@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nemihana — Princess of Reality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #06050c;
+    --ink: #efe9e0;
+    --ink-dim: #9a92a4;
+    --green: #35c98f;
+    --pink: #ec5aa0;
+    --purple: #8a5cf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100dvh;
+    background: radial-gradient(ellipse at 50% 0%, #140a22 0%, var(--void) 55%);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0.75rem 2rem;
+  }
+  a.back {
+    align-self: flex-start;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-dim);
+    text-decoration: none;
+    margin-bottom: 0.6rem;
+  }
+  a.back:hover { color: var(--green); }
+
+  .shell {
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0,0,0,0.35);
+  }
+  .shell-head {
+    padding: 1rem 1.1rem 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .shell-head .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--purple);
+  }
+  .shell-head h1 {
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.55rem;
+    margin-top: 0.15rem;
+  }
+  .shell-head .blurb {
+    margin-top: 0.4rem;
+    font-size: 0.88rem;
+    color: var(--ink-dim);
+    line-height: 1.4;
+  }
+
+  .hud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+  }
+  .hud .lives { color: var(--pink); letter-spacing: 0.12em; }
+  .hud .timer { color: var(--green); }
+  .hud .timer.warn { color: var(--pink); }
+  .hud .score { color: var(--ink); }
+
+  .modes {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+    padding: 0.85rem 1.1rem;
+  }
+  .mode-btn {
+    text-align: left;
+    padding: 0.7rem 0.8rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.03);
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .mode-btn:hover, .mode-btn.selected {
+    border-color: rgba(138,92,240,0.5);
+    background: rgba(138,92,240,0.08);
+  }
+  .mode-btn .mlabel {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .mode-btn .mdesc {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+    line-height: 1.35;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 1.1rem 0.9rem;
+  }
+  .actions button, .overlay button {
+    flex: 1;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.55rem 0.6rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.04);
+    color: var(--ink-dim);
+    cursor: pointer;
+  }
+  .actions button.primary, .overlay button.primary {
+    color: var(--green);
+    border-color: rgba(53,201,143,0.45);
+  }
+  .actions button:hover, .overlay button:hover {
+    color: var(--ink);
+    border-color: var(--purple);
+  }
+  .actions button:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .board-wrap {
+    padding: 0.5rem 1rem 1.1rem;
+  }
+  #board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 0.5rem;
+    min-height: 420px;
+  }
+  .card {
+    aspect-ratio: 3 / 4;
+    perspective: 800px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    position: relative;
+  }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s ease;
+    transform-style: preserve-3d;
+  }
+  .card.is-up .card-inner,
+  .card.is-matched .card-inner {
+    transform: rotateY(180deg);
+  }
+  .card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+    text-align: center;
+  }
+  .card-back {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(138,92,240,0.3);
+    box-shadow: inset 0 0 16px rgba(138,92,240,0.1);
+  }
+  .card-back::after {
+    content: '⟡';
+    color: var(--purple);
+    opacity: 0.45;
+    font-size: 1rem;
+  }
+  .card-front {
+    background: rgba(6,5,12,0.94);
+    border: 1px solid rgba(53,201,143,0.32);
+    transform: rotateY(180deg);
+    font-size: 0.72rem;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .card-front.kind-glyph { font-size: 1.5rem; color: var(--green); }
+  .card-front.kind-word {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+  .card-front.kind-desc {
+    font-size: 0.58rem;
+    color: var(--ink-dim);
+    line-height: 1.3;
+  }
+  .card.is-matched .card-front {
+    border-color: rgba(53,201,143,0.6);
+    box-shadow: 0 0 14px rgba(53,201,143,0.18);
+  }
+  .card.has-bonus .card-back::before {
+    content: '+';
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--pink);
+    opacity: 0.7;
+  }
+  .card.is-locked { pointer-events: none; }
+  .card:disabled { cursor: default; }
+
+  .hint {
+    padding: 0 1.1rem 1rem;
+    font-size: 0.82rem;
+    color: var(--ink-dim);
+    line-height: 1.4;
+  }
+
+  .overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(6,5,12,0.88);
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+    z-index: 5;
+  }
+  .shell { position: relative; }
+  .overlay.show { display: flex; }
+  .overlay .panel {
+    text-align: center;
+    max-width: 16rem;
+  }
+  .overlay h2 {
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.4rem;
+    margin-bottom: 0.45rem;
+  }
+  .overlay p {
+    color: var(--ink-dim);
+    font-size: 0.9rem;
+    margin-bottom: 0.9rem;
+    line-height: 1.4;
+  }
+
+  #setup { display: block; }
+  #play { display: none; }
+  body.playing #setup { display: none; }
+  body.playing #play { display: block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-inner { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <a class="back" href="./index.html">← World</a>
+
+  <div class="shell">
+    <div class="shell-head">
+      <div class="tag">Koruhana · game</div>
+      <h1>Nemihana</h1>
+      <p class="blurb">Four trios on the table — glyph, <em>kaviru</em> word, and sense. Match three faces of one root in succession.</p>
+    </div>
+
+    <div id="setup">
+      <div class="modes" id="modes"></div>
+      <div class="actions">
+        <button type="button" class="primary" id="start-btn">Start game</button>
+      </div>
+      <p class="hint">Each board draws four roots at random from thirteen. Faces are the mark, the Kaviru word (e.g. koru), and a short sense — not an English synonym alone.</p>
+    </div>
+
+    <div id="play">
+      <div class="hud">
+        <span class="score" id="hud-score">0 / 4</span>
+        <span class="lives" id="hud-lives" hidden></span>
+        <span class="timer" id="hud-timer" hidden></span>
+      </div>
+      <div class="board-wrap">
+        <div id="board" aria-label="Nemihana board"></div>
+      </div>
+      <div class="actions">
+        <button type="button" id="reset-btn">Reset</button>
+        <button type="button" id="menu-btn">Modes</button>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+      <div class="panel">
+        <h2 id="overlay-title">Nemihana</h2>
+        <p id="overlay-msg"></p>
+        <button type="button" class="primary" id="overlay-btn">Again</button>
+      </div>
+    </div>
+  </div>
+
+<script type="module">
+import { pickTrios, facesFromTrios, shuffle, MODES, TRIOS } from './js/kaviru-trios.js';
+
+const board = document.getElementById('board');
+const modesEl = document.getElementById('modes');
+const hudScore = document.getElementById('hud-score');
+const hudLives = document.getElementById('hud-lives');
+const hudTimer = document.getElementById('hud-timer');
+const overlay = document.getElementById('overlay');
+const overlayTitle = document.getElementById('overlay-title');
+const overlayMsg = document.getElementById('overlay-msg');
+
+let modeId = 'lives';
+let mode = MODES.lives;
+let cards = [];
+let streak = [];
+let matched = new Set();
+let lives = 0;
+let busy = false;
+let playing = false;
+let timerLeft = 0;
+let timerId = null;
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function renderModes() {
+  modesEl.innerHTML = '';
+  Object.values(MODES).forEach(m => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'mode-btn' + (m.id === modeId ? ' selected' : '');
+    btn.innerHTML = `<span class="mlabel">${m.label}</span><span class="mdesc">${m.desc}</span>`;
+    btn.onclick = () => {
+      modeId = m.id;
+      mode = m;
+      renderModes();
+    };
+    modesEl.appendChild(btn);
+  });
+}
+
+function stopTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = null;
+  }
+}
+
+function updateHud() {
+  hudScore.textContent = `${matched.size} / 4`;
+  if (mode.lives != null) {
+    hudLives.hidden = false;
+    hudLives.textContent = '♥'.repeat(Math.max(lives, 0)) + (lives <= 0 ? ' —' : '');
+  } else {
+    hudLives.hidden = true;
+  }
+  if (mode.timerSec != null) {
+    hudTimer.hidden = false;
+    const m = Math.floor(timerLeft / 60);
+    const s = String(timerLeft % 60).padStart(2, '0');
+    hudTimer.textContent = `${m}:${s}`;
+    hudTimer.classList.toggle('warn', timerLeft <= 15);
+  } else {
+    hudTimer.hidden = true;
+  }
+}
+
+function endGame(won) {
+  playing = false;
+  busy = true;
+  stopTimer();
+  overlayTitle.textContent = won ? 'Nemihana' : 'Solu';
+  overlayMsg.textContent = won
+    ? 'Four trios hold. Structure has emerged.'
+    : (mode.timerSec != null && timerLeft <= 0
+      ? 'Time closed the board.'
+      : 'No lives remain. The pattern dissolved.');
+  overlay.classList.add('show');
+}
+
+function loseLife() {
+  if (mode.lives == null) return;
+  lives -= 1;
+  updateHud();
+  if (lives <= 0) endGame(false);
+}
+
+function grantBonus() {
+  if (mode.lives == null) return;
+  lives += 1;
+  updateHud();
+}
+
+function flipDown(indices) {
+  indices.forEach(i => {
+    const el = board.querySelector(`[data-i="${i}"]`);
+    if (el && !el.classList.contains('is-matched')) el.classList.remove('is-up');
+  });
+}
+
+function lockMatched(rootId, indices) {
+  const hadBonus = indices.some(i => cards[i].bonus);
+  matched.add(rootId);
+  indices.forEach(i => {
+    const el = board.querySelector(`[data-i="${i}"]`);
+    if (el) {
+      el.classList.add('is-matched', 'is-up', 'is-locked');
+      el.disabled = true;
+    }
+  });
+  if (hadBonus) grantBonus();
+  updateHud();
+  if (matched.size >= 4) endGame(true);
+}
+
+function onCardClick(i) {
+  if (!playing || busy) return;
+  const el = board.querySelector(`[data-i="${i}"]`);
+  if (!el || el.classList.contains('is-matched') || el.classList.contains('is-up')) return;
+
+  el.classList.add('is-up');
+  streak.push(i);
+
+  if (streak.length < 3) return;
+
+  // three cards chosen — verify together as a single trio, not progressively
+  busy = true;
+  const picked = streak.slice();
+  streak = [];
+
+  const ids = picked.map(ix => cards[ix].rootId);
+  const kinds = picked.map(ix => cards[ix].kind);
+  const sameRoot = ids.every(id => id === ids[0]);
+  const uniqueKinds = new Set(kinds).size === kinds.length;
+  const isMatch = sameRoot && uniqueKinds;
+
+  setTimeout(() => {
+    if (isMatch) {
+      lockMatched(ids[0], picked);
+    } else {
+      flipDown(picked);
+      loseLife();
+    }
+    busy = false;
+  }, isMatch ? 260 : 650);
+}
+
+function renderBoard() {
+  board.innerHTML = '';
+  cards.forEach((c, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'card' + (c.bonus ? ' has-bonus' : '');
+    btn.dataset.i = String(i);
+    btn.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face card-back"></div>
+        <div class="card-face card-front kind-${c.kind}">${escapeHtml(c.text)}</div>
+      </div>`;
+    btn.addEventListener('click', () => onCardClick(i));
+    board.appendChild(btn);
+  });
+}
+
+function buildRound() {
+  const trios = pickTrios(4);
+  let faces = facesFromTrios(trios);
+  faces = shuffle(faces);
+  faces = faces.map(f => ({ ...f, bonus: false }));
+  // Exactly one guaranteed bonus card per round (lives/mixed only) — its trio grants an extra life when matched.
+  if (mode.lives != null && faces.length > 0) {
+    const bonusIndex = Math.floor(Math.random() * faces.length);
+    faces[bonusIndex].bonus = true;
+  }
+  return faces;
+}
+
+function startTimer() {
+  stopTimer();
+  if (mode.timerSec == null) return;
+  timerLeft = mode.timerSec;
+  updateHud();
+  timerId = setInterval(() => {
+    timerLeft -= 1;
+    updateHud();
+    if (timerLeft <= 0) endGame(false);
+  }, 1000);
+}
+
+function startGame() {
+  mode = MODES[modeId];
+  matched = new Set();
+  streak = [];
+  busy = false;
+  playing = true;
+  lives = mode.lives != null ? mode.lives : 0;
+  cards = buildRound();
+  overlay.classList.remove('show');
+  document.body.classList.add('playing');
+  updateHud();
+  renderBoard();
+  startTimer();
+}
+
+function resetRound() {
+  if (!document.body.classList.contains('playing')) return;
+  startGame();
+}
+
+function toMenu() {
+  playing = false;
+  busy = false;
+  stopTimer();
+  overlay.classList.remove('show');
+  document.body.classList.remove('playing');
+}
+
+document.getElementById('start-btn').onclick = startGame;
+document.getElementById('reset-btn').onclick = resetRound;
+document.getElementById('menu-btn').onclick = toMenu;
+document.getElementById('overlay-btn').onclick = () => {
+  overlay.classList.remove('show');
+  startGame();
+};
+
+renderModes();
+
+</script>
+</body>
+</html>

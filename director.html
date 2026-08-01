@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haylynn Director</title>
+  <style>
+    :root {
+      --void: #06050c;
+      --ink: #efe9e0;
+      --ink-dim: #9a92a4;
+      --pink: #ec5aa0;
+      --green: #35c98f;
+      --purple: #8a5cf0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--void);
+      color: var(--ink);
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+    header {
+      padding: 0.9rem 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    header h1 {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.3rem;
+      color: var(--pink);
+    }
+    .status {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+    .status.live { color: var(--green); }
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .panel {
+      padding: 1rem;
+      overflow-y: auto;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .panel:last-child { border-right: none; }
+    .panel h2 {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 0.8rem;
+    }
+    .quick {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .quick button, header button {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      padding: 0.4rem 0.7rem;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .quick button:hover, header button:hover {
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+    label {
+      display: block;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin: 0.7rem 0 0.25rem;
+    }
+    select, input, textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.8rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 6px;
+    }
+    textarea { min-height: 70px; resize: vertical; }
+    .send-row {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .send-row button {
+      flex: 1;
+      background: var(--pink);
+      color: var(--void);
+      border: none;
+      font-family: inherit;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .send-row button.secondary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--ink-dim);
+    }
+    #log {
+      font-size: 0.7rem;
+      line-height: 1.5;
+      color: var(--ink-dim);
+    }
+    #log .entry {
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    #log .ok { color: var(--green); }
+    #log .err { color: #e06060; }
+    #log .ts { opacity: 0.5; margin-right: 0.5rem; }
+    footer {
+      padding: 0.6rem 1.2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.6rem;
+      color: var(--ink-dim);
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Koru · Director</h1>
+    <span class="status" id="conn">waiting for page…</span>
+    <button id="link-btn">Link to page</button>
+  </header>
+
+  <main>
+    <div class="panel">
+      <h2>Quick actions</h2>
+      <div class="quick" id="quick"></div>
+
+      <h2>Manual action</h2>
+      <label>Type</label>
+      <select id="type">
+        <option value="movi">movi — navigate</option>
+        <option value="hana">hana — open detail</option>
+        <option value="miru">miru — close detail</option>
+        <option value="kavi">kavi — speak</option>
+        <option value="revi">revi — mutate</option>
+        <option value="zori">zori — highlight</option>
+        <option value="awe">awe — pulse mood</option>
+        <option value="solu">solu — reset</option>
+      </select>
+
+      <div id="fields"></div>
+
+      <div class="send-row">
+        <button id="send">Send</button>
+        <button class="secondary" id="snapshot">Snapshot</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Log</h2>
+      <div id="log"></div>
+    </div>
+  </main>
+
+  <footer>Local only · unlocks a director session on the linked page · never deploy this file</footer>
+
+<script>
+const SECTIONS = ['home','kaviru','draw','koruhana','chronicle','haylynn','arsenal','lymp'];
+const MOODS = ['mood-green','mood-pink','mood-purple'];
+
+const typeSelect = document.getElementById('type');
+const fieldsEl  = document.getElementById('fields');
+const logEl     = document.getElementById('log');
+const connEl    = document.getElementById('conn');
+
+const fieldMap = {
+  movi: () => field('sectionId', 'select', SECTIONS),
+  hana: () => field('sectionId', 'select', SECTIONS),
+  miru: () => field('sectionId', 'select', SECTIONS),
+  kavi: () => field('text', 'textarea'),
+  revi: () => field('selector','text') + field('html','textarea') + field('mode','select',['replace','append','prepend']),
+  zori: () => field('selector','text') + field('duration','text','1800'),
+  awe:  () => field('mood','select',MOODS) + field('duration','text','2200'),
+  solu: () => field('sectionId','select',['(all)',...SECTIONS])
+};
+
+function field(name, kind, options) {
+  let html = `<label>${name}</label>`;
+  if (kind === 'select') {
+    html += `<select id="f-${name}">${options.map(o => `<option>${o}</option>`).join('')}</select>`;
+  } else if (kind === 'textarea') {
+    html += `<textarea id="f-${name}"></textarea>`;
+  } else {
+    html += `<input id="f-${name}" value="${options || ''}">`;
+  }
+  return html;
+}
+
+function renderFields() {
+  fieldsEl.innerHTML = fieldMap[typeSelect.value]();
+}
+typeSelect.addEventListener('change', renderFields);
+renderFields();
+
+const quickActions = [
+  { label: 'movi · home',     action: { type:'movi', sectionId:'home' } },
+  { label: 'movi · kaviru',   action: { type:'movi', sectionId:'kaviru' } },
+  { label: 'hana · kaviru',   action: { type:'hana', sectionId:'kaviru' } },
+  { label: 'kavi · velith',   action: { type:'kavi', text:'koru ohna velith' } },
+  { label: 'awe · pink',      action: { type:'awe', mood:'mood-pink' } },
+  { label: 'awe · green',     action: { type:'awe', mood:'mood-green' } },
+  { label: 'solu · reset',    action: { type:'solu' } },
+];
+const quickEl = document.getElementById('quick');
+quickActions.forEach(q => {
+  const btn = document.createElement('button');
+  btn.textContent = q.label;
+  btn.onclick = () => send(q.action);
+  quickEl.appendChild(btn);
+});
+
+let pageWindow = null;
+
+function unlockLinkedPage(win) {
+  if (!win || !win.Haylynn) return false;
+  // Kaviru-shaped session open — not advertised as unlockDirector
+  if (typeof win.Haylynn.koru === 'function') {
+    win.Haylynn.koru('veeka');
+  }
+  return true;
+}
+
+function tryConnect() {
+  if (window.opener && !window.opener.closed && window.opener.Haylynn) {
+    pageWindow = window.opener;
+    unlockLinkedPage(pageWindow);
+    connEl.textContent = 'linked via opener · unlocked';
+    connEl.classList.add('live');
+  }
+}
+tryConnect();
+
+document.getElementById('link-btn').onclick = () => {
+  // Prefer existing named window
+  let w = window.open('', 'haylynn-main');
+  if (w && w.Haylynn) {
+    pageWindow = w;
+    unlockLinkedPage(pageWindow);
+    connEl.textContent = 'linked · unlocked';
+    connEl.classList.add('live');
+    return;
+  }
+  // Fallback: open the main page
+  w = window.open('./index.html', 'haylynn-main');
+  // Give it a moment to load the module
+  setTimeout(() => {
+    if (w && w.Haylynn) {
+      pageWindow = w;
+      unlockLinkedPage(pageWindow);
+      connEl.textContent = 'linked · unlocked';
+      connEl.classList.add('live');
+    } else {
+      alert('Open index.html first (or wait for modules to load), then click Link again.');
+    }
+  }, 800);
+};
+
+function log(msg, cls = '') {
+  const div = document.createElement('div');
+  div.className = 'entry ' + cls;
+  const ts = new Date().toLocaleTimeString();
+  div.innerHTML = `<span class="ts">${ts}</span>${msg}`;
+  logEl.prepend(div);
+}
+
+function send(action) {
+  if (!pageWindow || !pageWindow.Haylynn) {
+    log('No live connection to the page', 'err');
+    return;
+  }
+  try {
+    // Ensure this tab session is unlocked before each action
+    unlockLinkedPage(pageWindow);
+    const result = (pageWindow.Haylynn.movi || pageWindow.Haylynn.applyAction)(action);
+    if (result.success) {
+      log(`✓ ${action.type} ${JSON.stringify(action)}`, 'ok');
+    } else {
+      log(`✗ ${result.error}`, 'err');
+    }
+  } catch (e) {
+    log(`✗ ${e.message}`, 'err');
+  }
+}
+
+document.getElementById('send').onclick = () => {
+  const type = typeSelect.value;
+  const action = { type };
+  fieldsEl.querySelectorAll('[id^="f-"]').forEach(el => {
+    const key = el.id.slice(2);
+    let val = el.value;
+    if (key === 'duration') val = Number(val) || 1800;
+    // reset with "(all)" means omit sectionId → restore everything
+    if (key === 'sectionId' && val === '(all)') return;
+    action[key] = val;
+  });
+  send(action);
+};
+
+document.getElementById('snapshot').onclick = () => {
+  if (!pageWindow || !pageWindow.Haylynn) {
+    log('No connection', 'err');
+    return;
+  }
+  const snap = (pageWindow.Haylynn.nemi || pageWindow.Haylynn.getWorldSnapshot)();
+  log('SNAPSHOT ' + JSON.stringify(snap));
+};
+</script>
+</body>
+</html>

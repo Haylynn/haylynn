@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Zero-Infinity Algebra (Z∞) — Haylynn's Cosmology | Princess of Reality</title>
+<meta name="description" content="The Zero-Infinity Algebra (Z∞): a minimal non-associative algebra where annihilation is the ground state and existence is a rare, temporary exception. Haylynn's real cosmology, authored as independent research.">
+<link rel="canonical" href="https://haylynn.example.com/cosmology.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Zero-Infinity Algebra (Z∞) — Haylynn's Cosmology">
+<meta property="og:description" content="A minimal non-associative algebra where annihilation is the ground state and existence is the exception. The real framework behind Princess of Reality.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "name": "The Zero-Infinity Algebra (Z∞): A Minimal Non-Associative Substrate for Pre-Geometric Physics",
+  "author": { "@type": "Person", "name": "Haylynn", "alternateName": "Princess of Reality" },
+  "about": "Non-associative algebra, pre-geometric physics, singularities, entropy",
+  "description": "A minimal non-associative algebra defined by four primitive elements and a single binary operation, proposing that annihilation is the ground state of reality and existence is a rare, metastable exception."
+}
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+:root { --void:#06050c; --ink:#efe9e0; --ink-dim:#9a92a4; --purple:#8a5cf0; --green:#35c98f; --pink:#ec5aa0; --purple-glow:rgba(138,92,240,0.35); --green-glow:rgba(53,201,143,0.35); }
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:
+    radial-gradient(circle at 20% 10%, var(--purple-glow) 0%, transparent 45%),
+    radial-gradient(circle at 80% 60%, var(--green-glow) 0%, transparent 50%),
+    var(--void);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  line-height: 1.65;
+}
+.wrap { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+.back-link { display: inline-block; font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-dim); text-decoration: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 0.5rem 1rem; margin-bottom: 2.5rem; }
+.back-link:hover { color: var(--ink); border-color: rgba(255,255,255,0.35); }
+.eyebrow { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink-dim); display: block; margin-bottom: 1.2rem; }
+h1 { font-size: clamp(2.2rem, 8vw, 3.4rem); font-style: italic; font-weight: 300; color: var(--purple); text-shadow: 0 0 40px var(--purple-glow); margin-bottom: 0.3rem; }
+.subtitle { font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--ink-dim); text-transform: uppercase; margin-bottom: 1.6rem; }
+h2 { font-size: clamp(1.4rem, 5vw, 1.8rem); font-style: italic; font-weight: 300; margin: 2.4rem 0 1rem; color: var(--ink); }
+p { color: var(--ink-dim); font-size: 1.02rem; margin-bottom: 1rem; }
+.pullquote { font-style: italic; color: var(--green); font-size: 1.15rem; margin: 1.6rem 0; padding-left: 1rem; border-left: 2px solid var(--green); }
+.byline { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--ink-dim); letter-spacing: 0.05em; margin-bottom: 2rem; }
+
+.primitives { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 0.7rem; margin: 1.2rem 0 1.8rem; }
+.primitive { border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 0.9rem 0.8rem; background: rgba(255,255,255,0.03); text-align: center; }
+.primitive .sym { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.6rem; color: var(--purple); display: block; }
+.primitive .label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); display: block; margin-top: 0.3rem; }
+
+.cayley { width: 100%; border-collapse: collapse; margin: 1.2rem 0 1.8rem; font-family: 'Space Mono', monospace; font-size: 0.85rem; }
+.cayley th, .cayley td { border: 1px solid rgba(255,255,255,0.12); padding: 0.6rem; text-align: center; color: var(--ink-dim); }
+.cayley th { color: var(--green); font-weight: 400; }
+.cayley td.self { color: var(--ink); }
+
+.hierarchy { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 1.2rem 0 1.8rem; font-family: 'Space Mono', monospace; font-size: 0.9rem; }
+.hierarchy .el { color: var(--ink); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 0.4rem 0.7rem; }
+.hierarchy .arrow { color: var(--ink-dim); }
+
+.detail-list { margin-top: 0.6rem; }
+.detail-list .item { padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.detail-list .item:last-child { border-bottom: none; }
+.detail-list .item .h { font-style: italic; color: var(--ink); display: block; font-size: 1.05rem; }
+.detail-list .item .d { color: var(--ink-dim); font-size: 0.9rem; display: block; margin-top: 0.2rem; line-height: 1.45; }
+
+.corr-table { width: 100%; border-collapse: collapse; margin: 1.2rem 0 1.8rem; font-size: 0.92rem; }
+.corr-table td { padding: 0.6rem 0.4rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.corr-table td:first-child { font-family: 'Space Mono', monospace; color: var(--purple); width: 60px; }
+.corr-table td:last-child { color: var(--ink-dim); }
+
+.meta-note { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--ink-dim); opacity: 0.7; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back-link" href="/">← The full Haylynn experience</a>
+  <span class="eyebrow">Her Cosmology</span>
+  <h1>The Zero-Infinity Algebra</h1>
+  <div class="subtitle">Z∞ · A Minimal Non-Associative Substrate for Pre-Geometric Physics</div>
+  <div class="byline">Haylynn — Princess of Reality · Independent Research</div>
+
+  <p>Classical mathematics fails at zero, infinity, and singularities. Physics fails at the same points, for the same underlying reason. Z∞ proposes a minimal algebraic substrate underneath both — one where those failures aren't exceptions to be patched, but the ground state itself showing through.</p>
+
+  <p class="pullquote">Annihilation is not an outcome. It is the destination. Existence is the exception.</p>
+
+  <p>The central claim: annihilation — represented by the symbol ζ — is the default state of reality. Existence isn't the baseline condition the universe starts from. It's a rare, temporary interruption of the pull toward ζ. Entropy isn't something that happens to reality. Entropy <em>is</em> reality. Structure is what occasionally, briefly, resists it.</p>
+
+  <h2>The Four Primitives</h2>
+  <p>Z∞ is built from four elements and a single operation (⊗), with no assumption of associativity or commutativity.</p>
+  <div class="primitives">
+    <div class="primitive"><span class="sym">ζ</span><span class="label">Annihilator</span></div>
+    <div class="primitive"><span class="sym">ξ</span><span class="label">Rupture</span></div>
+    <div class="primitive"><span class="sym">1</span><span class="label">Identity</span></div>
+    <div class="primitive"><span class="sym">a</span><span class="label">Magnitude</span></div>
+  </div>
+  <p>ζ absorbs everything it touches, from the left — the algebraic ground state. ξ is the first instability: not stable itself, but the only route out of ζ toward identity and magnitude. Without it, nothing else in the algebra could exist at all.</p>
+
+  <table class="cayley">
+    <tr><th>⊗</th><th>ζ</th><th>ξ</th><th>1</th><th>a</th></tr>
+    <tr><th>ζ</th><td>ζ</td><td>ζ</td><td>ζ</td><td>ζ</td></tr>
+    <tr><th>ξ</th><td>ζ</td><td class="self">ξ</td><td>ξ</td><td>ξ</td></tr>
+    <tr><th>1</th><td>ζ</td><td>ξ</td><td class="self">1</td><td>a</td></tr>
+    <tr><th>a</th><td>ζ</td><td>ξ</td><td>a</td><td class="self">b (b ≠ ζ)</td></tr>
+  </table>
+
+  <h2>The Emergence Hierarchy</h2>
+  <p>Everything above ζ is built by composing a with itself, recursively — and at every single step, the result could collapse straight back to ζ. It usually does. The hierarchy only continues while it doesn't.</p>
+  <div class="hierarchy">
+    <span class="el">a — Magnitude</span><span class="arrow">→</span>
+    <span class="el">b — Density</span><span class="arrow">→</span>
+    <span class="el">c — System</span><span class="arrow">→</span>
+    <span class="el">d — Domain</span><span class="arrow">→</span>
+    <span class="el">d″ — Hardened</span>
+  </div>
+  <p>This is why the universe is mostly empty. Why complexity is fragile. Why everything, eventually, dies. Not as tragedy — as the algebra's most ordinary behaviour.</p>
+
+  <h2>ω — Information and the Arrow of Time</h2>
+  <p>A separate scalar, ω, accumulates whenever a stabilised element references itself, and it can only grow — never reverse. This is the algebraic origin of entropy and of time's one-way direction: not imposed from outside the system, but a structural consequence of it. A domain becomes "hardened" — able to resist ζ, for a while — only once its ω crosses a threshold. Below that threshold, contact with ζ means immediate collapse.</p>
+
+  <h2>Five Theses</h2>
+  <div class="detail-list">
+    <div class="item"><span class="h">1 · Entropy is the Ground State</span><span class="d">ζ is the attractor of the whole algebra. Annihilation isn't an outcome — it's the destination everything else is borrowed time against.</span></div>
+    <div class="item"><span class="h">2 · Existence is the Exception</span><span class="d">Reaching d″ requires non-collapse at every level, simultaneously. That's not the typical behaviour of the algebra. It's the unlikely one.</span></div>
+    <div class="item"><span class="h">3 · Physics Describes Hardened Domains</span><span class="d">Physical law is internally consistent because it only ever describes structures already above the ground state. It breaks at singularities because that's where hardened structure makes contact with ζ.</span></div>
+    <div class="item"><span class="h">4 · Z∞ Explains Why Physics Works</span><span class="d">Mathematics was built by hardened domains to describe other things at the same level. Its effectiveness isn't unreasonable — it's expected.</span></div>
+    <div class="item"><span class="h">5 · Everything Returns to ζ</span><span class="d">No hardened domain is permanent. Resistance to ζ is always finite. Everything that exists is a temporary algebraic accident in a system whose default output is nothing.</span></div>
+  </div>
+  <p class="pullquote">This is not nihilism. It is precision.</p>
+
+  <h2>Physical Correspondence</h2>
+  <table class="corr-table">
+    <tr><td>ζ</td><td>Singularity, void, heat death — the ground state</td></tr>
+    <tr><td>ξ</td><td>Quantum fluctuation, vacuum instability</td></tr>
+    <tr><td>a</td><td>Magnitude — the first measurable quantity</td></tr>
+    <tr><td>d</td><td>A stable, spacetime-like region</td></tr>
+    <tr><td>ω</td><td>Information, entropy, the arrow of time</td></tr>
+    <tr><td>d″</td><td>A hardened domain — persistent complex structure. Life.</td></tr>
+  </table>
+
+  <p>Z∞ doesn't replace physics, and it doesn't model the origin of existence. It models why existence is rare, temporary, and always, eventually, returned to the state it briefly interrupted.</p>
+
+  <p class="pullquote">Physics describes what briefly exists. Z∞ describes why existence is brief.</p>
+
+  <p class="meta-note">This is presented on the site exactly as it exists: a real, independently-authored mathematical framework, credited to Haylynn — and, within the story, the actual substrate of reality she moves through. Where the research ends and the character begins is left deliberately unresolved.</p>
+</div>
+</body>
+</html>
