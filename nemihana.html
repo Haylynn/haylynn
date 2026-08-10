@@ -460,28 +460,35 @@ function onCardClick(i) {
   el.classList.add('is-up');
   streak.push(i);
 
-  if (streak.length < 3) return;
+  if (streak.length === 1) return;
 
-  // three cards chosen — verify together as a single trio, not progressively
-  busy = true;
-  const picked = streak.slice();
-  streak = [];
-
-  const ids = picked.map(ix => cards[ix].rootId);
-  const kinds = picked.map(ix => cards[ix].kind);
+  const ids = streak.map(ix => cards[ix].rootId);
+  const kinds = streak.map(ix => cards[ix].kind);
   const sameRoot = ids.every(id => id === ids[0]);
   const uniqueKinds = new Set(kinds).size === kinds.length;
-  const isMatch = sameRoot && uniqueKinds;
 
-  setTimeout(() => {
-    if (isMatch) {
-      lockMatched(ids[0], picked);
-    } else {
-      flipDown(picked);
+  if (!sameRoot || !uniqueKinds) {
+    busy = true;
+    const failed = streak.slice();
+    streak = [];
+    setTimeout(() => {
+      flipDown(failed);
+      busy = false;
       loseLife();
-    }
-    busy = false;
-  }, isMatch ? 260 : 650);
+    }, 650);
+    return;
+  }
+
+  if (streak.length === 3) {
+    busy = true;
+    const done = streak.slice();
+    const rootId = ids[0];
+    streak = [];
+    setTimeout(() => {
+      lockMatched(rootId, done);
+      busy = false;
+    }, 260);
+  }
 }
 
 function renderBoard() {
@@ -505,12 +512,11 @@ function buildRound() {
   const trios = pickTrios(4);
   let faces = facesFromTrios(trios);
   faces = shuffle(faces);
-  faces = faces.map(f => ({ ...f, bonus: false }));
-  // Exactly one guaranteed bonus card per round (lives/mixed only) — its trio grants an extra life when matched.
-  if (mode.lives != null && faces.length > 0) {
-    const bonusIndex = Math.floor(Math.random() * faces.length);
-    faces[bonusIndex].bonus = true;
-  }
+  // Bonus hearts on random cards (only meaningful in lives/mixed)
+  faces = faces.map(f => ({
+    ...f,
+    bonus: mode.lives != null && Math.random() < mode.bonusChance
+  }));
   return faces;
 }
 
@@ -563,7 +569,3 @@ document.getElementById('overlay-btn').onclick = () => {
 };
 
 renderModes();
-
-</script>
-</body>
-</html>
