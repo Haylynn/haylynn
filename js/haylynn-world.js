@@ -96,13 +96,13 @@ export const WORLD = {
       special: 'custom-audio-player'
     },
     {
-      id: 'arsenal',
+      id: 'hananaru',
       mood: 'mood-green',
-      eyebrow: 'VII — Her Arsenal',
-      title: 'The Arsenal',
+      eyebrow: 'VII — Hananaru',
+      title: 'Hananaru',
       allowedSelectors: [
-        '.section[data-id="arsenal"] .content',
-        '.section[data-id="arsenal"] .detail',
+        '.section[data-id="hananaru"] .content',
+        '.section[data-id="hananaru"] .detail',
         '.product-grid',
         '.product-card'
       ],

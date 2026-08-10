@@ -16,6 +16,7 @@ import { initHaylynnPlayer } from './haylynn-player.js';
 import { initHaylynnDraw } from './haylynn-draw.js';
 import { startTicker } from './haylynn-ticker.js';
 import { startWeather } from './haylynn-weather.js';
+import { startVeil } from './haylynn-veil.js';
 
 // ── Star field ────────────────────────────────────────────────────────
 function paintStars(el, count, size, alpha) {
@@ -297,5 +298,6 @@ window.Haylynn = {
   get WORLD() { return getWorldSnapshot(); }
 };
 startStateSync();
+startVeil();
 startTicker();
 startWeather();

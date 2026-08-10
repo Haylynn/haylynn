@@ -242,9 +242,9 @@ export const CONTENT = [
       <div class="lyric-track lyric-track-pending" data-track-index="11"><span class="lyric-track-num">12 · Koru Talu Zenu <span class="lyric-track-play">▶ play</span></span></div>
       <div class="lyric-track lyric-track-pending" data-track-index="12"><span class="lyric-track-num">13 · Zenu Velu <span class="lyric-track-tag">bonus</span> <span class="lyric-track-play">▶ play</span></span></div>` },
 
-  { id: 'arsenal', mood: 'mood-green', eyebrow: 'VII — Her Arsenal', html: `
-      <h2 class="section-title">The Arsenal</h2>
-      <p>Print-on-demand mech art and merch from the world of Princess of Reality.</p>
+  { id: 'hananaru', mood: 'mood-green', eyebrow: 'VII — Hananaru', html: `
+      <h2 class="section-title">Hananaru</h2>
+      <p><em>Hana</em> — emergence. <em>Naru</em> — connection. Objects coming into reach: a thin aperture on reality. Placeholder shelf until her market is live.</p>
       <div class="product-grid">
         <div class="product-card"><span class="tag">Soon</span>
           <svg width="40" height="40" viewBox="0 0 48 48"><rect x="14" y="10" width="20" height="28" fill="none" stroke="#35c98f" stroke-width="1.5" rx="3"/><line x1="18" y1="18" x2="30" y2="18" stroke="#35c98f" stroke-width="1.2"/><line x1="18" y1="24" x2="30" y2="24" stroke="#35c98f" stroke-width="1.2"/><circle cx="24" cy="32" r="2" fill="#35c98f"/></svg>
@@ -263,10 +263,10 @@ export const CONTENT = [
           <span class="name">Zenuvelu — art print</span><span class="price">£—</span>
         </div>
       </div>
-      <a class="view-full-link" href="/arsenal.html">View full page ↗</a>`,
+      <a class="view-full-link" href="/hananaru.html">View full page ↗</a>`,
     detail: `
-      <h2>Coming to the Arsenal</h2>
-      <p>Merch and mech prints are still in production. Full drop notes below — nothing is live yet.</p>
+      <h2>Hananaru</h2>
+      <p>Emergence meeting connection — the aperture where objects enter range. Merch and prints are still forming. Nothing is live yet; this shelf is the shape of the market to come.</p>
       <div class="detail-list">
         <div class="item"><span class="h">Ground State — mech print</span><span class="d">A3 giclée, numbered edition</span></div>
         <div class="item"><span class="h">Velith — enamel pin</span><span class="d">Hard enamel, 32mm</span></div>
