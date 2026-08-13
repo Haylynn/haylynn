@@ -97,17 +97,29 @@ export const CONTENT = [
           <div><span class="name">Nemihana</span><span class="desc">Four trios on the table · glyph, kaviru word, sense</span></div>
         </div>
         <div class="astro-card">
-          <svg width="34" height="34" viewBox="0 0 48 48"><circle cx="24" cy="24" r="12" fill="none" stroke="#8a5cf0" stroke-width="1.3"/><path d="M24 12v12l8 4" fill="none" stroke="#8a5cf0" stroke-width="1.3"/></svg>
-          <div><span class="name">More to come</span><span class="desc">Further play will land on this table</span></div>
+          <svg width="34" height="34" viewBox="0 0 48 48"><circle cx="24" cy="24" r="12" fill="none" stroke="#8a5cf0" stroke-width="1.3"/><path d="M24 12v12l8 4" fill="none" stroke="#8a5cf0" stroke-width="1.3"/><circle cx="24" cy="24" r="2" fill="#8a5cf0"/></svg>
+          <div><span class="name">Cosmic Decay</span><span class="desc">Text adventure · a dying Earth under a bruised sky</span></div>
         </div>
       </div>
-      <a class="view-full-link" href="./nemihana.html">Play Nemihana ↗</a>`,
+      <a class="view-full-link" href="./nemihana.html">Play Nemihana ↗</a>
+      <a class="view-full-link" href="https://haylynn-s-world.vercel.app" style="margin-left:0.5rem">Enter Cosmic Decay ↗</a>`,
     detail: `
       <h2>Koruhana</h2>
       <p><em>Koru</em> — the observer. <em>Hana</em> — emergence. This is her table for play: not distraction, but language and structure given form.</p>
-      <p><strong>Nemihana</strong> is the first game. Each board draws four roots — twelve faces: the glyph, the Kaviru word in Latin script (e.g. koru), and a short sense. Match three faces of one root in succession. Lives, timer, or mixed.</p>
-      <p>Open the full board for the proper field of play.</p>
-      <a class="view-full-link" href="./nemihana.html">Enter Nemihana ↗</a>` },
+
+      <h2 style="margin-top:1.8rem;">Nemihana</h2>
+      <p>The first game. Each board draws four roots — twelve faces: the glyph, the Kaviru word in Latin script (e.g. koru), and a short sense. Match three faces of one root in succession. Lives, timer, or mixed.</p>
+      <a class="view-full-link" href="./nemihana.html">Enter Nemihana ↗</a>
+
+      <h2 style="margin-top:1.8rem;">Cosmic Decay</h2>
+      <p>A hybrid text-adventure on a dying Earth. Free-form commands, a live terminal, Resonance and Integrity as vitals. You stand in the Shattered Plaza under a bruised violet sky. The world answers in second person — melancholic, cosmic, decaying.</p>
+      <p>The narrative is driven by an LLM; every proposed change is filtered through a deterministic rules engine so the fiction stays coherent.</p>
+      <div class="detail-list">
+        <div class="item"><span class="h">Where</span><span class="d">Shattered Plaza · Resonance Spire · Rust Garden · Hollow Archive · Spire Apex</span></div>
+        <div class="item"><span class="h">How</span><span class="d">Type natural-language intent. The Resonance answers.</span></div>
+        <div class="item"><span class="h">Host</span><span class="d">Runs on a separate Vercel deployment (API + secrets). This site only links out.</span></div>
+      </div>
+      <a class="view-full-link" href="https://haylynn-s-world.vercel.app">Enter Cosmic Decay ↗</a>` },
 
   { id: 'chronicle', mood: 'mood-pink', eyebrow: 'V — Her Story', html: `
       <img class="book-cover" src="assets/vol1-end-at-the-beginning.jpg" alt="Princess of Reality — The End at the Beginning, book cover">
