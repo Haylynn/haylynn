@@ -358,7 +358,7 @@ export const CONTENT = [
           <a class="view-full-link" href="https://leaveyourmark.pixieset.com/lym-europe/" target="_blank" rel="noopener" style="margin-bottom:0.8rem;">Open LYMP gallery ↗</a>
           <iframe id="lymp-frame" data-src="https://leaveyourmark.pixieset.com/lym-europe/" title="LYMP — Leave Your Mark Photography" loading="lazy"></iframe>
         </div>
-      </div>` },,
+      </div>` },
 
   { id: 'threshold', mood: 'mood-purple', eyebrow: 'IX — Threshold', html: `
       <h2 class="section-title">Threshold</h2>
