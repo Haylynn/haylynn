@@ -37,3 +37,13 @@ Edit `js/ticker-config.js`.
 **Weather** (top-right) — 3-day icons via Open-Meteo + browser geolocation.  
 Appears only if the visitor allows location. Denied → stays invisible.  
 Edit `js/weather-config.js`.
+
+
+## Live radio (prepared)
+
+Frontend is ready in the Music section (**Her Voice** detail):
+
+- `js/radio-config.js` — set `streamUrl` and `nowPlayingUrl` when the VPS mount is live
+- `js/haylynn-radio.js` — player shell, holding state, now-playing poll
+
+Until those URLs are set, the UI shows **Frequency held** (on-brand off-air). Album (SoundCloud) is unchanged.
