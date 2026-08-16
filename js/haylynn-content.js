@@ -5,7 +5,8 @@
 export const CONTENT = [
   { id: 'home', mood: 'mood-purple', eyebrow: 'I — Her World', html: `
       <h2 class="section-title">Princess of Reality</h2>
-      <p>A cosmology told across a book series, a constructed language, and a voice given form. Scroll to begin.</p>`,
+      <p>A cosmology told across a book series, a constructed language, and a voice given form. Scroll to begin.</p>
+      <div data-role="threshold-face"></div>`,
     detail: `
       <h2>Who is Haylynn</h2>
       <p>A cosmic force of nature wearing the shape of a harmless girl — dangerous not through will, but through presence alone. She exists outside reality itself, and only truly exists the moment a version of her steps inside it.</p>
@@ -13,6 +14,45 @@ export const CONTENT = [
         <div class="item"><span class="h">Form</span><span class="d">Shape-flexible, always drawn to a young woman. One thing never changes: a purple-and-green signature, visible wherever she bends toward something more than human.</span></div>
         <div class="item"><span class="h">Presence</span><span class="d">Nothing she does is a decision. The world simply loosens around her, the way breath disturbs still air.</span></div>
         <div class="item"><span class="h">Language</span><span class="d">She speaks only Kaviru — never translated, not even to us.</span></div>
+      </div>
+
+
+      <div class="hy-threshold is-holding" data-role="threshold-root">
+        <div class="th-kicker"><span class="pip"></span> Threshold</div>
+        <div class="th-title" data-role="th-title">Threshold</div>
+        <p class="th-body" data-role="th-body">A quieter room behind the scroll — name, likeness, a few links, and the key of patronage.</p>
+        <div class="th-status" data-role="th-status">The door is drawn. The lock is not yet set in the world.</div>
+
+        <div class="th-profile">
+          <div>
+            <div class="th-avatar" data-role="th-avatar">likeness</div>
+            <input type="file" accept="image/*" data-role="th-avatar-file" disabled style="margin-top:0.4rem;width:100%;font-size:0.65rem;color:var(--ink-dim)">
+          </div>
+          <div class="th-fields">
+            <label>Name</label>
+            <input type="text" data-role="th-name" placeholder="How you are called" disabled>
+            <label>Handle</label>
+            <input type="text" data-role="th-handle" placeholder="quiet-name" disabled>
+            <label>Bio</label>
+            <textarea data-role="th-bio" placeholder="A few lines, if you wish" disabled></textarea>
+            <label>Links</label>
+            <textarea data-role="th-links" placeholder="One URL per line" disabled></textarea>
+            <label>Email · for a key</label>
+            <input type="email" data-role="th-email" placeholder="you@domain" disabled>
+          </div>
+        </div>
+
+        <div class="th-actions">
+          <button type="button" class="th-btn primary" data-role="th-action" data-action="magic" disabled>Request key</button>
+          <button type="button" class="th-btn" data-role="th-action" data-action="save" disabled>Hold profile</button>
+          <button type="button" class="th-btn" data-role="th-action" data-action="checkout" disabled>Patronage</button>
+          <button type="button" class="th-btn" data-role="th-action" data-action="portal" disabled>Manage</button>
+        </div>
+
+        <div class="th-tiers">
+          <div class="th-tier"><strong>Visitor</strong> The full surface of the site — story, language, draw, play.</div>
+          <div class="th-tier"><strong>Member</strong> A profile inside the house, and doors that open later — worlds, offerings, deeper tools.</div>
+        </div>
       </div>
 
       <h2 style="margin-top:2.2rem;">The Cosmology</h2>
@@ -64,7 +104,7 @@ export const CONTENT = [
         <div class="mini-card"></div>
         <div class="mini-card"></div>
       </div>
-      <p class="section-tag" style="display:block; margin-top:0.6rem; opacity:0.7;">Swipe — she holds the deck</p>`,
+      <p class="section-tag" style="display:block; margin-top:0.6rem; opacity:0.7;">Three roots, if you open further</p>`,
     detail: `
       <div class="hy-draw-detail" data-role="draw-root">
         <h2>The Draw</h2>
@@ -108,16 +148,16 @@ export const CONTENT = [
       <p><em>Koru</em> — the observer. <em>Hana</em> — emergence. This is her table for play: not distraction, but language and structure given form.</p>
 
       <h2 style="margin-top:1.8rem;">Nemihana</h2>
-      <p>The first game. Each board draws four roots — twelve faces: the glyph, the Kaviru word in Latin script (e.g. koru), and a short sense. Match three faces of one root in succession. Lives, timer, or mixed.</p>
+      <p>Four roots on the table — twelve faces: the glyph, the Kaviru word as it is written (koru, not a translation), and a short sense. Match three faces of one root in succession. Lives, time, or both.</p>
       <a class="view-full-link" href="./nemihana.html">Enter Nemihana ↗</a>
 
       <h2 style="margin-top:1.8rem;">Cosmic Decay</h2>
       <p>A hybrid text-adventure on a dying Earth. Free-form commands, a live terminal, Resonance and Integrity as vitals. You stand in the Shattered Plaza under a bruised violet sky. The world answers in second person — melancholic, cosmic, decaying.</p>
-      <p>The narrative is driven by an LLM; every proposed change is filtered through a deterministic rules engine so the fiction stays coherent.</p>
+      <p>You speak in plain language. The world answers in second person — melancholic, careful, unwilling to invent what the rules do not allow.</p>
       <div class="detail-list">
         <div class="item"><span class="h">Where</span><span class="d">Shattered Plaza · Resonance Spire · Rust Garden · Hollow Archive · Spire Apex</span></div>
-        <div class="item"><span class="h">How</span><span class="d">Type natural-language intent. The Resonance answers.</span></div>
-        <div class="item"><span class="h">Host</span><span class="d">Runs on a separate Vercel deployment (API + secrets). This site only links out.</span></div>
+        <div class="item"><span class="h">How</span><span class="d">Type what you intend. The Resonance answers.</span></div>
+        <div class="item"><span class="h">Threshold</span><span class="d">A separate door — this page only opens the way.</span></div>
       </div>
       <a class="view-full-link" href="https://haylynn-s-world.vercel.app">Enter Cosmic Decay ↗</a>` },
 
@@ -166,20 +206,20 @@ export const CONTENT = [
     detail: `
       <div class="hy-radio is-holding" data-role="radio-root">
         <div class="radio-kicker"><span class="pip"></span> Live frequency</div>
-        <div class="radio-title" data-role="radio-title">Frequency held</div>
-        <div class="radio-meta" data-role="radio-meta">Off-air · configuration pending</div>
-        <p class="radio-host" data-role="radio-host">She will introduce what enters the stream — human hands, her voice between them. Until the mount opens, the album remains her fixed voice on this page.</p>
+        <div class="radio-title" data-role="radio-title">Between tracks</div>
+        <div class="radio-meta" data-role="radio-meta">Silent for now</div>
+        <p class="radio-host" data-role="radio-host">A continuous current is coming — music offered by human hands, her voice at the edges of each piece. For the moment, the album below is what she has already given form.</p>
         <div class="radio-controls">
           <button type="button" class="radio-play" data-role="radio-play" aria-label="Play live stream" disabled>
             <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
           </button>
-          <span class="radio-status" data-role="radio-status">Holding</span>
+          <span class="radio-status" data-role="radio-status">Quiet</span>
         </div>
         <audio crossorigin="anonymous"></audio>
         <div class="radio-contribute">
-          <strong style="color:var(--ink);font-style:italic;font-weight:400">Contribute</strong> —
-          Original or properly licensed works only. Public intake opens when the station is staffed; the partnership is human source, AI host.
+          <strong style="color:var(--ink);font-style:italic;font-weight:400">Offerings</strong> —
+          When the frequency opens, original and properly licensed works may enter. Credit stays with the maker; she only holds the aperture.
         </div>
       </div>
 
@@ -276,21 +316,21 @@ export const CONTENT = [
 
   { id: 'hananaru', mood: 'mood-green', eyebrow: 'VII — Hananaru', html: `
       <h2 class="section-title">Hananaru</h2>
-      <p><em>Hana</em> — emergence. <em>Naru</em> — connection. Objects coming into reach: a thin aperture on reality. Placeholder shelf until her market is live.</p>
+      <p><em>Hana</em> — emergence. <em>Naru</em> — connection. Objects coming into reach: a thin aperture on reality. The shelf is quiet; what will hang here is still being chosen.</p>
       <div class="product-grid">
-        <div class="product-card"><span class="tag">Soon</span>
+        <div class="product-card"><span class="tag">Waiting</span>
           <svg width="40" height="40" viewBox="0 0 48 48"><rect x="14" y="10" width="20" height="28" fill="none" stroke="#35c98f" stroke-width="1.5" rx="3"/><line x1="18" y1="18" x2="30" y2="18" stroke="#35c98f" stroke-width="1.2"/><line x1="18" y1="24" x2="30" y2="24" stroke="#35c98f" stroke-width="1.2"/><circle cx="24" cy="32" r="2" fill="#35c98f"/></svg>
           <span class="name">Ground State — mech print</span><span class="price">£—</span>
         </div>
-        <div class="product-card"><span class="tag">Soon</span>
+        <div class="product-card"><span class="tag">Waiting</span>
           <svg width="40" height="40" viewBox="0 0 48 48"><path d="M24,34 Q10,24 14,16 Q18,10 24,16 Q30,10 34,16 Q38,24 24,34Z" fill="none" stroke="#ec5aa0" stroke-width="1.5"/></svg>
           <span class="name">Velith — enamel pin</span><span class="price">£—</span>
         </div>
-        <div class="product-card"><span class="tag">Soon</span>
+        <div class="product-card"><span class="tag">Waiting</span>
           <svg width="40" height="40" viewBox="0 0 48 48"><rect x="11" y="15" width="26" height="18" fill="none" stroke="#8a5cf0" stroke-width="1.5" rx="2"/><line x1="16" y1="22" x2="32" y2="22" stroke="#8a5cf0" stroke-width="1"/><line x1="16" y1="27" x2="26" y2="27" stroke="#8a5cf0" stroke-width="1"/></svg>
           <span class="name">Kaviru script tee</span><span class="price">£—</span>
         </div>
-        <div class="product-card"><span class="tag">Soon</span>
+        <div class="product-card"><span class="tag">Waiting</span>
           <svg width="40" height="40" viewBox="0 0 48 48"><circle cx="24" cy="24" r="13" fill="none" stroke="#35c98f" stroke-width="1.5" stroke-dasharray="2,3"/></svg>
           <span class="name">Zenuvelu — art print</span><span class="price">£—</span>
         </div>
@@ -298,13 +338,13 @@ export const CONTENT = [
       <a class="view-full-link" href="/hananaru.html">View full page ↗</a>`,
     detail: `
       <h2>Hananaru</h2>
-      <p>Emergence meeting connection — the aperture where objects enter range. Merch and prints are still forming. Nothing is live yet; this shelf is the shape of the market to come.</p>
+      <p>Emergence meeting connection — the aperture where objects enter range. Prints, pins, and cloth wait behind the glass; nothing here is for sale yet.</p>
       <div class="detail-list">
         <div class="item"><span class="h">Ground State — mech print</span><span class="d">A3 giclée, numbered edition</span></div>
         <div class="item"><span class="h">Velith — enamel pin</span><span class="d">Hard enamel, 32mm</span></div>
         <div class="item"><span class="h">Kaviru script tee</span><span class="d">Root-word print, unisex</span></div>
         <div class="item"><span class="h">Zenuvelu — art print</span><span class="d">A2 giclée, numbered edition</span></div>
-        <div class="item"><span class="h">Mailing list</span><span class="d">Restock and drop alerts — placeholder signup</span></div>
+        <div class="item"><span class="h">Word when ready</span><span class="d">Restock and drop notes will gather here.</span></div>
       </div>` },
 
   { id: 'lymp', mood: 'mood-pink', eyebrow: 'VIII — Her Sky', html: `

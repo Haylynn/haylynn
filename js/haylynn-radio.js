@@ -149,9 +149,9 @@ function bindRoot(root) {
 
   if (!hasStream) {
     if (titleEl) titleEl.textContent = RADIO_CONFIG.holding.title;
-    if (metaEl) metaEl.textContent = 'Off-air · configuration pending';
+    if (metaEl) metaEl.textContent = 'Silent for now';
     if (hostEl) hostEl.textContent = RADIO_CONFIG.holding.host;
-    if (statusEl) statusEl.textContent = 'Holding';
+    if (statusEl) statusEl.textContent = 'Quiet';
     if (playBtn) playBtn.disabled = true;
     return;
   }
@@ -212,7 +212,7 @@ export function initHaylynnRadio() {
   document.querySelectorAll('[data-role="radio-face"]').forEach(el => {
     el.classList.add('hy-radio-face');
     const live = Boolean(RADIO_CONFIG.streamUrl);
-    el.innerHTML = `<span class="pip"></span>${live ? 'Live frequency open' : 'Live frequency · forming'}`;
+    el.innerHTML = `<span class="pip"></span>${live ? 'Live frequency' : 'Live frequency · quiet'}`;
   });
 
   document.querySelectorAll('[data-role="radio-root"]').forEach(bindRoot);

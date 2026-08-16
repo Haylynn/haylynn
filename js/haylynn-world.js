@@ -16,6 +16,8 @@ export const WORLD = {
         '.section[data-id="home"] .detail',
         '.section[data-id="home"] .detail-list',
         '.section[data-id="home"] #cosmology-frame',
+        '.hy-threshold',
+        '[data-role="threshold-root"]',
         '#dots .dot[data-real="0"]'
       ],
       canOpenDetail: true,
