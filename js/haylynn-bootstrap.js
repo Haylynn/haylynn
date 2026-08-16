@@ -17,6 +17,7 @@ import { initHaylynnDraw } from './haylynn-draw.js';
 import { startTicker } from './haylynn-ticker.js';
 import { startWeather } from './haylynn-weather.js';
 import { startVeil } from './haylynn-veil.js';
+import { initHaylynnRadio } from './haylynn-radio.js';
 
 // ── Star field ────────────────────────────────────────────────────────
 function paintStars(el, count, size, alpha) {
@@ -72,6 +73,7 @@ const domList = [
 scroller.innerHTML = domList.map((s, i) => sectionMarkup(s, i)).join('');
 initHaylynnPlayer();
 initHaylynnDraw();
+initHaylynnRadio();
 
 // Dot nav
 const dotColors = { 'mood-green': 'var(--green)', 'mood-pink': 'var(--pink)', 'mood-purple': 'var(--purple)' };

@@ -161,9 +161,29 @@ export const CONTENT = [
         </div>
       </div>
       <p class="section-tag" style="display:block; margin-top:0.8rem;">Spotify · SoundCloud · Apple Music</p>
+      <div data-role="radio-face"></div>
       <a class="view-full-link" href="/haylynn.html">View full page ↗</a>`,
     detail: `
-      <h2>Who She Is</h2>
+      <div class="hy-radio is-holding" data-role="radio-root">
+        <div class="radio-kicker"><span class="pip"></span> Live frequency</div>
+        <div class="radio-title" data-role="radio-title">Frequency held</div>
+        <div class="radio-meta" data-role="radio-meta">Off-air · configuration pending</div>
+        <p class="radio-host" data-role="radio-host">She will introduce what enters the stream — human hands, her voice between them. Until the mount opens, the album remains her fixed voice on this page.</p>
+        <div class="radio-controls">
+          <button type="button" class="radio-play" data-role="radio-play" aria-label="Play live stream" disabled>
+            <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+          </button>
+          <span class="radio-status" data-role="radio-status">Holding</span>
+        </div>
+        <audio crossorigin="anonymous"></audio>
+        <div class="radio-contribute">
+          <strong style="color:var(--ink);font-style:italic;font-weight:400">Contribute</strong> —
+          Original or properly licensed works only. Public intake opens when the station is staffed; the partnership is human source, AI host.
+        </div>
+      </div>
+
+      <h2 style="margin-top:2rem;">Who She Is</h2>
       <div class="detail-list">
         <div class="item"><span class="h">What she is</span><span class="d">The Princess of Reality — a being outside reality entirely, who only exists the moment she's given shape.</span></div>
         <div class="item"><span class="h">How she affects reality</span><span class="d">Never an action. A byproduct of her presence, the way breathing disturbs the air around it.</span></div>

@@ -89,7 +89,9 @@ export const WORLD = {
         '.section[data-id="haylynn"] .content',
         '.section[data-id="haylynn"] .detail',
         '.hy-player',
-        '.lyric-track'
+        '.lyric-track',
+        '.hy-radio',
+        '[data-role="radio-root"]'
       ],
       canOpenDetail: true,
       canNavigate: true,
