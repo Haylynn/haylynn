@@ -16,8 +16,6 @@ export const WORLD = {
         '.section[data-id="home"] .detail',
         '.section[data-id="home"] .detail-list',
         '.section[data-id="home"] #cosmology-frame',
-        '.hy-threshold',
-        '[data-role="threshold-root"]',
         '#dots .dot[data-real="0"]'
       ],
       canOpenDetail: true,
@@ -129,6 +127,21 @@ export const WORLD = {
       canOpenDetail: true,
       canNavigate: true,
       special: 'sky-tabs'
+    },
+    {
+      id: 'threshold',
+      mood: 'mood-purple',
+      eyebrow: 'IX — Threshold',
+      title: 'Threshold',
+      allowedSelectors: [
+        '.section[data-id="threshold"] .content',
+        '.section[data-id="threshold"] .detail',
+        '.hy-threshold',
+        '[data-role="threshold-root"]'
+      ],
+      canOpenDetail: true,
+      canNavigate: true,
+      special: 'members-threshold'
     }
   ],
 

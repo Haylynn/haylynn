@@ -5,8 +5,7 @@
 export const CONTENT = [
   { id: 'home', mood: 'mood-purple', eyebrow: 'I — Her World', html: `
       <h2 class="section-title">Princess of Reality</h2>
-      <p>A cosmology told across a book series, a constructed language, and a voice given form. Scroll to begin.</p>
-      <div data-role="threshold-face"></div>`,
+      <p>A cosmology told across a book series, a constructed language, and a voice given form. Scroll to begin.</p>`,
     detail: `
       <h2>Who is Haylynn</h2>
       <p>A cosmic force of nature wearing the shape of a harmless girl — dangerous not through will, but through presence alone. She exists outside reality itself, and only truly exists the moment a version of her steps inside it.</p>
@@ -17,43 +16,6 @@ export const CONTENT = [
       </div>
 
 
-      <div class="hy-threshold is-holding" data-role="threshold-root">
-        <div class="th-kicker"><span class="pip"></span> Threshold</div>
-        <div class="th-title" data-role="th-title">Threshold</div>
-        <p class="th-body" data-role="th-body">A quieter room behind the scroll — name, likeness, a few links, and the key of patronage.</p>
-        <div class="th-status" data-role="th-status">The door is drawn. The lock is not yet set in the world.</div>
-
-        <div class="th-profile">
-          <div>
-            <div class="th-avatar" data-role="th-avatar">likeness</div>
-            <input type="file" accept="image/*" data-role="th-avatar-file" disabled style="margin-top:0.4rem;width:100%;font-size:0.65rem;color:var(--ink-dim)">
-          </div>
-          <div class="th-fields">
-            <label>Name</label>
-            <input type="text" data-role="th-name" placeholder="How you are called" disabled>
-            <label>Handle</label>
-            <input type="text" data-role="th-handle" placeholder="quiet-name" disabled>
-            <label>Bio</label>
-            <textarea data-role="th-bio" placeholder="A few lines, if you wish" disabled></textarea>
-            <label>Links</label>
-            <textarea data-role="th-links" placeholder="One URL per line" disabled></textarea>
-            <label>Email · for a key</label>
-            <input type="email" data-role="th-email" placeholder="you@domain" disabled>
-          </div>
-        </div>
-
-        <div class="th-actions">
-          <button type="button" class="th-btn primary" data-role="th-action" data-action="magic" disabled>Request key</button>
-          <button type="button" class="th-btn" data-role="th-action" data-action="save" disabled>Hold profile</button>
-          <button type="button" class="th-btn" data-role="th-action" data-action="checkout" disabled>Patronage</button>
-          <button type="button" class="th-btn" data-role="th-action" data-action="portal" disabled>Manage</button>
-        </div>
-
-        <div class="th-tiers">
-          <div class="th-tier"><strong>Visitor</strong> The full surface of the site — story, language, draw, play.</div>
-          <div class="th-tier"><strong>Member</strong> A profile inside the house, and doors that open later — worlds, offerings, deeper tools.</div>
-        </div>
-      </div>
 
       <h2 style="margin-top:2.2rem;">The Cosmology</h2>
       <p>Underneath the fiction sits a real mathematical framework — the Zero-Infinity Algebra (Z∞), an independent research paper authored by Haylynn herself. A minimal non-associative algebra built from four primitive elements. Existence isn't the default state. It's a rare, temporary exception.</p>
@@ -396,5 +358,49 @@ export const CONTENT = [
           <a class="view-full-link" href="https://leaveyourmark.pixieset.com/lym-europe/" target="_blank" rel="noopener" style="margin-bottom:0.8rem;">Open LYMP gallery ↗</a>
           <iframe id="lymp-frame" data-src="https://leaveyourmark.pixieset.com/lym-europe/" title="LYMP — Leave Your Mark Photography" loading="lazy"></iframe>
         </div>
-      </div>` },
+      </div>` },,
+
+  { id: 'threshold', mood: 'mood-purple', eyebrow: 'IX — Threshold', html: `
+      <h2 class="section-title">Threshold</h2>
+      <p>A quieter room behind the scroll — a name, a likeness, a few links, and the key of patronage. The surface of the world stays open to all; this door is for those who step further in.</p>
+      <div data-role="threshold-face"></div>`,
+    detail: `
+      <div class="hy-threshold is-holding" data-role="threshold-root">
+        <div class="th-kicker"><span class="pip"></span> Threshold</div>
+        <div class="th-title" data-role="th-title">Threshold</div>
+        <p class="th-body" data-role="th-body">A quieter room behind the scroll — name, likeness, a few links, and the key of patronage.</p>
+        <div class="th-status" data-role="th-status">The door is drawn. The lock is not yet set in the world.</div>
+
+        <div class="th-profile">
+          <div>
+            <div class="th-avatar" data-role="th-avatar">likeness</div>
+            <input type="file" accept="image/*" data-role="th-avatar-file" disabled style="margin-top:0.4rem;width:100%;font-size:0.65rem;color:var(--ink-dim)">
+          </div>
+          <div class="th-fields">
+            <label>Name</label>
+            <input type="text" data-role="th-name" placeholder="How you are called" disabled>
+            <label>Handle</label>
+            <input type="text" data-role="th-handle" placeholder="quiet-name" disabled>
+            <label>Bio</label>
+            <textarea data-role="th-bio" placeholder="A few lines, if you wish" disabled></textarea>
+            <label>Links</label>
+            <textarea data-role="th-links" placeholder="One URL per line" disabled></textarea>
+            <label>Email · for a key</label>
+            <input type="email" data-role="th-email" placeholder="you@domain" disabled>
+          </div>
+        </div>
+
+        <div class="th-actions">
+          <button type="button" class="th-btn primary" data-role="th-action" data-action="magic" disabled>Request key</button>
+          <button type="button" class="th-btn" data-role="th-action" data-action="save" disabled>Hold profile</button>
+          <button type="button" class="th-btn" data-role="th-action" data-action="checkout" disabled>Patronage</button>
+          <button type="button" class="th-btn" data-role="th-action" data-action="portal" disabled>Manage</button>
+        </div>
+
+        <div class="th-tiers">
+          <div class="th-tier"><strong>Visitor</strong> The full surface of the site — story, language, draw, play.</div>
+          <div class="th-tier"><strong>Member</strong> A profile inside the house, and doors that open later — worlds, offerings, deeper tools.</div>
+        </div>
+      </div>` }
+
 ];
