@@ -20,6 +20,7 @@ import { startVeil } from './haylynn-veil.js';
 import { initHaylynnRadio } from './haylynn-radio.js';
 import { initHaylynnMembers } from './haylynn-members.js';
 import { initAuthUI } from './haylynn-auth-ui.js';
+import { initConstructionOverlays } from './haylynn-construction.js';
 
 // ── Star field ────────────────────────────────────────────────────────
 function paintStars(el, count, size, alpha) {
@@ -78,6 +79,7 @@ initHaylynnDraw();
 initHaylynnRadio();
 initHaylynnMembers();
 initAuthUI();
+initConstructionOverlays();
 
 // Dot nav
 const dotColors = { 'mood-green': 'var(--green)', 'mood-pink': 'var(--pink)', 'mood-purple': 'var(--purple)' };
