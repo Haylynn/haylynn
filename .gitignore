@@ -1,3 +1,25 @@
 # Local-only control surface — never publish
 director.html
 **/director.html
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*secret*
+*credentials*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs & deps (if added later)
+node_modules/
+npm-debug.log*
+dist/
+.cache/

@@ -1,49 +1,46 @@
-# Haylynn — Princess of Reality
+# Princess of Reality
 
-Modular living website.
+**Haylynn** — a cosmology told across a book series, a constructed language (Kaviru), and a voice given form in music.
 
-## Structure
+**Live site:** [haylynn.github.io/haylynn](https://haylynn.github.io/haylynn/)
 
-```
-haylynn/
-├── index.html
-├── cosmology.html
-├── director.html
-├── README.md
-└── js/
-    ├── haylynn-content.js
-    ├── haylynn-world.js
-    ├── haylynn-runtime.js
-    ├── haylynn-player.js
-    ├── haylynn-bootstrap.js
-    ├── haylynn-ticker.js      # bottom ambient prices
-    ├── ticker-config.js
-    ├── haylynn-weather.js     # top-right 3-day local weather
-    └── weather-config.js
-```
+The main experience is a vertical scroll through her world: language, a draw of insight, play, story, sound, sky, and a threshold for those who stay longer. Static pages exist for each chapter so the text can be read and indexed without the interactive layer.
 
-## Run
+## On the site
+
+| | |
+|---|---|
+| **World** | Who she is, and the Zero-Infinity frame under the fiction |
+| **Kaviru** | Language where every statement marks how you know it |
+| **The Draw** | Three roots — insight in the guise of a reading |
+| **Koruhana** | Games, including Nemihana |
+| **Story** | The book series |
+| **Voice** | *Talu — What Remains* and her presence in sound |
+| **Hananaru** | Objects coming into range |
+| **Sky** | Earth, space, and LYMP photography |
+| **Threshold** | Profiles and patronage (when connected) |
+
+## Local preview
 
 ```bash
-cd haylynn
+# from this repo root
 python3 -m http.server 8080
 ```
 
-## Ambient layers
+Open `http://localhost:8080` — use a local server so ES modules load correctly.
 
-**Ticker** (bottom) — crypto/stocks, fades in on update, auto-hides, hover keeps visible.  
-Edit `js/ticker-config.js`.
+## Repo layout (short)
 
-**Weather** (top-right) — 3-day icons via Open-Meteo + browser geolocation.  
-Appears only if the visitor allows location. Denied → stays invisible.  
-Edit `js/weather-config.js`.
+- `index.html` — interactive scroll
+- `world.html`, `kaviru.html`, … — static chapter pages (SEO / plain reading)
+- `cosmology.html`, `nemihana.html` — standalone deep pages
+- `js/` — modules for content, player, draw, ambient layers, auth shell
+- `assets/` — images and media
+- `sitemap.xml`, `robots.txt` — crawlers
 
+`director.html` is local-only (listed in `.gitignore`) and is not part of the public site.
 
-## Live radio (prepared)
+## Licence & contact
 
-Frontend is ready in the Music section (**Her Voice** detail):
-
-- `js/radio-config.js` — set `streamUrl` and `nowPlayingUrl` when the VPS mount is live
-- `js/haylynn-radio.js` — player shell, holding state, now-playing poll
-
-Until those URLs are set, the UI shows **Frequency held** (on-brand off-air). Album (SoundCloud) is unchanged.
+All rights to the Princess of Reality fiction, Kaviru, and music remain with their author.  
+Site code in this repository is provided for running and extending the official experience.
