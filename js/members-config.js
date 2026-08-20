@@ -1,31 +1,19 @@
 /**
- * Haylynn Threshold (members) — frontend config
- * Leave apiBase empty until the backend is live; UI stays in quiet holding mode.
+ * Members UI extras (theme demo). Auth keys live in auth-config.js.
  */
-
 export const MEMBERS_CONFIG = {
-  // e.g. 'https://api.haylynn.example.com'
-  apiBase: '',
-
-  // Paths relative to apiBase (adjust when backend exists)
-  endpoints: {
-    session: '/auth/session',
-    magicLink: '/auth/magic-link',
-    profile: '/me',
-    avatar: '/me/avatar',
-    checkout: '/billing/checkout',
-    portal: '/billing/portal'
-  },
-
-  // Public copy (brand voice — not system status)
-  holding: {
-    title: 'Threshold',
-    line: 'A quieter room behind the scroll — name, likeness, a few links, and the key of patronage.',
-    status: 'The door is drawn. The lock is not yet set in the world.'
-  },
-
-  tiers: [
-    { id: 'public', label: 'Visitor', blurb: 'The full surface of the site — story, language, draw, play.' },
-    { id: 'member', label: 'Member', blurb: 'A profile inside the house, and doors that open later — worlds, offerings, deeper tools.' }
-  ]
+  demoTheme: {
+    themeName: 'Void Bloom',
+    colors: {
+      primary: '#8a5cf0',
+      secondary: '#35c98f',
+      background: '#0a0814',
+      surface: '#16122a',
+      text: '#efe9e0',
+      accent: '#ec5aa0'
+    },
+    typography: { fontStyle: 'serif' },
+    geometry: { borderRadius: 'round' },
+    customEffects: { glow: true, scanlines: false, glassmorphism: true }
+  }
 };

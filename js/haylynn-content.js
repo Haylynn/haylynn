@@ -365,16 +365,19 @@ export const CONTENT = [
       <p>A quieter room behind the scroll — a name, a likeness, a few links, and the key of patronage. The surface of the world stays open to all; this door is for those who step further in.</p>
       <div data-role="threshold-face"></div>`,
     detail: `
-      <div class="hy-threshold is-holding" data-role="threshold-root">
+      <div class="hy-threshold" data-role="threshold-root">
         <div class="th-kicker"><span class="pip"></span> Threshold</div>
         <div class="th-title" data-role="th-title">Threshold</div>
-        <p class="th-body" data-role="th-body">A quieter room behind the scroll — name, likeness, a few links, and the key of patronage.</p>
-        <div class="th-status" data-role="th-status">The door is drawn. The lock is not yet set in the world.</div>
+        <p class="th-body">Sign in to hold a profile here. Patronage opens deeper rooms later — the scroll remains free for everyone.</p>
+        <div class="th-status" data-role="th-status">The door is drawn.</div>
+
+        <div class="th-actions" style="margin-bottom:1rem">
+          <button type="button" class="th-btn primary" data-role="th-action" data-action="signin">Sign in</button>
+        </div>
 
         <div class="th-profile">
           <div>
             <div class="th-avatar" data-role="th-avatar">likeness</div>
-            <input type="file" accept="image/*" data-role="th-avatar-file" disabled style="margin-top:0.4rem;width:100%;font-size:0.65rem;color:var(--ink-dim)">
           </div>
           <div class="th-fields">
             <label>Name</label>
@@ -385,22 +388,23 @@ export const CONTENT = [
             <textarea data-role="th-bio" placeholder="A few lines, if you wish" disabled></textarea>
             <label>Links</label>
             <textarea data-role="th-links" placeholder="One URL per line" disabled></textarea>
-            <label>Email · for a key</label>
-            <input type="email" data-role="th-email" placeholder="you@domain" disabled>
           </div>
         </div>
 
         <div class="th-actions">
-          <button type="button" class="th-btn primary" data-role="th-action" data-action="magic" disabled>Request key</button>
-          <button type="button" class="th-btn" data-role="th-action" data-action="save" disabled>Hold profile</button>
-          <button type="button" class="th-btn" data-role="th-action" data-action="checkout" disabled>Patronage</button>
+          <button type="button" class="th-btn primary" data-role="th-action" data-action="save" disabled>Hold profile</button>
+          <button type="button" class="th-btn" data-role="th-action" data-action="checkout-supporter" disabled>Supporter</button>
+          <button type="button" class="th-btn" data-role="th-action" data-action="checkout-patron" disabled>Patron</button>
           <button type="button" class="th-btn" data-role="th-action" data-action="portal" disabled>Manage</button>
         </div>
 
         <div class="th-tiers">
-          <div class="th-tier"><strong>Visitor</strong> The full surface of the site — story, language, draw, play.</div>
-          <div class="th-tier"><strong>Member</strong> A profile inside the house, and doors that open later — worlds, offerings, deeper tools.</div>
+          <div class="th-tier" data-tier="free"><strong>Visitor</strong> The full surface of the site — story, language, draw, play.</div>
+          <div class="th-tier" data-tier="supporter"><strong>Supporter</strong> Profile, skin, and doors that open first.</div>
+          <div class="th-tier" data-tier="patron"><strong>Patron</strong> Deepest access — worlds, offerings, early thresholds.</div>
         </div>
+
+        <div data-role="theme-preview" style="margin-top:1rem"></div>
       </div>` }
 
 ];
