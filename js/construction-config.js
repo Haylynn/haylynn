@@ -1,11 +1,11 @@
 /**
- * Detail panels still forming — overlay only on .detail (not the scroll face).
- * Set enabled: false or remove an entry when that room is ready.
+ * Detail panels still forming.
+ * Content is NOT removed — only hidden under a veil until the visitor enters.
+ * Scroll faces are never altered.
  */
 
 export const CONSTRUCTION = {
-  // Default progress destination (optional)
-  progressUrl: '', // e.g. 'https://github.com/Haylynn/haylynn' or a changelog page
+  progressUrl: '',
 
   sections: {
     hananaru: {
@@ -16,18 +16,12 @@ export const CONSTRUCTION = {
     threshold: {
       label: 'Door drawn',
       line: 'The room is shaped. The lock is not yet set in the world.',
-      progress: 'Accounts, patronage, and profile skins connect when auth is live. The public scroll stays open.',
+      progress: 'Accounts and patronage connect when auth is live. The public scroll stays open.',
     },
     haylynn: {
       label: 'Partial aperture',
-      line: 'Her fixed voice — the album — is here. The continuous frequency is still gathering.',
-      progress: 'Live radio and offerings arrive when the stream is mounted. Talu remains available now.',
+      line: 'The album is here. The continuous frequency is still gathering.',
+      progress: 'Live radio arrives when the stream is mounted. Talu remains available now.',
     },
-    // Example: uncomment when needed
-    // koruhana: {
-    //   label: 'Table half-set',
-    //   line: 'Nemihana is playable; other games will join the table.',
-    //   progress: 'Koruhana expands as each game is finished.',
-    // },
   },
 };

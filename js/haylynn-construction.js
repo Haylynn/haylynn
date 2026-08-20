@@ -1,71 +1,69 @@
 /**
- * Overlay unfinished *detail* panels only (swipe / deeper view).
- * Face of each section stays fully readable.
+ * Unfinished *detail* panels only — content stays in the DOM.
+ * Overlay hides it; click dismisses the veil so you can enter the room.
+ * Face (scroll) content is never touched.
  */
 
 import { CONSTRUCTION } from './construction-config.js';
 
 const STYLE = `
-.hy-forming {
+.hy-forming-veil {
   position: absolute;
   inset: 0;
   z-index: 6;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem 1.25rem;
-  background: rgba(6, 5, 12, 0.82);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  padding: 5.5rem 1.35rem 2.5rem;
+  background: rgba(6, 5, 12, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   cursor: pointer;
   text-align: center;
   border: none;
   width: 100%;
+  box-sizing: border-box;
   color: inherit;
   font: inherit;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
 }
-.hy-forming:focus-visible {
-  outline: 1px solid var(--purple, #8a5cf0);
-  outline-offset: -4px;
+.hy-forming-veil.is-dismissed {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 .hy-forming-inner {
   max-width: 22rem;
-  pointer-events: none;
 }
 .hy-forming-kicker {
   font-family: 'Space Mono', monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.16em;
+  font-size: 0.48rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--purple, #8a5cf0);
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 .hy-forming-kicker .pip {
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--purple, #8a5cf0);
-  opacity: 0.85;
-  animation: hy-forming-pulse 2s ease-in-out infinite;
-}
-@keyframes hy-forming-pulse {
-  0%, 100% { opacity: 0.85; }
-  50% { opacity: 0.35; }
+  flex: 0 0 auto;
 }
 .hy-forming-title {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   color: var(--ink, #efe9e0);
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.45rem;
 }
 .hy-forming-line {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.5;
   color: var(--ink-dim, #9a92a4);
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
 }
 .hy-forming-cta {
   font-family: 'Space Mono', monospace;
@@ -73,30 +71,24 @@ const STYLE = `
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--green, #35c98f);
-  opacity: 0.9;
 }
-.hy-forming.is-open .hy-forming-cta { display: none; }
 .hy-forming-progress {
   display: none;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.45;
   color: var(--ink, #efe9e0);
-  margin-top: 0.35rem;
-  opacity: 0.9;
+  margin-top: 0.65rem;
 }
-.hy-forming.is-open .hy-forming-progress { display: block; }
-.hy-forming.is-open .hy-forming-line { opacity: 0.55; }
+.hy-forming-veil.is-preview .hy-forming-progress { display: block; }
+.hy-forming-veil.is-preview .hy-forming-cta { display: none; }
 
-/* Detail must position so overlay can cover content */
-.section .detail.has-forming {
-  position: relative;
-}
-.section .detail.has-forming > *:not(.hy-forming):not(.detail-close) {
-  /* keep content in DOM for when forming lifts; dim slightly under overlay is enough */
+/* Close always above the veil */
+.section .detail > .detail-close {
+  z-index: 8 !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hy-forming-kicker .pip { animation: none; }
+  .hy-forming-veil { transition: none; }
 }
 `;
 
@@ -108,64 +100,62 @@ function injectStyle() {
   document.head.appendChild(s);
 }
 
-function attachOverlay(detail, id, cfg) {
-  if (detail.querySelector('.hy-forming')) return;
-  detail.classList.add('has-forming');
-
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'hy-forming';
-  btn.setAttribute('data-section', id);
-  btn.setAttribute('aria-expanded', 'false');
-  btn.innerHTML = `
-    <div class="hy-forming-inner">
-      <div class="hy-forming-kicker"><span class="pip"></span> Aperture incomplete</div>
-      <div class="hy-forming-title">${escapeHtml(cfg.label || 'Still forming')}</div>
-      <p class="hy-forming-line">${escapeHtml(cfg.line || '')}</p>
-      <div class="hy-forming-cta">Touch for progress</div>
-      <p class="hy-forming-progress">${escapeHtml(cfg.progress || '')}</p>
-    </div>
-  `;
-
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const open = btn.classList.toggle('is-open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (open && CONSTRUCTION.progressUrl && e.detail === 2) {
-      // double-intent optional: long path via config only on explicit second mode — skip auto-nav
-    }
-  });
-
-  // Optional: long-press or second control for external progress URL
-  if (CONSTRUCTION.progressUrl) {
-    const link = document.createElement('a');
-    link.href = CONSTRUCTION.progressUrl;
-    link.target = '_blank';
-    link.rel = 'noopener';
-    link.className = 'hy-forming-cta';
-    link.style.cssText = 'display:none;pointer-events:auto;margin-top:0.75rem;color:var(--purple,#8a5cf0)';
-    link.textContent = 'Open progress log';
-    btn.querySelector('.hy-forming-inner').appendChild(link);
-    btn.addEventListener('click', () => {
-      link.style.display = btn.classList.contains('is-open') ? 'inline-block' : 'none';
-    });
-  }
-
-  // Insert after close button so × stays usable
-  const close = detail.querySelector('.detail-close');
-  if (close && close.nextSibling) {
-    detail.insertBefore(btn, close.nextSibling);
-  } else {
-    detail.appendChild(btn);
-  }
-}
-
 function escapeHtml(s) {
   return String(s)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+function storageKey(id) {
+  return `hy-forming-entered:${id}`;
+}
+
+function attachOverlay(detail, id, cfg) {
+  if (detail.querySelector('[data-role="hy-forming"]')) return;
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'hy-forming-veil';
+  btn.setAttribute('data-role', 'hy-forming');
+  btn.setAttribute('data-section', id);
+  btn.setAttribute('aria-label', 'Enter this room');
+  btn.innerHTML = `
+    <div class="hy-forming-inner">
+      <div class="hy-forming-kicker"><span class="pip"></span> Aperture incomplete</div>
+      <div class="hy-forming-title">${escapeHtml(cfg.label || 'Still forming')}</div>
+      <p class="hy-forming-line">${escapeHtml(cfg.line || '')}</p>
+      <div class="hy-forming-cta">Touch to enter</div>
+      <p class="hy-forming-progress">${escapeHtml(cfg.progress || '')}</p>
+    </div>
+  `;
+
+  // Remember per session if they already entered (optional)
+  const remember = cfg.remember !== false;
+  if (remember && sessionStorage.getItem(storageKey(id)) === '1') {
+    btn.classList.add('is-dismissed');
+  }
+
+  let previewed = false;
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // First tap: show progress line; second tap (or if no progress): dismiss and enter
+    if (!previewed && cfg.progress) {
+      previewed = true;
+      btn.classList.add('is-preview');
+      const cta = btn.querySelector('.hy-forming-cta');
+      if (cta) {
+        cta.style.display = 'block';
+        cta.textContent = 'Touch again to enter';
+      }
+      return;
+    }
+    btn.classList.add('is-dismissed');
+    if (remember) sessionStorage.setItem(storageKey(id), '1');
+  });
+
+  detail.appendChild(btn);
 }
 
 export function initConstructionOverlays() {
