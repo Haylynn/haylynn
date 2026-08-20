@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+:root {
+  --void: #06050c;
+  --ink: #efe9e0;
+  --ink-dim: #9a92a4;
+  --green: #35c98f;
+  --pink: #ec5aa0;
+  --purple: #8a5cf0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--void);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  line-height: 1.55;
+  min-height: 100vh;
+}
+.skip {
+  position: absolute; left: -999px; top: 0;
+  background: var(--purple); color: #fff; padding: 0.5rem 1rem;
+}
+.skip:focus { left: 0; z-index: 100; }
+.site-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.2rem 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+  position: sticky; top: 0; background: rgba(6,5,12,0.92); backdrop-filter: blur(8px); z-index: 10;
+}
+.brand {
+  font-family: 'Space Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--purple); text-decoration: none;
+}
+.enter {
+  font-family: 'Space Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--green); text-decoration: none;
+  border: 1px solid rgba(53,201,143,0.35); border-radius: 16px; padding: 0.4rem 0.75rem;
+}
+.section-nav {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem;
+  padding: 0.9rem 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-family: 'Space Mono', monospace; font-size: 0.52rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.section-nav a { color: var(--ink-dim); text-decoration: none; }
+.section-nav a:hover { color: var(--ink); }
+.static-main { max-width: 38rem; margin: 0 auto; padding: 2rem 1.4rem 3.5rem; }
+.eyebrow {
+  font-family: 'Space Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-dim); margin-bottom: 1.2rem;
+}
+.static-main h2 {
+  font-style: italic; font-weight: 300; font-size: 1.75rem;
+  color: var(--ink); margin: 1.8rem 0 0.75rem;
+}
+.static-main h2:first-of-type { margin-top: 0; }
+.static-main h3 {
+  font-style: italic; font-weight: 300; font-size: 1.2rem;
+  color: var(--purple); margin: 1.2rem 0 0.5rem;
+}
+.static-main p { margin-bottom: 0.85rem; color: var(--ink-dim); font-size: 1.05rem; }
+.static-note {
+  margin-top: 2.5rem; padding-top: 1.2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-family: 'Space Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.06em; color: var(--ink-dim);
+}
+.static-note a { color: var(--green); }
+.site-footer {
+  padding: 1.5rem 1.4rem 2rem; border-top: 1px solid rgba(255,255,255,0.08);
+  font-family: 'Space Mono', monospace; font-size: 0.55rem;
+  letter-spacing: 0.08em; color: var(--ink-dim); text-align: center;
+}
+.site-footer a { color: var(--ink-dim); }
+.site-footer p + p { margin-top: 0.5rem; }
