@@ -33,14 +33,16 @@ function injectStyles() {
   style.id = 'hy-auth-style';
   style.textContent = `
     #auth-badge {
-      position: fixed; top: 1rem; right: 1rem; z-index: 50;
-      font-family: 'Space Mono', monospace; font-size: 0.58rem;
+      position: fixed; top: 1rem; left: 1rem; right: auto; z-index: 50;
+      font-family: 'Space Mono', monospace; font-size: 0.55rem;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--ink-dim, #9a92a4);
       border: 1px solid rgba(255,255,255,0.15); border-radius: 20px;
-      padding: 0.45rem 0.9rem; cursor: pointer;
+      padding: 0.4rem 0.75rem; cursor: pointer;
       background: rgba(6,5,12,0.72); backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      max-width: min(46vw, 11rem);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     #auth-badge:hover { color: var(--ink, #efe9e0); border-color: rgba(138,92,240,0.45); }
     #auth-modal {
@@ -153,7 +155,7 @@ export async function initAuthUI() {
   const badge = document.createElement('button');
   badge.type = 'button';
   badge.id = 'auth-badge';
-  badge.textContent = authReady ? 'Sign In' : 'Threshold · quiet';
+  badge.textContent = authReady ? 'Sign In' : 'Sign In';
   document.body.appendChild(badge);
 
   const modal = renderModal();
@@ -166,7 +168,7 @@ export async function initAuthUI() {
 
   async function refreshBadge() {
     if (!authReady) {
-      badge.textContent = 'Threshold · quiet';
+      badge.textContent = 'Sign In';
       badge.onclick = () => modal.classList.add('open');
       return;
     }
