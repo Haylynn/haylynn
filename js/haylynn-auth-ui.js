@@ -163,7 +163,7 @@ export async function initAuthUI() {
 
   const note = document.getElementById('auth-note');
   if (!authReady) {
-    note.textContent = 'The lock is not yet set — auth connects when Supabase keys are in place.';
+    note.textContent = 'Accounts open when the house is ready to keep them.';
   }
 
   async function refreshBadge() {
@@ -212,7 +212,7 @@ export async function initAuthUI() {
 
   document.getElementById('auth-submit').onclick = async () => {
     if (!authReady) {
-      document.getElementById('auth-error').textContent = 'Auth is not connected yet.';
+      document.getElementById('auth-error').textContent = 'Sign-in is closed for now.';
       return;
     }
     const email = document.getElementById('auth-email').value.trim();

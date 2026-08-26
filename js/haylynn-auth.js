@@ -16,17 +16,17 @@ export const supabase = authReady
   : null;
 
 export async function signUp(email, password) {
-  if (!supabase) return { data: null, error: { message: 'Auth is not connected yet.' } };
+  if (!supabase) return { data: null, error: { message: 'Sign-in is closed for now.' } };
   return supabase.auth.signUp({ email, password });
 }
 
 export async function signIn(email, password) {
-  if (!supabase) return { data: null, error: { message: 'Auth is not connected yet.' } };
+  if (!supabase) return { data: null, error: { message: 'Sign-in is closed for now.' } };
   return supabase.auth.signInWithPassword({ email, password });
 }
 
 export async function signInWithOAuth(provider) {
-  if (!supabase) throw new Error('Auth is not connected yet.');
+  if (!supabase) throw new Error('Sign-in is closed for now.');
   const { error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {

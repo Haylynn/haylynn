@@ -15,5 +15,5 @@ export const RADIO_CONFIG = {
   },
 
   showContribute: true,
-  contributeNote: 'When the frequency opens, original and properly licensed works may enter. Credit stays with the maker.'
+  contributeNote: 'When the live frequency opens, makers may bring original or licensed work. Credit stays with them.'
 };

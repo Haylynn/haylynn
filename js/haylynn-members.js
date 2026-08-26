@@ -152,7 +152,7 @@ async function refreshRoot(root) {
   root.classList.toggle('is-live', authReady);
 
   if (!authReady) {
-    if (statusEl) statusEl.textContent = 'The door is drawn. The lock is not yet set in the world.';
+    if (statusEl) statusEl.textContent = 'Profiles are not open yet.';
     setEnabled(root, false);
     // Sign-in opener still works via badge; enable "open door" button
     root.querySelectorAll('[data-action="signin"]').forEach((b) => {
@@ -163,7 +163,7 @@ async function refreshRoot(root) {
       renderProfileCard(preview, {
         display_name: 'Example presence',
         handle: 'koru',
-        bio: 'A place in the house — likeness and links, skinned once at the door.',
+        bio: 'A place in the house — name, likeness, and a few links.',
         links: [{ label: 'World', url: '/' }],
         theme_config: MEMBERS_CONFIG.demoTheme,
       });
@@ -173,7 +173,7 @@ async function refreshRoot(root) {
 
   const user = await getCurrentUser();
   if (!user) {
-    if (statusEl) statusEl.textContent = 'Sign in to step through';
+    if (statusEl) statusEl.textContent = 'Sign in to hold a place here.';
     if (titleEl) titleEl.textContent = 'Threshold';
     setEnabled(root, false);
     root.querySelectorAll('[data-action="signin"]').forEach((b) => {
@@ -243,7 +243,7 @@ function bindRoot(root) {
             bio: root.querySelector('[data-role="th-bio"]')?.value || null,
             links,
           });
-          if (statusEl) statusEl.textContent = 'Profile held';
+          if (statusEl) statusEl.textContent = 'Saved.';
           await refreshRoot(root);
         }
         if (action === 'checkout-supporter') {
@@ -260,7 +260,7 @@ function bindRoot(root) {
           await openBillingPortal();
         }
       } catch (e) {
-        if (statusEl) statusEl.textContent = e.message || 'The door did not answer';
+        if (statusEl) statusEl.textContent = e.message || 'Something went wrong.';
       }
     });
   });
@@ -275,7 +275,7 @@ export function initHaylynnMembers() {
 
   document.querySelectorAll('[data-role="threshold-face"]').forEach((el) => {
     el.classList.add('hy-threshold-face');
-    el.innerHTML = `<span class="pip"></span>${authReady ? 'Threshold' : 'Threshold · quiet'}`;
+    el.innerHTML = `<span class="pip"></span>Threshold`;
   });
 
   document.querySelectorAll('[data-role="threshold-root"]').forEach(bindRoot);

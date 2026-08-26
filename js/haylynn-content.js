@@ -181,7 +181,7 @@ export const CONTENT = [
         <audio crossorigin="anonymous"></audio>
         <div class="radio-contribute">
           <strong style="color:var(--ink);font-style:italic;font-weight:400">Offerings</strong> —
-          When the frequency opens, original and properly licensed works may enter. Credit stays with the maker; she only holds the aperture.
+          When the live frequency opens, makers may bring original or licensed work. Credit stays with them.
         </div>
       </div>
 
@@ -368,8 +368,8 @@ export const CONTENT = [
       <div class="hy-threshold" data-role="threshold-root">
         <div class="th-kicker"><span class="pip"></span> Threshold</div>
         <div class="th-title" data-role="th-title">Threshold</div>
-        <p class="th-body">Sign in to hold a profile here. Patronage opens deeper rooms later — the scroll remains free for everyone.</p>
-        <div class="th-status" data-role="th-status">The door is drawn.</div>
+        <p class="th-body">A name, a likeness, a few links. Deeper rooms open with patronage. The rest of the scroll stays free.</p>
+        <div class="th-status" data-role="th-status"></div>
 
         <div class="th-actions" style="margin-bottom:1rem">
           <button type="button" class="th-btn primary" data-role="th-action" data-action="signin">Sign in</button>
@@ -415,6 +415,6 @@ export const CONTENT = [
       <h2>The Well</h2>
       <p>Patronage and fundraisers — for this site, for sound, for other projects that need a quiet place to ask. Each link goes where the money is meant to go. The scroll stays open either way.</p>
       <div data-role="well-detail"></div>
-      <p class="meta-note" style="margin-top:1.2rem;">Threshold is membership inside the house. The Well is simply support — one-time or ongoing — including causes beyond Haylynn.</p>` }
+      <p class="meta-note" style="margin-top:1.2rem;">Support can be one-time or ongoing, for this world or another.</p>` }
 
 ];
