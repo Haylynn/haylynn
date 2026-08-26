@@ -142,6 +142,21 @@ export const WORLD = {
       canOpenDetail: true,
       canNavigate: true,
       special: 'members-threshold'
+    },
+    {
+      id: 'well',
+      mood: 'mood-green',
+      eyebrow: 'X — The Well',
+      title: 'The Well',
+      allowedSelectors: [
+        '.section[data-id="well"] .content',
+        '.section[data-id="well"] .detail',
+        '.hy-well-grid',
+        '.hy-well-card'
+      ],
+      canOpenDetail: true,
+      canNavigate: true,
+      special: 'offerings-well'
     }
   ],
 

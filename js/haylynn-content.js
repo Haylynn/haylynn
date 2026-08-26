@@ -405,6 +405,16 @@ export const CONTENT = [
         </div>
 
         <div data-role="theme-preview" style="margin-top:1rem"></div>
-      </div>` }
+      </div>` },
+
+  { id: 'well', mood: 'mood-green', eyebrow: 'X — The Well', html: `
+      <h2 class="section-title">The Well</h2>
+      <p>Support this house, or another work that should stay in the world. Nothing here is required to walk the scroll.</p>
+      <div data-role="well-face"></div>`,
+    detail: `
+      <h2>The Well</h2>
+      <p>Patronage and fundraisers — for this site, for sound, for other projects that need a quiet place to ask. Each link goes where the money is meant to go. The scroll stays open either way.</p>
+      <div data-role="well-detail"></div>
+      <p class="meta-note" style="margin-top:1.2rem;">Threshold is membership inside the house. The Well is simply support — one-time or ongoing — including causes beyond Haylynn.</p>` }
 
 ];

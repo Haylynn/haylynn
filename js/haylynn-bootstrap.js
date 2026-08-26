@@ -19,6 +19,7 @@ import { startWeather } from './haylynn-weather.js';
 import { startVeil } from './haylynn-veil.js';
 import { initHaylynnRadio } from './haylynn-radio.js';
 import { initHaylynnMembers } from './haylynn-members.js';
+import { initHaylynnOfferings } from './haylynn-offerings.js';
 import { initAuthUI } from './haylynn-auth-ui.js';
 
 // ── Star field ────────────────────────────────────────────────────────
@@ -77,6 +78,7 @@ initHaylynnPlayer();
 initHaylynnDraw();
 initHaylynnRadio();
 initHaylynnMembers();
+initHaylynnOfferings();
 initAuthUI();
 
 // Dot nav
