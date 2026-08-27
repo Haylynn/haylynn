@@ -30,9 +30,9 @@ export const OFFERINGS_CONFIG = {
       id: 'moli',
       title: 'MOLI — Mercy On Lost Individuals',
       featured: true,
-      tag: 'Welfare · not a registered charity',
+      tag: 'Welfare · UK · not registered',
       blurb:
-        'A proposed charity in formation for animals killed and injured on UK roads. This appeal is only for incorporation costs — not a general donation fund, and not Gift Aid eligible.',
+        'A proposed UK charity in formation — Scotland first — for animals killed and injured on roads. This appeal is only for incorporation costs; not yet registered; not tax-relief eligible.',
       body: [
         'Respond — a line and network so roadside harm gets a humane response, not only a clear-up.',
         'Record — species, place, road, time: evidence that barely exists today.',

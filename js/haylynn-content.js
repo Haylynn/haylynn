@@ -410,7 +410,7 @@ export const CONTENT = [
   { id: 'well', mood: 'mood-green', eyebrow: 'X — The Well', html: `
       <h2 class="section-title">The Well</h2>
       <p>Support this house, or another work that should stay in the world. Nothing here is required to walk the scroll.</p>
-      <p style="margin-top:0.75rem;font-size:0.95rem;color:var(--ink-dim)">Swipe for causes — including <em style="color:var(--ink);font-style:italic">MOLI</em>, a proposed welfare charity in formation.</p>
+      <p style="margin-top:0.75rem;font-size:0.95rem;color:var(--ink-dim)">Swipe for causes — including <em style="color:var(--ink);font-style:italic">MOLI</em>, a proposed UK welfare body in formation (Scotland first).</p>
       <div data-role="well-face"></div>`,
     detail: `
       <h2>The Well</h2>
