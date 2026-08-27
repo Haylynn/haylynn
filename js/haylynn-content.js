@@ -410,11 +410,12 @@ export const CONTENT = [
   { id: 'well', mood: 'mood-green', eyebrow: 'X — The Well', html: `
       <h2 class="section-title">The Well</h2>
       <p>Support this house, or another work that should stay in the world. Nothing here is required to walk the scroll.</p>
+      <p style="margin-top:0.75rem;font-size:0.95rem;color:var(--ink-dim)">Swipe for causes — including <em style="color:var(--ink);font-style:italic">MOLI</em>, a proposed welfare charity in formation.</p>
       <div data-role="well-face"></div>`,
     detail: `
       <h2>The Well</h2>
-      <p>Patronage and fundraisers — for this site, for sound, for other projects that need a quiet place to ask. Each link goes where the money is meant to go. The scroll stays open either way.</p>
+      <p>Patronage and fundraisers — for this site, for sound, and for other work that needs a quiet place to ask. Open a cause for the full case. The scroll stays free either way.</p>
       <div data-role="well-detail"></div>
-      <p class="meta-note" style="margin-top:1.2rem;">Support can be one-time or ongoing, for this world or another.</p>` }
+      <p class="meta-note" style="margin-top:1.2rem;">Support can be one-time or ongoing. Causes that are not yet registered say so clearly.</p>` }
 
 ];

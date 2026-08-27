@@ -1,10 +1,6 @@
 /**
  * The Well — patronage & project fundraising
- *
- * For multi-channel causes (e.g. MOLI), set:
- *   url: primary CTA (optional)
- *   payments: { stripe, gofundme, paypal }  // any subset
- *   moreHref: full static page
+ * moreHref → full static page. payments → Stripe / GoFundMe / PayPal when live.
  */
 
 export const OFFERINGS_CONFIG = {
@@ -32,18 +28,25 @@ export const OFFERINGS_CONFIG = {
     },
     {
       id: 'moli',
-      title: 'MOLI',
-      blurb: 'Mercy On Lost Individuals — proposed charity in formation (not yet registered). Appeal only for incorporation costs. UK roads: respond, record, prevent.',
-      url: '', // optional primary
+      title: 'MOLI — Mercy On Lost Individuals',
+      featured: true,
+      tag: 'Welfare · not a registered charity',
+      blurb:
+        'A proposed charity in formation for animals killed and injured on UK roads. This appeal is only for incorporation costs — not a general donation fund, and not Gift Aid eligible.',
+      body: [
+        'Respond — a line and network so roadside harm gets a humane response, not only a clear-up.',
+        'Record — species, place, road, time: evidence that barely exists today.',
+        'Prevent — use that evidence for crossings, signage, and design where deaths cluster.',
+      ],
+      goal: '£2,000 incorporation goal · £0 raised',
       payments: {
-        stripe: '',    // e.g. https://buy.stripe.com/...
-        gofundme: '',  // e.g. https://www.gofundme.com/...
-        paypal: '',    // e.g. https://www.paypal.com/donate/?hosted_button_id=...
+        stripe: '',
+        gofundme: '',
+        paypal: '',
       },
       label: 'Help MOLI incorporate',
-      tag: 'Welfare',
       moreHref: './moli.html',
-      moreLabel: 'Read the full case',
+      moreLabel: 'Full case, costs & legal notice',
       active: true,
     },
   ],
