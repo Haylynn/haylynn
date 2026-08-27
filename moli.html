@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOLI — Mercy On Lost Individuals</title>
+<meta name="description" content="MOLI is a welfare charity in formation for animals killed and injured on UK roads — respond, record, prevent. Pre-registration fundraiser.">
+<link rel="canonical" href="https://haylynn.github.io/haylynn/moli.html">
+<meta property="og:title" content="MOLI — Mercy On Lost Individuals">
+<meta property="og:description" content="A welfare charity in formation for UK road deaths — because almost none of it is treated as a welfare issue at all.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://haylynn.github.io/haylynn/moli.html">
+<link rel="stylesheet" href="./static-section.css">
+<style>
+  .moli-sign {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    letter-spacing: 0.28em;
+    color: var(--ink);
+    border: 1px solid rgba(53,201,143,0.45);
+    border-radius: 4px;
+    padding: 0.85rem 1.2rem;
+    margin: 0.5rem 0 1.2rem;
+  }
+  .moli-sign .dot { color: var(--pink, #ec5aa0); }
+  .moli-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 1.4rem 0 1.6rem;
+  }
+  @media (max-width: 560px) { .moli-stats { grid-template-columns: 1fr; } }
+  .moli-stat {
+    padding: 1rem 1.05rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+  }
+  .moli-stat .num {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.2rem;
+    color: var(--pink, #ec5aa0);
+    margin-bottom: 0.35rem;
+    line-height: 1.25;
+  }
+  .moli-stat .cap { font-size: 0.92rem; color: var(--ink-dim); line-height: 1.4; }
+  .moli-stat .src {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.48rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    opacity: 0.75;
+    margin-top: 0.55rem;
+  }
+  .moli-pillars { display: grid; gap: 0.85rem; margin: 1.2rem 0; }
+  .moli-pillar {
+    padding: 0.9rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(53,201,143,0.25);
+    background: rgba(53,201,143,0.05);
+  }
+  .moli-pillar .mark {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.35rem;
+  }
+  .moli-pillar h3 {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin: 0 0 0.35rem;
+  }
+  .moli-quote {
+    margin: 1.8rem 0;
+    padding: 1.2rem 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .moli-quote cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-style: normal;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .moli-panel {
+    margin-top: 1.5rem;
+    padding: 1.2rem 1.1rem;
+    border-radius: 14px;
+    border: 1px solid rgba(138,92,240,0.35);
+    background: rgba(138,92,240,0.06);
+  }
+  .moli-panel .goal {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0.75rem 0 0.35rem;
+  }
+  .moli-panel .goal strong {
+    color: var(--green);
+    font-weight: 400;
+  }
+  .moli-bar {
+    height: 6px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.08);
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .moli-bar span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--green), var(--purple));
+  }
+  .moli-uses { list-style: none; margin: 0; padding: 0; }
+  .moli-uses li {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.55rem 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.92rem;
+    color: var(--ink-dim);
+    line-height: 1.4;
+  }
+  .moli-uses li:first-child { border-top: none; }
+  .moli-uses .amt {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--green);
+    white-space: nowrap;
+    min-width: 3.2rem;
+  }
+  .moli-pay {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .moli-cta {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--green);
+    border: 1px solid rgba(53,201,143,0.45);
+    border-radius: 16px;
+    padding: 0.55rem 0.95rem;
+  }
+  .moli-cta.is-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    border-color: rgba(255,255,255,0.12);
+    color: var(--ink-dim);
+  }
+  .moli-legal {
+    margin-top: 1.1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--ink-dim);
+  }
+</style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="./">Princess of Reality</a>
+    <a class="enter" href="./">Enter the scroll</a>
+  </header>
+  <nav class="section-nav" aria-label="Sections">
+    <a href="./world.html">I — Her World</a>
+    <a href="./kaviru.html">II — Her Language</a>
+    <a href="./draw.html">III — The Draw</a>
+    <a href="./koruhana.html">IV — Koruhana</a>
+    <a href="./chronicle.html">V — Her Story</a>
+    <a href="./haylynn.html">VI — Her Voice</a>
+    <a href="./hananaru.html">VII — Hananaru</a>
+    <a href="./lymp.html">VIII — Her Sky</a>
+    <a href="./threshold.html">IX — Threshold</a>
+    <a href="./moli.html">MOLI</a>
+  </nav>
+
+  <main id="main" class="static-main">
+    <p class="eyebrow">Not a registered charity · appeal for a proposed charity in formation (England &amp; Wales)</p>
+    <p style="font-family:'Space Mono',monospace;font-size:0.5rem;letter-spacing:0.06em;color:var(--ink-dim);margin:-0.4rem 0 1rem;line-height:1.5">
+      Funds are asked only toward the costs of incorporating MOLI. This is not Gift Aid eligible. See the legal notice below before donating.
+    </p>
+    <div class="moli-sign">M<span class="dot">·</span>O<span class="dot">·</span>L<span class="dot">·</span>I</div>
+    <h2>Mercy On Lost Individuals</h2>
+    <p>MOLI is being built to respond to, record, and ultimately reduce the number of animals dying on UK roads — because right now, almost none of it is treated as a welfare issue at all.</p>
+
+    <h2>The bit nobody’s job it is to care about</h2>
+    <p>When an animal is killed on a UK road, there is usually no dedicated, humane, timely response. It may be swept aside by a highways contractor, left to decompose, or simply never recorded. There is no single body responsible for treating it as a welfare matter — most of what exists is a patchwork of maintenance duties, and maintenance isn’t mercy.</p>
+    <p>The gap between what gets reported and what actually happens is the clearest sign of how invisible this problem has been allowed to stay.</p>
+
+    <div class="moli-stats">
+      <div class="moli-stat">
+        <div class="num">~14,600</div>
+        <div class="cap">wildlife deaths reported in one year of FOI-based highway data (comparison-site analysis) — only a thin slice of what occurs</div>
+        <div class="src">GoCompare roadkill report (FOI / highway authority figures, c. 14,649)</div>
+      </div>
+      <div class="moli-stat">
+        <div class="num">167k–335k</div>
+        <div class="cap">hedgehogs alone estimated killed on British roads each year — before counting badgers, deer, foxes, and the rest</div>
+        <div class="src">Wembridge et al., Mammal Communications (2016)</div>
+      </div>
+    </div>
+    <p style="font-size:0.9rem;color:var(--ink-dim)">Other published estimates include on the order of <strong style="color:var(--ink);font-weight:400">~50,000 badgers</strong> and <strong style="color:var(--ink);font-weight:400">tens of thousands of deer</strong> annually. Official logged removals on the strategic network capture only a fraction of the true toll.</p>
+
+    <h2>What MOLI actually does</h2>
+    <p>Three things, in order — because you can’t fix what you don’t first see, and you can’t prevent what you haven’t understood.</p>
+    <div class="moli-pillars">
+      <div class="moli-pillar">
+        <div class="mark">01 · Respond</div>
+        <h3>Respond</h3>
+        <p>A reporting line and volunteer network so an injured or killed animal on the road gets a fast, humane response — instead of being left, or treated purely as a hazard to clear.</p>
+      </div>
+      <div class="moli-pillar">
+        <div class="mark">02 · Record</div>
+        <h3>Record</h3>
+        <p>Every response is logged — species, location, road, time. Data that barely exists today, and that turns individual losses into evidence.</p>
+      </div>
+      <div class="moli-pillar">
+        <div class="mark">03 · Prevent</div>
+        <h3>Prevent</h3>
+        <p>That evidence is used to push for the things that actually reduce deaths — wildlife crossings, signage, speed and design changes — at the roads where it matters most.</p>
+      </div>
+    </div>
+
+    <blockquote class="moli-quote">
+      “Every roadside death is an individual — not a statistic, not a hazard to clear. MOLI is mercy for the ones nobody stopped for.”
+      <cite>— Founding note, MOLI</cite>
+    </blockquote>
+
+    <div class="moli-panel" id="fundraiser">
+      <p class="eyebrow" style="margin-bottom:0.4rem">Pre-charity fundraiser</p>
+      <h2 style="margin-top:0">Help MOLI get off the ground</h2>
+      <p>MOLI is not registered. This appeal exists only to cover the costs of getting it registered and able to operate — as listed below. Please read the legal notice before giving.</p>
+      <div class="goal"><strong>£0 raised</strong> · of £2,000 incorporation goal</div>
+      <div class="moli-bar" aria-hidden="true"><span style="width:0%"></span></div>
+      <ul class="moli-uses">
+        <li><span class="amt">£40</span><span>Charity Commission registration fee and associated admin</span></li>
+        <li><span class="amt">£350</span><span>Governing document and legal review, drafted for a non-species-limited welfare purpose</span></li>
+        <li><span class="amt">£600</span><span>Reporting line and basic case-recording system for Respond / Record</span></li>
+        <li><span class="amt">£1,010</span><span>Website, insurance, and first-year running costs while trustees are onboarded</span></li>
+      </ul>
+
+      <!-- Fill each href when that channel is live. Empty href keeps the button disabled. -->
+      <div class="moli-pay" data-role="moli-pay">
+        <a class="moli-cta is-disabled" data-pay="stripe" href="#" aria-disabled="true">Stripe</a>
+        <a class="moli-cta is-disabled" data-pay="gofundme" href="#" aria-disabled="true">GoFundMe</a>
+        <a class="moli-cta is-disabled" data-pay="paypal" href="#" aria-disabled="true">PayPal</a>
+      </div>
+      <p style="margin-top:0.75rem;font-family:'Space Mono',monospace;font-size:0.48rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-dim)">Payment links open when the fundraiser is live</p>
+
+      <div class="moli-legal">
+        <strong style="color:var(--ink);font-weight:400">Important — please read before giving</strong>
+        <ul style="margin:0.65rem 0 0;padding-left:1.1rem;line-height:1.55">
+          <li><strong style="color:var(--ink);font-weight:400">Not a registered charity.</strong> MOLI is a <em>proposed</em> charity in formation for England and Wales. It does <em>not</em> have a Charity Commission registration number. Do not treat this appeal as giving to a registered charity.</li>
+          <li><strong style="color:var(--ink);font-weight:400">Purpose of this appeal.</strong> Money is asked only to cover the incorporation costs listed above (registration, governing document, basic systems, insurance and first-year running costs while trustees are onboarded). It is not a general “save animals” fund until a charity exists and can lawfully hold wider purposes.</li>
+          <li><strong style="color:var(--ink);font-weight:400">If incorporation does not proceed.</strong> Unused funds will be returned to donors where practical, or — if return is not practical — redirected to a <em>registered</em> charity with a closely related animal-welfare purpose. Donors will be notified of the outcome.</li>
+          <li><strong style="color:var(--ink);font-weight:400">Who holds the money.</strong> Until MOLI is registered, donations are received and held by the organiser of this appeal (details below), separately from personal spending, and only for the purposes stated here.</li>
+          <li><strong style="color:var(--ink);font-weight:400">No Gift Aid.</strong> Gift Aid cannot be claimed on these donations until a charity is registered (or otherwise recognised for tax) and the correct declarations are in place.</li>
+          <li><strong style="color:var(--ink);font-weight:400">After registration.</strong> This page will be updated with the registered charity name and Charity Commission number. Wider fundraising for operational work will only begin under that registered status.</li>
+        </ul>
+        <p style="margin-top:0.85rem">
+          <strong style="color:var(--ink);font-weight:400">Organiser contact:</strong>
+          <span data-role="moli-contact">[Add name / email for the person responsible for this appeal]</span>
+        </p>
+        <p style="margin-top:0.65rem;font-size:0.78rem;opacity:0.9">
+          Charity Commission guidance allows raising funds before registration if it is made clear that you are not yet registered. This page is written to meet that expectation. It is not legal advice; for formal setup (trustees, governing document, bank account, refund process), take advice from a solicitor or the Commission’s published guidance.
+        </p>
+      </div>
+    </div>
+
+    <p class="static-note">
+      <a href="./">Open the interactive site</a> ·
+      hosted in The Well on the Princess of Reality scroll
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <p>M · O · L · I — Mercy On Lost Individuals</p>
+    <p><a href="./">Home</a> · <a href="./moli.html">MOLI</a> · <a href="./world.html">World</a></p>
+  </footer>
+</body>
+</html>
