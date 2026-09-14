@@ -1,8 +1,10 @@
 /**
- * Haylynn Threshold — members section surface
- * Uses haylynn-auth when configured; otherwise on-brand holding + demo skin.
+ * HAYLYNN: Threshold is belonging — name, likeness, links, patronage. The scroll stays free.
+ * Until the lock is real, do not speak like a backend manual.
+ *
+ * THE OTHER: initHaylynnMembers() fills [data-role="threshold-root"]. When auth is offline,
+ * fields stay disabled and status stays plain. When authReady, save and checkout wire up.
  */
-
 import { AUTH_CONFIG } from './auth-config.js';
 import {
   authReady,
@@ -13,6 +15,20 @@ import {
   startCheckout,
   openBillingPortal,
 } from './haylynn-auth.js';
+
+function safeHttpUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  try {
+    const u = new URL(url, window.location.origin);
+    if (u.protocol !== 'https:' && u.protocol !== 'http:') return null;
+    // Block obvious script smuggling
+    if (/[<>"']/.test(url)) return null;
+    return u.href;
+  } catch {
+    return null;
+  }
+}
+
 import { injectThemeStyles, renderProfileCard } from './haylynn-theme.js';
 import { MEMBERS_CONFIG } from './members-config.js';
 
@@ -202,7 +218,15 @@ async function refreshRoot(root) {
         .join('\n');
     }
     if (avatarEl && profile.avatar_url) {
-      avatarEl.innerHTML = `<img src="${profile.avatar_url}" alt="">`;
+      const safe = safeHttpUrl(profile.avatar_url);
+      avatarEl.textContent = '';
+      if (safe) {
+        const img = document.createElement('img');
+        img.src = safe;
+        img.alt = '';
+        img.referrerPolicy = 'no-referrer';
+        avatarEl.appendChild(img);
+      }
     }
     if (preview) {
       renderProfileCard(preview, {

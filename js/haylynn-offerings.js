@@ -1,7 +1,11 @@
 /**
- * Renders cause cards into The Well from offerings-config.js
+ * HAYLYNN: The Well is giving — not membership. This house, the voice, MOLI and whatever
+ * else should stay in the world. Featured causes get room; full cases get their own page.
+ *
+ * THE OTHER: initHaylynnOfferings() reads offerings-config, paints [data-role="well-face"]
+ * and [data-role="well-detail"]. moreHref opens the static case (e.g. moli.html).
+ * Payment buttons appear only when URLs are non-empty.
  */
-
 import { OFFERINGS_CONFIG } from './offerings-config.js';
 
 const STYLE = `

@@ -1,11 +1,9 @@
 /**
- * Haylynn ambient bar — NEWS primary, prices secondary
+ * HAYLYNN: Most symbols stay dark. A few may wake when I say so.
  *
- * Core focus: world / economy headlines scrolling quietly at the bottom.
- * Breaking items override into a stronger state.
- * Prices (crypto + whatever stocks resolve) trail as soft context.
+ * THE OTHER: flags per ticker id. false by default unless you set true.
+ * The ribbon only requests what is enabled here.
  */
-
 export const TICKER_CONFIG = {
   // ── Behaviour ──────────────────────────────────────────
   mode: 'news',              // 'news' | 'prices' | 'both'

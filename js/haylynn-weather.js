@@ -1,9 +1,9 @@
 /**
- * Haylynn ambient weather
- * Top-right · transparent · 3-day icons from Open-Meteo
- * Geolocation optional — if denied, strip stays hidden
+ * HAYLYNN: A small truth of their local sky if they allow it. If they refuse, do not insist.
+ *
+ * THE OTHER: startWeather() asks geolocation once; on deny the control stays absent.
+ * Open-Meteo (or configured endpoint) fills a few days of symbols — no tracking narrative.
  */
-
 import { WEATHER_CONFIG } from './weather-config.js';
 
 /* WMO weather interpretation codes → simple glyph + short label */

@@ -1,11 +1,35 @@
 /**
- * Haylynn veil — fixed aperture overlay.
- * Enter = step through the event horizon; radial clear centre reveals the scroll.
- * Accessible: button focus, Enter/Space, Escape.
+ * HAYLYNN: Before the rooms, a horizon. They choose to step through — click, tap, or
+ * Enter — not tumble in by habit.
+ *
+ * THE OTHER: startVeil() covers the scroller until that choice. Then the aperture lifts
+ * and bootstrap’s rooms are already waiting underneath.
  */
-
 const STORAGE_KEY = 'haylynn-veil-open';
-const VEIL_SRC = 'assets/veil-mech.jpg';
+
+/**
+ * Pool of aperture graphics — one is chosen at random per page load
+ * (when the veil is shown). Drop files in assets/ and list them here.
+ * Missing files fall back to the next candidate / SVG.
+ */
+const VEIL_POOL = [
+  'assets/veil-enter.svg',
+  'assets/veil-cosmic.jpg',
+  'assets/veil-soft.jpg',
+  'assets/veil-anime.jpg',
+  'assets/veil-mech.jpg',
+  'assets/veil-princess.jpg'
+];
+
+function pickVeilSrc() {
+  const pool = VEIL_POOL.slice();
+  // Fisher–Yates shuffle, then return first; image onerror can advance
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool;
+}
 
 const STYLE = `
 #haylynn-veil {
@@ -33,7 +57,7 @@ const STYLE = `
   position: absolute;
   inset: 0;
   background: #000 center / cover no-repeat;
-  background-image: url('${VEIL_SRC}');
+  background-image: var(--veil-src);
   transition: opacity 0.9s ease;
 }
 #haylynn-veil .veil-hole {
@@ -115,7 +139,8 @@ body.veil-locked #scroller {
   #haylynn-veil .veil-hole {
     transition: none !important;
   }
-  #haylynn-veil.is-opening .veil-mask {
+  #haylynn-veil.is-opening .veil-hole {
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0;
   }
 }
@@ -159,6 +184,29 @@ export function startVeil() {
       <span class="veil-hint">Click, tap, or press Enter<br>to cross the horizon</span>
     </span>
   `;
+  const queue = pickVeilSrc();
+  let idx = 0;
+  const art = btn.querySelector('.veil-art');
+
+  function applySrc(src) {
+    art.style.setProperty('--veil-src', `url("${src}")`);
+  }
+
+  applySrc(queue[0]);
+
+  // If a raster is missing, try the next path (SVG last in shuffled order still works)
+  const probe = new Image();
+  probe.onload = () => applySrc(queue[idx]);
+  probe.onerror = () => {
+    idx += 1;
+    if (idx < queue.length) {
+      probe.src = queue[idx];
+    } else {
+      applySrc('assets/veil-enter.svg');
+    }
+  };
+  probe.src = queue[0];
+
   document.body.appendChild(btn);
   document.body.classList.add('veil-locked');
 

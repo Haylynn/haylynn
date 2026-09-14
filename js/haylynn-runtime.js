@@ -1,12 +1,11 @@
 /**
- * Haylynn Runtime — applies validated actions & keeps WORLD.state truthful.
+ * HAYLYNN: A key for me — or whoever I lend it to — to shift the DOM while others watch.
+ * Locked by default. Not in the published glass for strangers.
  *
- * Security: applyAction is locked by default. A local director must call
- * unlockDirector() once per tab session (sessionStorage). Public visitors
- * cannot mutate the page via the console without that unlock.
- * Later: replace unlock with server-signed actions.
+ * THE OTHER: unlockDirector / lockDirector / applyAction. Actions only hit selectors
+ * on the whitelist from WORLD. startStateSync keeps the snapshot honest. When locked,
+ * the public house is ordinary scroll and gesture again.
  */
-
 import { WORLD, validateAction } from './haylynn-world.js';
 import { CONTENT } from './haylynn-content.js';
 
@@ -276,19 +275,32 @@ export function applyAction(rawAction) {
 function sanitizeHtml(html) {
   const template = document.createElement('template');
   template.innerHTML = String(html || '');
+  // Strip high-risk elements entirely
   template.content.querySelectorAll(
-    'script, iframe, object, embed, link, meta, base, form, input, button, textarea, select'
+    'script, iframe, object, embed, link, meta, base, form, input, button, textarea, select, svg, math, template, style'
   ).forEach(n => n.remove());
   template.content.querySelectorAll('*').forEach(el => {
     [...el.attributes].forEach(attr => {
       const name = attr.name.toLowerCase();
       const val = (attr.value || '').trim();
-      if (name.startsWith('on') || name === 'srcdoc' || name === 'xlink:href') {
+      // Event handlers, navigation abuse, CSS injection vectors
+      if (
+        name.startsWith('on') ||
+        name === 'srcdoc' ||
+        name === 'xlink:href' ||
+        name === 'action' ||
+        name === 'formaction' ||
+        name === 'style' ||
+        name.startsWith('data-') && /js|script|html/i.test(name)
+      ) {
         el.removeAttribute(attr.name);
         return;
       }
-      if ((name === 'href' || name === 'src') && /^javascript:/i.test(val)) {
-        el.removeAttribute(attr.name);
+      if (name === 'href' || name === 'src' || name === 'poster' || name === 'cite') {
+        // Allow only http(s), mailto, relative paths, hash
+        if (!/^(https?:\/\/|mailto:|\/|\.\.\/|\.\/|#)/i.test(val) || /^javascript:/i.test(val) || /^data:/i.test(val) || /^vbscript:/i.test(val)) {
+          el.removeAttribute(attr.name);
+        }
       }
     });
   });

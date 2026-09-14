@@ -1,8 +1,10 @@
 /**
- * Haylynn Draw — three-card Kaviru reading.
- * Face: teaser. Detail: full flip + fortune.
+ * HAYLYNN: Three roots — how one knows — not human carnival fortune. They may keep
+ * past readings in their own glass.
+ *
+ * THE OTHER: initHaylynnDraw() deals from the draw pool, writes history to localStorage,
+ * stays inside the draw section’s face and detail. Insight is interaction, not a brochure.
  */
-
 const DECK = [
   { name: 'velu', symbol: '⟡', glow: 'glow-velu', meaning: 'Being / existence',
     desc: 'A moment returns you to the simple fact of being. No story, no demand, just presence. Something in your life is asking to be met without interpretation.' },

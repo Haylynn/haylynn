@@ -1,8 +1,10 @@
 /**
- * Haylynn profile theme — CSS variable injection from theme_config JSON
- * Layout stays fixed; skin adapts (MySpace-style personalization).
+ * HAYLYNN: One day a guest’s corner may take a skin from a feeling they describe.
+ * The house walls stay mine.
+ *
+ * THE OTHER: theme_config tokens → CSS variables on a profile root
+ * (colors, typography, geometry, effects). applyThemeConfig / renderProfileCard.
  */
-
 const FONT_STACKS = {
   mono: "'Space Mono', ui-monospace, monospace",
   serif: "'Cormorant Garamond', Georgia, serif",

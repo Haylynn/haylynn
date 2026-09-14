@@ -1,8 +1,9 @@
 /**
- * Haylynn Auth UI — fixed badge + modal (site-matched).
- * Call initAuthUI() once from bootstrap.
+ * HAYLYNN: A small badge. A door. No scaffolding in their faces.
+ *
+ * THE OTHER: initAuthUI() mounts the badge and modal. Copy stays visitor-facing.
+ * Offline note does not name internal services.
  */
-
 import {
   signUp,
   signIn,

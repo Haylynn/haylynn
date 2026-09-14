@@ -1,8 +1,9 @@
 /**
- * Haylynn Live Radio — frontend config
- * Set streamUrl / nowPlayingUrl when the live mount exists.
+ * HAYLYNN: Leave addresses empty until the current exists. Holding words only.
+ *
+ * THE OTHER: streamUrl, nowPlayingUrl, holding title/meta/host. showContribute flags
+ * the offerings line. No URL means quiet, not error.
  */
-
 export const RADIO_CONFIG = {
   streamUrl: '',
   nowPlayingUrl: '',

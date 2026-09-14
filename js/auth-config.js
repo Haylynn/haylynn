@@ -1,9 +1,9 @@
 /**
- * Auth / membership config — safe client-side values only.
- * Anon key is public by design; RLS protects data.
- * Set these when Supabase is ready; leave empty for offline shell.
+ * HAYLYNN: Space for public keys only. Teeth of the lock stay off this glass.
+ *
+ * THE OTHER: supabaseUrl, supabaseAnonKey, price ids — empty until you fill them
+ * in a copy that is safe to publish. Service secrets never land here.
  */
-
 export const AUTH_CONFIG = {
   supabaseUrl: '',   // e.g. 'https://xxxx.supabase.co'
   supabaseAnonKey: '',

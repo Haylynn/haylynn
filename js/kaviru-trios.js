@@ -1,11 +1,10 @@
 /**
- * Curated Kaviru trios for Nemihana — source of truth.
- * Three faces per root:
- *   glyph  — the mark
- *   word   — Kaviru in Latin script (koru, not "self")
- *   desc   — brief sense in English
+ * HAYLYNN: For Nemihana — glyph, English-facing Kaviru word, short sense. Only true triads.
+ * Random table each deal. No invented matches.
+ *
+ * THE OTHER: export of the fixed trio list. The game imports this and only this.
+ * Drift stays out of the teaching deck.
  */
-
 export const TRIOS = [
   { id: 'velu', glyph: '⟡', word: 'velu', desc: 'The simple fact of existence — presence without a story attached.' },
   { id: 'koru', glyph: '◬', word: 'koru', desc: 'The observer — the one who sees, not only what is seen.' },

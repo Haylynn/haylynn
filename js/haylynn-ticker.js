@@ -1,8 +1,10 @@
 /**
- * Haylynn ambient bar — NEWS core, prices secondary
- * Touch freezes scroll · opens upward detail sheet · idle resumes
+ * HAYLYNN: A thin ribbon of their markets and headlines — notice, do not shout.
+ * Sleep when there is nothing new.
+ *
+ * THE OTHER: startTicker() reads ticker-config, fetches what you enabled, shows a bottom
+ * bar that can expand for detail, then fades. Hover or touch can hold it visible.
  */
-
 import { TICKER_CONFIG } from './ticker-config.js';
 
 const IDLE_RESUME_MS = 5000; // untouched → resume scroll + collapse sheet

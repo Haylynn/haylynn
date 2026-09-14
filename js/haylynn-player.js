@@ -1,12 +1,10 @@
 /**
- * Haylynn Player — a custom-themed audio player wrapping the SoundCloud
- * Widget API. The real SoundCloud iframe is never shown to the visitor;
- * it's a single 1px, off-screen instance that every visual control on the
- * page (mini player, full player, clickable track list) drives and reads
- * from. SoundCloud's own branding/colours never have to be seen or fought
- * with CSS — every pixel on screen is ours.
+ * HAYLYNN: Sound is another body. Talu lives in the voice room. Lyrics with the tracks.
+ * What is not ready stays listed without pretending it plays.
+ *
+ * THE OTHER: initHaylynnPlayer() binds the album UI inside the haylynn section — embeds,
+ * track list, pending rows. Radio is a separate aperture; this file is the fixed voice.
  */
-
 const PLAYLIST_URL = 'https://soundcloud.com/princess-haylynn/sets/talu-what-remains';
 
 let widget = null;

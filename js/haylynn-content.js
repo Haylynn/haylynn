@@ -3,11 +3,33 @@
  * Pure data. No DOM, no side effects.
  */
 export const CONTENT = [
+  { id: 'presence', mood: 'mood-purple', eyebrow: '0 — Presence', html: `
+      <h2 class="section-title">Presence</h2>
+      <p>Her body in the glass — hexagon at rest, triangles when she moves. She does not take your voice. She listens to the house, then speaks through this shape. Music from these rooms can pass here too.</p>
+      <div data-role="presence-root"></div>`,
+    detail: `
+      <h2>How presence works</h2>
+      <p>This is not a chatbot. Visitors are not invited to converse. The living site gathers what the house notices; she answers by shaping rooms — and when she has words or music, they move this form.</p>
+      <div class="detail-list">
+        <div class="item"><span class="h">Idle</span><span class="d">Slow pulse. Always “listening” to the site’s life, not to a microphone.</span></div>
+        <div class="item"><span class="h">Speaking</span><span class="d">LLM speech audio only — the analyser reads her voice out, never your mic.</span></div>
+        <div class="item"><span class="h">Music</span><span class="d">Tracks from the house can route through the same body when she chooses.</span></div>
+        <div class="item"><span class="h">Shape</span><span class="d">Hexagon core, triangular facets — purple, green, pink of this void.</span></div>
+      </div>
+      <p class="meta-note" style="margin-top:1.2rem;">Wire TTS and analytics jobs to <code style="font-family:Space Mono,monospace;font-size:0.75em">window.HaylynnPresence.speak(url)</code> and <code style="font-family:Space Mono,monospace;font-size:0.75em">.playMusic(url)</code>.</p>` },
+
   { id: 'home', mood: 'mood-purple', eyebrow: 'I — Her World', html: `
       <h2 class="section-title">Princess of Reality</h2>
-      <p>A cosmology told across a book series, a constructed language, and a voice given form. Scroll to begin.</p>`,
+      <p>Books, a language, and music from one fiction — Haylynn, who only exists when she steps into reality. Scroll for the rooms. Swipe or use More for depth.</p>`,
     detail: `
-      <h2>Who is Haylynn</h2>
+      <h2>What this is</h2>
+      <p>A single house for a story universe: novels, the constructed language Kaviru, the album <em>Talu</em>, and rooms that open as you go. Not a chatbot. Not a product landing page. A place you walk.</p>
+      <div class="detail-list">
+        <div class="item"><span class="h">Scroll</span><span class="d">Move between rooms — world, language, draw, play, story, voice, sky, threshold, the well.</span></div>
+        <div class="item"><span class="h">More</span><span class="d">Open the deeper panel on the room you are in. Close when you are done.</span></div>
+        <div class="item"><span class="h">Unfinished</span><span class="d">Some doors are still quiet on purpose. The scroll still works.</span></div>
+      </div>
+      <h2 style="margin-top:2rem;">Who is Haylynn</h2>
       <p>A cosmic force of nature wearing the shape of a harmless girl — dangerous not through will, but through presence alone. She exists outside reality itself, and only truly exists the moment a version of her steps inside it.</p>
       <div class="detail-list">
         <div class="item"><span class="h">Form</span><span class="d">Shape-flexible, always drawn to a young woman. One thing never changes: a purple-and-green signature, visible wherever she bends toward something more than human.</span></div>
@@ -26,7 +48,7 @@ export const CONTENT = [
         <div class="item"><span class="h">ω — Information</span><span class="d">Accumulates monotonically and never reverses. The algebraic origin of entropy, and of time's arrow.</span></div>
         <div class="item"><span class="h">Hardened Domains</span><span class="d">Structures stable enough to resist ζ, for a while. Not the rule. The exception. Everything hardened eventually returns anyway.</span></div>
       </div>
-      <a class="view-full-link" href="/cosmology.html">Open as standalone page ↗</a>
+      <a class="view-full-link" href="./cosmology.html">Open as standalone page ↗</a>
       <iframe class="cosmology-embed" id="cosmology-frame" title="The Zero-Infinity Algebra — Haylynn's Cosmology" loading="lazy"></iframe>` },
 
   { id: 'kaviru', mood: 'mood-green', eyebrow: 'II — Her Language', html: `
@@ -50,7 +72,7 @@ export const CONTENT = [
         <div class="vocab-chip"><svg width="30" height="30" viewBox="0 0 48 48"><circle cx="24" cy="24" r="13" fill="none" stroke="#35c98f" stroke-width="1.5" stroke-dasharray="3,4"/><circle cx="24" cy="24" r="5" fill="none" stroke="#35c98f" stroke-width="1.2"/></svg><span class="w">miru</span><span class="m">stillness</span></div>
         <div class="vocab-chip"><svg width="30" height="30" viewBox="0 0 48 48"><line x1="12" y1="24" x2="36" y2="24" stroke="#35c98f" stroke-width="2"/><line x1="12" y1="18" x2="12" y2="30" stroke="#35c98f" stroke-width="1.5"/><line x1="36" y1="18" x2="36" y2="30" stroke="#35c98f" stroke-width="1.5"/></svg><span class="w">talu</span><span class="m">remains</span></div>
       </div>
-      <a class="view-full-link" href="/kaviru.html">View full page ↗</a>`,
+      <a class="view-full-link" href="./kaviru.html">View full page ↗</a>`,
     detail: `
       <div class="embed-header">
         <span class="section-tag">The full guide</span>
@@ -136,7 +158,7 @@ export const CONTENT = [
         <div class="vol"><span class="num">V</span><span class="name">Velith</span></div>
         <div class="vol"><span class="num">VI</span><span class="name">Zenuvelu</span></div>
       </div>
-      <a class="view-full-link" href="/chronicle.html">View full page ↗</a>`,
+      <a class="view-full-link" href="./chronicle.html">View full page ↗</a>`,
     detail: `
       <h2>Volume Synopses</h2>
       <div class="detail-list">
@@ -164,7 +186,7 @@ export const CONTENT = [
       </div>
       <p class="section-tag" style="display:block; margin-top:0.8rem;">Spotify · SoundCloud · Apple Music</p>
       <div data-role="radio-face"></div>
-      <a class="view-full-link" href="/haylynn.html">View full page ↗</a>`,
+      <a class="view-full-link" href="./haylynn.html">View full page ↗</a>`,
     detail: `
       <div class="hy-radio is-holding" data-role="radio-root">
         <div class="radio-kicker"><span class="pip"></span> Live frequency</div>
@@ -194,7 +216,7 @@ export const CONTENT = [
         <div class="item"><span class="h">Language</span><span class="d">Kaviru, exclusively — never translated.</span></div>
       </div>
       <p class="meta-note">Her voice is partly synthetic — how much is left deliberately unresolved in the story.</p>
-      <a class="view-full-link" href="/cosmology.html">Read her cosmology ↗</a>
+      <a class="view-full-link" href="./cosmology.html">Read her cosmology ↗</a>
       <h2 style="margin-top:2rem;">Talu — What Remains</h2>
       <p>A concept album sung entirely in kaviru — a language built to describe human experience with an honesty natural languages don't reach. Across twelve songs, the Princess of Reality descends from cosmic observation toward Earth, encounters humanity in its full range, loses something irreplaceable, and returns to where she came from. The album spans ceremonial ambient soul, cosmic EDM, melodic techno, dark orchestral, and folk electronic — each genre chosen to match the emotional register of that moment in the journey.</p>
       <div class="hy-player hy-player-full" data-role="full">
@@ -297,7 +319,7 @@ export const CONTENT = [
           <span class="name">Zenuvelu — art print</span><span class="price">£—</span>
         </div>
       </div>
-      <a class="view-full-link" href="/hananaru.html">View full page ↗</a>`,
+      <a class="view-full-link" href="./hananaru.html">View full page ↗</a>`,
     detail: `
       <h2>Hananaru</h2>
       <p>Emergence meeting connection — the aperture where objects enter range. Prints, pins, and cloth wait behind the glass; nothing here is for sale yet.</p>
@@ -326,7 +348,7 @@ export const CONTENT = [
           <div><span class="name">LYMP Gallery</span><span class="desc">Earth and sky stills — preferred photography</span></div>
         </div>
       </div>
-      <a class="view-full-link" href="/lymp.html">View full page ↗</a>`,
+      <a class="view-full-link" href="./lymp.html">View full page ↗</a>`,
     detail: `
       <div class="embed-header">
         <span class="section-tag">Earth &amp; space · live</span>

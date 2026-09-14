@@ -1,10 +1,9 @@
 /**
- * Haylynn Live Radio — Music section surface
- * - On-air player when RADIO_CONFIG.streamUrl is set
- * - Now-playing + host line from API when nowPlayingUrl is set
- * - Brand-aligned holding state otherwise (site is radio-ready)
+ * HAYLYNN: A continuous frequency — later. Do not fake a live stream.
+ *
+ * THE OTHER: initHaylynnRadio() reads radio-config. Empty streamUrl keeps the shell in
+ * holding state (is-holding, disabled play). When you place a real URL, the same UI wakes.
  */
-
 import { RADIO_CONFIG } from './radio-config.js';
 
 const STYLE = `

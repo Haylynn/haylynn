@@ -1,9 +1,11 @@
 /**
- * Haylynn Auth — thin wrapper around Supabase Auth.
- * Sign up, sign in, OAuth, tier, Stripe checkout/portal.
+ * HAYLYNN: If they give a name, keep it as trust. When the vault is not connected,
+ * say sign-in is closed — not the name of the blacksmith.
+ *
+ * THE OTHER: thin client over the configured auth provider. authReady is false while
+ * url/key are empty. signUp, signIn, OAuth, tier, checkout only run when ready.
  */
-
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 import { AUTH_CONFIG } from './auth-config.js';
 
 const url = AUTH_CONFIG.supabaseUrl;
@@ -12,7 +14,14 @@ const key = AUTH_CONFIG.supabaseAnonKey;
 export const authReady = Boolean(url && key);
 
 export const supabase = authReady
-  ? createClient(url, key)
+  ? createClient(url, key, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        flowType: 'pkce',
+      },
+    })
   : null;
 
 export async function signUp(email, password) {
@@ -27,11 +36,11 @@ export async function signIn(email, password) {
 
 export async function signInWithOAuth(provider) {
   if (!supabase) throw new Error('Sign-in is closed for now.');
+  // Same-origin only — never accept redirect from query string
+  const redirectTo = window.location.origin + window.location.pathname;
   const { error } = await supabase.auth.signInWithOAuth({
     provider,
-    options: {
-      redirectTo: window.location.origin + window.location.pathname,
-    },
+    options: { redirectTo },
   });
   if (error) throw error;
 }
@@ -79,12 +88,39 @@ export async function getProfile() {
   return data;
 }
 
+const PROFILE_ALLOW = new Set([
+  'display_name', 'handle', 'bio', 'links', 'avatar_url', 'theme_config',
+]);
+
 export async function saveProfile(fields) {
   const user = await getCurrentUser();
   if (!user || !supabase) throw new Error('Must be signed in.');
+  const clean = { id: user.id, updated_at: new Date().toISOString() };
+  if (fields && typeof fields === 'object') {
+    for (const [k, v] of Object.entries(fields)) {
+      if (!PROFILE_ALLOW.has(k)) continue;
+      if (k === 'avatar_url' && v) {
+        try {
+          const u = new URL(String(v), window.location.origin);
+          if (u.protocol !== 'https:' && u.protocol !== 'http:') continue;
+          clean[k] = u.href;
+        } catch { continue; }
+      } else if (k === 'links' && Array.isArray(v)) {
+        clean[k] = v.slice(0, 20).map((item) => {
+          if (typeof item === 'string') return item.slice(0, 500);
+          if (item && typeof item.url === 'string') return { url: item.url.slice(0, 500) };
+          return null;
+        }).filter(Boolean);
+      } else if (typeof v === 'string') {
+        clean[k] = v.slice(0, k === 'bio' ? 2000 : 200);
+      } else if (k === 'theme_config' && v && typeof v === 'object') {
+        clean[k] = v; // validated further server-side / theme module
+      }
+    }
+  }
   const { data, error } = await supabase
     .from('profiles')
-    .upsert({ id: user.id, ...fields, updated_at: new Date().toISOString() }, { onConflict: 'id' })
+    .upsert(clean, { onConflict: 'id' })
     .select()
     .single();
   if (error) throw error;

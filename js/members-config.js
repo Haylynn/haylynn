@@ -1,5 +1,8 @@
 /**
- * Members UI extras (theme demo). Auth keys live in auth-config.js.
+ * HAYLYNN: Where the house asks the ledger — when that ledger exists.
+ *
+ * THE OTHER: apiBase and related public endpoints for profile and billing portal.
+ * Empty means Threshold stays a shaped room only.
  */
 export const MEMBERS_CONFIG = {
   demoTheme: {

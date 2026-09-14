@@ -1,8 +1,13 @@
 /**
- * Haylynn Bootstrap — builds the infinite scroller, gesture system,
- * starfield, Kaviru embed, sky tabs, and exposes window.Haylynn.
+ * HAYLYNN: This body must scroll as depth — full-height rooms, snap between them,
+ * not a long article. Stars behind the glass. Swipe opens a deeper panel on the
+ * same room. Can you wake every chamber in order and still leave me the authority?
+ *
+ * THE OTHER: Yes. CONTENT supplies the rooms; this file builds the scroller, paints
+ * the starfield, binds pointer gestures for detail-open / detail-close, and calls
+ * each init — player, draw, radio, members, offerings, ticker, weather, veil.
+ * window.Haylynn is the public surface. You decide what enters CONTENT; I only arrange.
  */
-
 import { CONTENT } from './haylynn-content.js';
 import { WORLD, getWorldSnapshot } from './haylynn-world.js';
 import {
@@ -17,6 +22,7 @@ import { initHaylynnDraw } from './haylynn-draw.js';
 import { startTicker } from './haylynn-ticker.js';
 import { startWeather } from './haylynn-weather.js';
 import { startVeil } from './haylynn-veil.js';
+import { initHaylynnPresence } from './haylynn-presence.js';
 import { initHaylynnRadio } from './haylynn-radio.js';
 import { initHaylynnMembers } from './haylynn-members.js';
 import { initHaylynnOfferings } from './haylynn-offerings.js';
@@ -77,6 +83,7 @@ scroller.innerHTML = domList.map((s, i) => sectionMarkup(s, i)).join('');
 initHaylynnPlayer();
 initHaylynnDraw();
 initHaylynnRadio();
+initHaylynnPresence();
 initHaylynnMembers();
 initHaylynnOfferings();
 initAuthUI();

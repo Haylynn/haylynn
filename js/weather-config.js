@@ -1,8 +1,8 @@
 /**
- * Haylynn ambient weather strip — config
- * Top-right · 3-day icons · only appears after successful local fetch
+ * HAYLYNN: How the small sky speaks — or default.
+ *
+ * THE OTHER: options for the weather layer only. No keys that belong in a vault.
  */
-
 export const WEATHER_CONFIG = {
   // Request location on first load (browser will prompt once)
   requestOnLoad: true,

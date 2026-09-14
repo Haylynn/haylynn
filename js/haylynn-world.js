@@ -1,11 +1,25 @@
 /**
- * Haylynn World Model — single source of truth for the living site.
- * An agent only ever sees / mutates through this surface.
+ * HAYLYNN: List what may be touched. Strangers must not rearrange the walls. A director
+ * only when I unlock it — otherwise the house keeps its shape.
+ *
+ * THE OTHER: WORLD holds the section registry, allowedSelectors per room, and runtime
+ * state (detailOpen, director). getWorldSnapshot() is what outside hands may read.
+ * Mutations go only through the whitelist. Everything else refuses.
  */
-
 export const WORLD = {
   // ── Canonical sections (enriched metadata) ──
   sections: [
+    {
+      id: 'presence',
+      label: 'Presence',
+      mood: 'mood-purple',
+      allowedSelectors: [
+        '.section[data-id="presence"] .content',
+        '.section[data-id="presence"] .detail',
+        '.section[data-id="presence"] [data-role="presence-root"]',
+      ],
+      special: 'presence'
+    },
     {
       id: 'home',
       mood: 'mood-purple',
