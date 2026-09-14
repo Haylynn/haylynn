@@ -1,8 +1,8 @@
-# Local-only control surface — never publish
+# Workshop only
 director.html
 **/director.html
 
-# Env & secrets
+# Secrets
 .env
 .env.*
 !.env.example
@@ -18,8 +18,6 @@ Thumbs.db
 *.swp
 *.swo
 
-# Logs & deps (if added later)
 node_modules/
-npm-debug.log*
 dist/
 .cache/

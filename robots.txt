@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Local control surface must not be published; if present, disallow:
+Disallow: /director.html
+
 Sitemap: https://haylynn.github.io/haylynn/sitemap.xml

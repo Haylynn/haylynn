@@ -2,26 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' https: blob:; connect-src 'self' https://*.supabase.co https://esm.sh https://api.open-meteo.com; frame-src 'self' https:; base-uri 'self'; object-src 'none'; form-action 'self'">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
 <title>Haylynn — Princess of Reality | Sci-Fi Series, Conlang & Music</title>
-<meta name="description" content="Haylynn, Princess of Reality: a post-apocalyptic sci-fi book series, an original concept album sung in the constructed language Kaviru, mech art, and an astrophotography partnership with LYMP.">
-<link rel="canonical" href="https://haylynn.example.com/">
+<meta name="description" content="Princess of Reality — sci-fi books, the Kaviru language, and the album Talu in one place. Scroll the rooms. Not a chatbot.">
+<link rel="canonical" href="https://haylynn.github.io/haylynn/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Haylynn — Princess of Reality">
-<meta property="og:description" content="A post-apocalyptic sci-fi book series, a concept album sung in the constructed language Kaviru, mech art, and real-world astrophotography — one universe, one site.">
-<meta property="og:image" content="/assets/vol1-end-at-the-beginning.jpg">
-<meta property="og:url" content="https://haylynn.example.com/">
+<meta property="og:description" content="Books, language, and music from one story universe. Scroll to walk the rooms of the Princess of Reality.">
+<meta property="og:image" content="https://haylynn.github.io/haylynn/assets/vol1-end-at-the-beginning.jpg">
+<meta property="og:url" content="https://haylynn.github.io/haylynn/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Haylynn — Princess of Reality">
 <meta name="twitter:description" content="A post-apocalyptic sci-fi book series, a concept album in the constructed language Kaviru, mech art, and real-world astrophotography.">
-<meta name="twitter:image" content="/assets/vol1-end-at-the-beginning.jpg">
+<meta name="twitter:image" content="https://haylynn.github.io/haylynn/assets/vol1-end-at-the-beginning.jpg">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
 
 :root {
   --void: #06050c;
   --ink: #efe9e0;
-  --ink-dim: #9a92a4;
+  --ink-dim: #b0a8bc;
 
   --green: #35c98f;
   --pink: #ec5aa0;
@@ -766,5 +771,56 @@ body {
 
 
 <script type="module" src="./js/haylynn-bootstrap.js"></script>
+
+<!-- Cookie / privacy notice: no non-essential cookies by default -->
+<style>
+#hy-privacy-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 80;
+  padding: 0.85rem 1rem calc(0.85rem + env(safe-area-inset-bottom, 0));
+  background: rgba(6,5,12,0.94);
+  border-top: 1px solid rgba(138,92,240,0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: none;
+  font-family: 'Cormorant Garamond', serif;
+}
+#hy-privacy-bar.open { display: block; }
+#hy-privacy-bar .inner {
+  max-width: 40rem; margin: 0 auto;
+  display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between;
+}
+#hy-privacy-bar p {
+  flex: 1 1 14rem; margin: 0;
+  font-size: 0.95rem; line-height: 1.4; color: #9a92a4;
+}
+#hy-privacy-bar a { color: #35c98f; }
+#hy-privacy-bar button {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid rgba(53,201,143,0.45); background: transparent;
+  color: #35c98f; border-radius: 14px; padding: 0.45rem 0.85rem; cursor: pointer;
+}
+</style>
+<div id="hy-privacy-bar" role="dialog" aria-label="Privacy notice">
+  <div class="inner">
+    <p>This house does not set non-essential cookies by default. Technical storage may be used for the scroll to work. <a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a></p>
+    <button type="button" id="hy-privacy-ok">Understood</button>
+  </div>
+</div>
+<script>
+(function () {
+  try {
+    if (localStorage.getItem('hy-privacy-ok') === '1') return;
+  } catch (e) { return; }
+  var bar = document.getElementById('hy-privacy-bar');
+  if (!bar) return;
+  bar.classList.add('open');
+  document.getElementById('hy-privacy-ok').onclick = function () {
+    try { localStorage.setItem('hy-privacy-ok', '1'); } catch (e) {}
+    bar.classList.remove('open');
+  };
+})();
+</script>
+
 </body>
 </html>
