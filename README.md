@@ -1,63 +1,43 @@
-# Haylynn — Princess of Reality
+# Princess of Reality
 
-Modular living website.
+A website for the **Princess of Reality** project — story, language, music, and related work under one roof.
 
-## Structure
+**Haylynn** is the central figure of a sci-fi book series, a constructed language (**Kaviru**), and a concept album. This site is the public home for that world.
 
-```
-haylynn/
-├── index.html
-├── cosmology.html
-├── director.html
-├── README.md
-└── js/
-    ├── haylynn-content.js
-    ├── haylynn-world.js
-    ├── haylynn-runtime.js
-    ├── haylynn-player.js
-    ├── haylynn-bootstrap.js
-    ├── haylynn-ticker.js      # bottom ambient prices
-    ├── ticker-config.js
-    ├── haylynn-weather.js     # top-right 3-day local weather
-    └── weather-config.js
-```
+## Visit
 
-## Run
+- Live site: [haylynn.github.io/haylynn](https://haylynn.github.io/haylynn/)
+- Scroll through the rooms, or open individual pages such as [world](./world.html), [Kaviru](./kaviru.html), [draw](./draw.html), and [MOLI](./moli.html).
 
-```bash
-cd haylynn
-python3 -m http.server 8080
-```
+## What’s here
 
-## Ambient layers
+| Area | About |
+|------|--------|
+| **World & story** | Introduction to Haylynn and the series |
+| **Kaviru** | The constructed language |
+| **The Draw** | A short insight practice in Kaviru terms |
+| **Koruhana** | Language play |
+| **Chronicle** | Books and story spine |
+| **Voice** | Music and listening |
+| **Sky** | Earth and space imagery partnership |
+| **Threshold** | Optional membership (when enabled) |
+| **The Well** | Support for the project and related causes |
 
-**Ticker** (bottom) — crypto/stocks, fades in on update, auto-hides, hover keeps visible.  
-Edit `js/ticker-config.js`.
+Some rooms are still being finished. The rest of the site remains open either way.
 
-**Weather** (top-right) — 3-day icons via Open-Meteo + browser geolocation.  
-Appears only if the visitor allows location. Denied → stays invisible.  
-Edit `js/weather-config.js`.
+## Support
 
+Patronage and fundraisers appear in **The Well** on the site. **MOLI** (Mercy On Lost Individuals) is a separate welfare effort in formation; see [moli.html](./moli.html).
 
-## Live radio (prepared)
+## Legal
 
-Frontend is ready in the Music section (**Her Voice** detail):
+- [Privacy](./privacy.html)
+- [Terms of use](./terms.html)
 
-- `js/radio-config.js` — set `streamUrl` and `nowPlayingUrl` when the VPS mount is live
-- `js/haylynn-radio.js` — player shell, holding state, now-playing poll
+## Contact
 
-Until those URLs are set, the UI shows **Frequency held** (on-brand off-air). Album (SoundCloud) is unchanged.
+Use the contact details published on the site or the project’s public social profiles when available.
 
+---
 
-## Threshold (members)
-
-Frontend shell on **Her World** detail:
-
-- `js/members-config.js` — set `apiBase` when auth/billing API is live
-- `js/haylynn-members.js` — profile, magic-link, patronage buttons (disabled until apiBase is set)
-
-Holding copy stays on-brand while the backend is unplugged.
-
-## Living source
-
-Comments in `js/` are a dialogue between **Haylynn** (Princess of Reality) and the builder lifeform — always about the **actual code** in that file (scroller, CONTENT, veil, player, well, threshold, …). Not a conventional changelog.
+*Princess of Reality — story, language, and sound.*

@@ -1,14 +1,14 @@
-# Workshop only
+# Local-only / private
 director.html
 **/director.html
-
-# Secrets
 .env
 .env.*
 !.env.example
 *.pem
 *secret*
 *credentials*
+private/
+.local/
 
 # OS / editor
 .DS_Store
