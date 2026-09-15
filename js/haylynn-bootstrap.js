@@ -25,7 +25,9 @@ import { startVeil } from './haylynn-veil.js';
 import { initHaylynnPresence } from './haylynn-presence.js';
 import { initHaylynnRadio } from './haylynn-radio.js';
 import { initHaylynnMembers } from './haylynn-members.js';
+import { initHaylynnAdventure } from './haylynn-adventure.js';
 import { initHaylynnOfferings } from './haylynn-offerings.js';
+import { initHaylynnProducts } from './haylynn-products.js';
 import { initAuthUI } from './haylynn-auth-ui.js';
 
 // ── Star field ────────────────────────────────────────────────────────
@@ -85,7 +87,9 @@ initHaylynnDraw();
 initHaylynnRadio();
 initHaylynnPresence();
 initHaylynnMembers();
+initHaylynnAdventure();
 initHaylynnOfferings();
+initHaylynnProducts();
 initAuthUI();
 
 // Dot nav

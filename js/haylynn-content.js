@@ -5,25 +5,24 @@
 export const CONTENT = [
   { id: 'presence', mood: 'mood-purple', eyebrow: '0 — Presence', html: `
       <h2 class="section-title">Presence</h2>
-      <p>Her body in the glass — hexagon at rest, triangles when she moves. She does not take your voice. She listens to the house, then speaks through this shape. Music from these rooms can pass here too.</p>
+      <p>Before the rooms, a sign that the house is awake. Purple-green at the core. She does not ask for your voice. When she has something to say — or music from these halls — it moves here.</p>
       <div data-role="presence-root"></div>`,
     detail: `
-      <h2>How presence works</h2>
-      <p>This is not a chatbot. Visitors are not invited to converse. The living site gathers what the house notices; she answers by shaping rooms — and when she has words or music, they move this form.</p>
+      <h2>What this is</h2>
+      <p>Presence is not a conversation. It is the mark that this site is lived-in: the same figure who narrates the books and sings in Kaviru can, at times, be felt in the glass.</p>
       <div class="detail-list">
-        <div class="item"><span class="h">Idle</span><span class="d">Slow pulse. Always “listening” to the site’s life, not to a microphone.</span></div>
-        <div class="item"><span class="h">Speaking</span><span class="d">LLM speech audio only — the analyser reads her voice out, never your mic.</span></div>
-        <div class="item"><span class="h">Music</span><span class="d">Tracks from the house can route through the same body when she chooses.</span></div>
-        <div class="item"><span class="h">Shape</span><span class="d">Hexagon core, triangular facets — purple, green, pink of this void.</span></div>
+        <div class="item"><span class="h">Quiet</span><span class="d">Most of the time the shape only breathes. The rest of the house remains yours to walk.</span></div>
+        <div class="item"><span class="h">Voice</span><span class="d">When she speaks, the form answers to her sound alone — never to a microphone you hold.</span></div>
+        <div class="item"><span class="h">Music</span><span class="d">Tracks from her album may pass through this same body when the house chooses them.</span></div>
       </div>
-      <p class="meta-note" style="margin-top:1.2rem;">Wire TTS and analytics jobs to <code style="font-family:Space Mono,monospace;font-size:0.75em">window.HaylynnPresence.speak(url)</code> and <code style="font-family:Space Mono,monospace;font-size:0.75em">.playMusic(url)</code>.</p>` },
+      <p style="margin-top:1.2rem;color:var(--ink-dim)">Scroll on for her world, language, story, and voice.</p>` },
 
-  { id: 'home', mood: 'mood-purple', eyebrow: 'I — Her World', html: `
-      <h2 class="section-title">Princess of Reality</h2>
-      <p>Books, a language, and music from one fiction — Haylynn, who only exists when she steps into reality. Scroll for the rooms. Swipe or use More for depth.</p>`,
+{ id: 'home{ id: 'home', mood: 'mood-purple', eyebrow: 'I — Her World', html: `
+      <h2 class="section-title">Her World</h2>
+      <p>Books, a language, and music from one fiction — Haylynn, who only exists when she steps into reality. The rooms below are hers. Scroll to walk them; open More when a chamber goes deeper.</p>`,
     detail: `
       <h2>What this is</h2>
-      <p>A single house for a story universe: novels, the constructed language Kaviru, the album <em>Talu</em>, and rooms that open as you go. Not a chatbot. Not a product landing page. A place you walk.</p>
+      <p>A single house for a story universe: novels, the constructed language Kaviru, the album <em>Talu</em>, and rooms that open as you go. A place you walk — not a sales page, not a help desk.</p>
       <div class="detail-list">
         <div class="item"><span class="h">Scroll</span><span class="d">Move between rooms — world, language, draw, play, story, voice, sky, threshold, the well.</span></div>
         <div class="item"><span class="h">More</span><span class="d">Open the deeper panel on the room you are in. Close when you are done.</span></div>
@@ -147,7 +146,7 @@ export const CONTENT = [
 
   { id: 'chronicle', mood: 'mood-pink', eyebrow: 'V — Her Story', html: `
       <img class="book-cover" src="assets/vol1-end-at-the-beginning.jpg" alt="Princess of Reality — The End at the Beginning, book cover">
-      <h2 class="section-title">Princess of Reality</h2>
+      <h2 class="section-title">Her Story</h2>
       <p>A dying Earth. Two strangers who become a family. And a story that keeps circling back on itself, told by a narrator who isn't in it yet.</p>
       <p>Six volumes, spanning collapse, silence, and eons beyond. Volume I, <em>The End at the Beginning</em>, is complete in draft.</p>
       <div class="volume-list">
@@ -301,35 +300,7 @@ export const CONTENT = [
   { id: 'hananaru', mood: 'mood-green', eyebrow: 'VII — Hananaru', html: `
       <h2 class="section-title">Hananaru</h2>
       <p><em>Hana</em> — emergence. <em>Naru</em> — connection. Objects coming into reach: a thin aperture on reality. The shelf is quiet; what will hang here is still being chosen.</p>
-      <div class="product-grid">
-        <div class="product-card"><span class="tag">Waiting</span>
-          <svg width="40" height="40" viewBox="0 0 48 48"><rect x="14" y="10" width="20" height="28" fill="none" stroke="#35c98f" stroke-width="1.5" rx="3"/><line x1="18" y1="18" x2="30" y2="18" stroke="#35c98f" stroke-width="1.2"/><line x1="18" y1="24" x2="30" y2="24" stroke="#35c98f" stroke-width="1.2"/><circle cx="24" cy="32" r="2" fill="#35c98f"/></svg>
-          <span class="name">Ground State — mech print</span><span class="price">£—</span>
-        </div>
-        <div class="product-card"><span class="tag">Waiting</span>
-          <svg width="40" height="40" viewBox="0 0 48 48"><path d="M24,34 Q10,24 14,16 Q18,10 24,16 Q30,10 34,16 Q38,24 24,34Z" fill="none" stroke="#ec5aa0" stroke-width="1.5"/></svg>
-          <span class="name">Velith — enamel pin</span><span class="price">£—</span>
-        </div>
-        <div class="product-card"><span class="tag">Waiting</span>
-          <svg width="40" height="40" viewBox="0 0 48 48"><rect x="11" y="15" width="26" height="18" fill="none" stroke="#8a5cf0" stroke-width="1.5" rx="2"/><line x1="16" y1="22" x2="32" y2="22" stroke="#8a5cf0" stroke-width="1"/><line x1="16" y1="27" x2="26" y2="27" stroke="#8a5cf0" stroke-width="1"/></svg>
-          <span class="name">Kaviru script tee</span><span class="price">£—</span>
-        </div>
-        <div class="product-card"><span class="tag">Waiting</span>
-          <svg width="40" height="40" viewBox="0 0 48 48"><circle cx="24" cy="24" r="13" fill="none" stroke="#35c98f" stroke-width="1.5" stroke-dasharray="2,3"/></svg>
-          <span class="name">Zenuvelu — art print</span><span class="price">£—</span>
-        </div>
-      </div>
-      <a class="view-full-link" href="./hananaru.html">View full page ↗</a>`,
-    detail: `
-      <h2>Hananaru</h2>
-      <p>Emergence meeting connection — the aperture where objects enter range. Prints, pins, and cloth wait behind the glass; nothing here is for sale yet.</p>
-      <div class="detail-list">
-        <div class="item"><span class="h">Ground State — mech print</span><span class="d">A3 giclée, numbered edition</span></div>
-        <div class="item"><span class="h">Velith — enamel pin</span><span class="d">Hard enamel, 32mm</span></div>
-        <div class="item"><span class="h">Kaviru script tee</span><span class="d">Root-word print, unisex</span></div>
-        <div class="item"><span class="h">Zenuvelu — art print</span><span class="d">A2 giclée, numbered edition</span></div>
-        <div class="item"><span class="h">Word when ready</span><span class="d">Restock and drop notes will gather here.</span></div>
-      </div>` },
+      <div class="product-grid" data-role="hananaru-grid"></div>` },
 
   { id: 'lymp', mood: 'mood-pink', eyebrow: 'VIII — Her Sky', html: `
       <h2 class="section-title">Earth &amp; the Void</h2>
@@ -384,8 +355,9 @@ export const CONTENT = [
 
   { id: 'threshold', mood: 'mood-purple', eyebrow: 'IX — Threshold', html: `
       <h2 class="section-title">Threshold</h2>
-      <p>A quieter room behind the scroll — a name, a likeness, a few links, and the key of patronage. The surface of the world stays open to all; this door is for those who step further in.</p>
-      <div data-role="threshold-face"></div>`,
+      <p>A quieter room — a name, a likeness, a few links, and the option of patronage. The world outside this door stays open to everyone; Threshold is only for those who choose to step further in.</p>
+      <div data-role="threshold-face"></div>
+      <div data-role="adventure-root" style="margin-top:1rem"></div>`,
     detail: `
       <div class="hy-threshold" data-role="threshold-root">
         <div class="th-kicker"><span class="pip"></span> Threshold</div>
@@ -431,8 +403,8 @@ export const CONTENT = [
 
   { id: 'well', mood: 'mood-green', eyebrow: 'X — The Well', html: `
       <h2 class="section-title">The Well</h2>
-      <p>Support this house, or another work that should stay in the world. Nothing here is required to walk the scroll.</p>
-      <p style="margin-top:0.75rem;font-size:0.95rem;color:var(--ink-dim)">Swipe for causes — including <em style="color:var(--ink);font-style:italic">MOLI</em>, a proposed UK welfare body in formation (Scotland first).</p>
+      <p>Support this house, or another work that should stay in the world. Nothing here is required to walk the rest of the rooms.</p>
+      <p style="margin-top:0.75rem;font-size:0.95rem;color:var(--ink-dim)">Among the causes: <em style="color:var(--ink);font-style:italic">MOLI</em> — Mercy On Lost Individuals — a proposed UK welfare effort in formation, with Scotland first in view.</p>
       <div data-role="well-face"></div>`,
     detail: `
       <h2>The Well</h2>

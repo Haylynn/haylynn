@@ -1,9 +1,4 @@
-/**
- * HAYLYNN: Where the house asks the ledger — when that ledger exists.
- *
- * THE OTHER: apiBase and related public endpoints for profile and billing portal.
- * Empty means Threshold stays a shaped room only.
- */
+/** Membership UI defaults (theme preview). No secrets. */
 export const MEMBERS_CONFIG = {
   demoTheme: {
     themeName: 'Void Bloom',
@@ -13,10 +8,10 @@ export const MEMBERS_CONFIG = {
       background: '#0a0814',
       surface: '#16122a',
       text: '#efe9e0',
-      accent: '#ec5aa0'
+      accent: '#ec5aa0',
     },
     typography: { fontStyle: 'serif' },
     geometry: { borderRadius: 'round' },
-    customEffects: { glow: true, scanlines: false, glassmorphism: true }
-  }
+    customEffects: { glow: true, scanlines: false, glassmorphism: true },
+  },
 };

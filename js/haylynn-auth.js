@@ -89,7 +89,7 @@ export async function getProfile() {
 }
 
 const PROFILE_ALLOW = new Set([
-  'display_name', 'handle', 'bio', 'links', 'avatar_url', 'theme_config',
+  'display_name', 'handle', 'bio', 'links', 'avatar_url', 'theme_config', 'wallet_address',
 ]);
 
 export async function saveProfile(fields) {
