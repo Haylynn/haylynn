@@ -1,0 +1,6 @@
+-- Cosmic Decay passport notes (no breaking schema change).
+-- adventure_progress.flags may include:
+--   domain_id, campaign_id, character_name, room marks from the RPG
+-- adventure_progress.node_id: hub | domain_ruins | future campaign keys
+-- inventory_items: RPG loot mirrored from Cosmic Decay when synced
+-- The playable Domains live in the Cosmic Decay app; this DB is the account mirror.
