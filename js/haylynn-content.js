@@ -17,7 +17,7 @@ export const CONTENT = [
       </div>
       <p style="margin-top:1.2rem;color:var(--ink-dim)">Scroll on for her world, language, story, and voice.</p>` },
 
-{ id: 'home{ id: 'home', mood: 'mood-purple', eyebrow: 'I — Her World', html: `
+{ id: 'home', mood: 'mood-purple', eyebrow: 'I — Her World', html: `
       <h2 class="section-title">Her World</h2>
       <p>Books, a language, and music from one fiction — Haylynn, who only exists when she steps into reality. The rooms below are hers. Scroll to walk them; open More when a chamber goes deeper.</p>`,
     detail: `
