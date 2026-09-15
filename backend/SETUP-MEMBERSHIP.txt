@@ -1,0 +1,38 @@
+Membership setup (private runbook — do not put secrets in the public site)
+
+1) Supabase project
+   - Authentication → enable Email; optionally Google/Discord
+   - URL config: Site URL + redirect = your real origin (Pages or domain)
+
+2) SQL
+   - Run: backend/supabase/migrations/20260914_membership_core.sql
+   - Confirm RLS enabled on profiles + adventure_progress
+
+3) Frontend config (js/auth-config.js)
+   - supabaseUrl = project URL
+   - supabaseAnonKey = anon public key only
+   - prices.supporter / prices.patron = Stripe Price ids (price_...)
+
+4) Stripe
+   - Products: Supporter, Patron (recurring)
+   - Edge secrets: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET,
+     STRIPE_PRICE_SUPPORTER, STRIPE_PRICE_PATRON, SITE_URL,
+     SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
+
+5) Deploy functions
+   - create-checkout-session
+   - create-portal-session
+   - stripe-webhook
+   - Point Stripe webhook to .../functions/v1/stripe-webhook
+     events: checkout.session.completed, customer.subscription.updated,
+     customer.subscription.deleted
+
+6) Test
+   - Sign up → row in profiles + adventure_progress
+   - Try path on Threshold without login (guest) vs with login (saved)
+   - Checkout test mode → profiles.tier updates via webhook only
+
+Security
+   - Never ship service_role or Stripe secret in js/
+   - Clients cannot update tier / stripe_* (enforced by RLS policy)
+   - Webhook is the only writer for paid state
