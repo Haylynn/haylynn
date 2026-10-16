@@ -89,6 +89,7 @@ export async function getProfile() {
 }
 
 const PROFILE_ALLOW = new Set([
+  'section_tags',
   'display_name', 'handle', 'bio', 'links', 'avatar_url', 'theme_config', 'wallet_address',
 ]);
 
@@ -111,6 +112,8 @@ export async function saveProfile(fields) {
           if (item && typeof item.url === 'string') return { url: item.url.slice(0, 500) };
           return null;
         }).filter(Boolean);
+      } else if (k === 'section_tags' && Array.isArray(v)) {
+        clean[k] = v.filter((id) => typeof id === 'string').map((id) => id.slice(0, 64)).slice(0, 99);
       } else if (typeof v === 'string') {
         clean[k] = v.slice(0, k === 'bio' ? 2000 : 200);
       } else if (k === 'theme_config' && v && typeof v === 'object') {

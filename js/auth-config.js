@@ -1,6 +1,7 @@
 /**
  * Plug-in: public keys only. Leave empty until backends are live.
  * Site stays visitor-safe while these are blank.
+ * Copy values from auth-config.EXAMPLE.js when going live.
  */
 export const AUTH_CONFIG = {
   supabaseUrl: '', // https://xxxx.supabase.co

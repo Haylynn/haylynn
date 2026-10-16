@@ -1,65 +1,56 @@
 /**
- * Adventure progress — account-bound path through the house.
- * Requires auth. Guest progress stays in memory only (not written).
+ * Cosmic Decay — membership passport for the hybrid text-adventure RPG.
+ * Play happens at the campaign shell; this site holds account-bound progress
+ * when auth is live (node, domain, flags, score, unlocks).
+ *
+ * Game: https://haylynn-s-world.vercel.app/
  */
 import { authReady, supabase, getCurrentUser } from './haylynn-auth.js';
 
+export const COSMIC_DECAY_URL = 'https://haylynn-s-world.vercel.app/';
+
 const DEFAULT = {
-  node_id: 'start',
+  node_id: 'hub',
+  domain_id: null,
+  campaign_id: null,
   flags: {},
   unlocked: [],
   path_score: 0,
+  character_name: null,
 };
 
-/** Starter graph — expand nodes without changing the data model. */
+/**
+ * Lightweight hub on the main site — not a replacement for the full RPG.
+ * Real Domains (Plaza, Garden, Wreck, Archive, Spire Node, …) live in the game.
+ */
 export const ADVENTURE_NODES = {
-  start: {
-    id: 'start',
-    title: 'Cosmic Decay · edge',
-    body: 'Cosmic Decay begins at the edge of the house. The scroll is open to anyone. Threshold and the longer paths wait for those who leave a name.',
+  hub: {
+    id: 'hub',
+    title: 'Cosmic Decay',
+    body: 'A hybrid text-adventure RPG on a dying Earth. The shell is empty until you choose a Domain. Campaigns slot in as they are written — progress under your name waits here when you are signed in.',
     choices: [
-      { id: 'enter_threshold', label: 'Step toward Threshold', next: 'threshold_gate' },
-      { id: 'walk_free', label: 'Walk the free rooms only', next: 'free_walk' },
+      { id: 'open_game', label: 'Enter Cosmic Decay', href: COSMIC_DECAY_URL },
+      { id: 'domain_ruins', label: 'About Domain Ruins (test)', next: 'domain_ruins' },
     ],
   },
-  free_walk: {
-    id: 'free_walk',
-    title: 'Open halls',
-    body: 'World, language, story, and voice remain open. Return here when you wish to leave a mark.',
+  domain_ruins: {
+    id: 'domain_ruins',
+    title: 'Domain Ruins',
+    body: 'Test campaign: explore a collapsed Hardened Domain — Plaza, Garden, Wreck (Prime), Archive, Spire Node. Full play is in the Cosmic Decay shell; this house only keeps your passport.',
     choices: [
-      { id: 'back', label: 'Return to the edge', next: 'start' },
-    ],
-  },
-  threshold_gate: {
-    id: 'threshold_gate',
-    title: 'Threshold',
-    body: 'A quieter door. Sign in to keep your place in this path. Patronage, when you choose it, deepens what opens later — it is never required to walk the public rooms.',
-    choices: [
-      { id: 'continue_signed', label: 'I have crossed (signed in)', next: 'path_open', requireAuth: true },
-      { id: 'back', label: 'Not yet', next: 'start' },
-    ],
-  },
-  path_open: {
-    id: 'path_open',
-    title: 'A place kept',
-    body: 'Your account holds this step. From here the path can branch — trials, patronage doors, and later, longer adventures. The house remembers only what you allow it to keep under your name.',
-    choices: [
-      { id: 'to_patron_note', label: 'Ask about patronage', next: 'patron_note' },
-      { id: 'to_start', label: 'Return to the edge', next: 'start' },
-    ],
-  },
-  patron_note: {
-    id: 'patron_note',
-    title: 'Patronage',
-    body: 'Supporter and Patron are subscriptions managed outside this tale. They unlock quieter perks in Threshold — not a higher moral rank. The public house stays open either way.',
-    choices: [
-      { id: 'back_path', label: 'Back', next: 'path_open' },
+      { id: 'play_ruins', label: 'Play Domain Ruins', href: COSMIC_DECAY_URL },
+      { id: 'back_hub', label: 'Back', next: 'hub' },
     ],
   },
 };
+
+// Back-compat for members UI imports
+export { ADVENTURE_NODES as ADVENTURE_NODES_MAP };
 
 export async function loadAdventureProgress() {
-  if (!authReady || !supabase) return { ...DEFAULT, guest: true };
+  if (!authReady || !supabase) {
+    return { ...DEFAULT, guest: true };
+  }
   const user = await getCurrentUser();
   if (!user) return { ...DEFAULT, guest: true };
 
@@ -70,19 +61,27 @@ export async function loadAdventureProgress() {
     .maybeSingle();
 
   if (error || !data) {
-    // Ensure row exists
     await supabase.from('adventure_progress').upsert(
-      { user_id: user.id, node_id: 'start', flags: {}, unlocked: [], path_score: 0 },
+      { user_id: user.id, node_id: 'hub', flags: {}, unlocked: [], path_score: 0 },
       { onConflict: 'user_id' },
     );
     return { ...DEFAULT, guest: false };
   }
+
+  // Prefer hub if old placeholder nodes linger
+  let node_id = data.node_id || 'hub';
+  if (!ADVENTURE_NODES[node_id]) node_id = 'hub';
+
   return {
-    node_id: data.node_id || 'start',
+    node_id,
+    domain_id: data.flags?.domain_id || null,
+    campaign_id: data.flags?.campaign_id || null,
     flags: data.flags || {},
     unlocked: data.unlocked || [],
     path_score: data.path_score || 0,
+    character_name: data.flags?.character_name || null,
     guest: false,
+    updated_at: data.updated_at,
   };
 }
 
@@ -94,10 +93,15 @@ export async function saveAdventureProgress(patch) {
   const current = await loadAdventureProgress();
   if (current.guest) return { ok: false, reason: 'auth' };
 
+  const flags = { ...(current.flags || {}), ...(patch.flags || {}) };
+  if (patch.domain_id != null) flags.domain_id = patch.domain_id;
+  if (patch.campaign_id != null) flags.campaign_id = patch.campaign_id;
+  if (patch.character_name != null) flags.character_name = patch.character_name;
+
   const next = {
     user_id: user.id,
     node_id: patch.node_id ?? current.node_id,
-    flags: patch.flags ?? current.flags,
+    flags,
     unlocked: patch.unlocked ?? current.unlocked,
     path_score: Math.max(0, patch.path_score ?? current.path_score),
     updated_at: new Date().toISOString(),
@@ -108,14 +112,18 @@ export async function saveAdventureProgress(patch) {
     .upsert(next, { onConflict: 'user_id' });
 
   if (error) return { ok: false, reason: error.message };
-  return { ok: true, progress: next };
+  return { ok: true, progress: { ...next, guest: false } };
 }
 
 export async function chooseAdventure(choiceId) {
   const progress = await loadAdventureProgress();
-  const node = ADVENTURE_NODES[progress.node_id] || ADVENTURE_NODES.start;
+  const node = ADVENTURE_NODES[progress.node_id] || ADVENTURE_NODES.hub;
   const choice = (node.choices || []).find((c) => c.id === choiceId);
   if (!choice) return { ok: false, reason: 'unknown_choice' };
+
+  if (choice.href) {
+    return { ok: true, external: choice.href, progress };
+  }
 
   if (choice.requireAuth && progress.guest) {
     return { ok: false, reason: 'auth_required' };
@@ -137,7 +145,7 @@ export async function chooseAdventure(choiceId) {
 
   const saved = await saveAdventureProgress({ node_id: nextId, flags, path_score });
   if (!saved.ok) return saved;
-  return { ok: true, guest: false, progress: saved.progress };
+  return { ok: true, guest: false, progress: { ...saved.progress, guest: false } };
 }
 
 const ADV_STYLE = `
@@ -158,13 +166,15 @@ const ADV_STYLE = `
   font-size: 0.92rem; color: var(--ink-dim); line-height: 1.5; margin-bottom: 0.85rem;
 }
 .hy-adventure .adv-choices { display: flex; flex-direction: column; gap: 0.45rem; }
-.hy-adventure .adv-choices button {
+.hy-adventure .adv-choices button,
+.hy-adventure .adv-choices a.adv-link {
   font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
   text-align: left; padding: 0.55rem 0.75rem; border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.25);
-  color: var(--ink); cursor: pointer;
+  color: var(--ink); cursor: pointer; text-decoration: none; display: block;
 }
-.hy-adventure .adv-choices button:hover {
+.hy-adventure .adv-choices button:hover,
+.hy-adventure .adv-choices a.adv-link:hover {
   border-color: rgba(53,201,143,0.45);
 }
 .hy-adventure .adv-meta {
@@ -189,40 +199,65 @@ export async function mountAdventure(root) {
 
   const render = async (overrideProgress) => {
     const progress = overrideProgress || (await loadAdventureProgress());
-    const node = ADVENTURE_NODES[progress.node_id] || ADVENTURE_NODES.start;
+    const node = ADVENTURE_NODES[progress.node_id] || ADVENTURE_NODES.hub;
     root.innerHTML = '';
     const box = document.createElement('div');
     box.className = 'hy-adventure';
+
     const kicker = document.createElement('div');
     kicker.className = 'adv-kicker';
-    kicker.textContent = progress.guest ? 'Path · unrecorded' : 'Path · held under your name';
+    kicker.textContent = progress.guest
+      ? 'Cosmic Decay · passport unlinked'
+      : 'Cosmic Decay · passport under your name';
+
     const title = document.createElement('div');
     title.className = 'adv-title';
     title.textContent = node.title;
+
     const body = document.createElement('div');
     body.className = 'adv-body';
     body.textContent = node.body;
+
     const choices = document.createElement('div');
     choices.className = 'adv-choices';
     for (const c of node.choices || []) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = c.label;
-      btn.addEventListener('click', async () => {
-        const res = await chooseAdventure(c.id);
-        if (!res.ok && res.reason === 'auth_required') {
-          body.textContent = 'Sign in at Threshold to keep this step under your name. The public rooms stay open either way.';
-          return;
-        }
-        if (res.ok) await render(res.progress);
-      });
-      choices.appendChild(btn);
+      if (c.href) {
+        const a = document.createElement('a');
+        a.className = 'adv-link';
+        a.href = c.href;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = c.label;
+        choices.appendChild(a);
+      } else {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = c.label;
+        btn.addEventListener('click', async () => {
+          const res = await chooseAdventure(c.id);
+          if (!res.ok && res.reason === 'auth_required') {
+            body.textContent =
+              'Sign in at Threshold to keep Cosmic Decay progress under your name. You can still play the game as a guest.';
+            return;
+          }
+          if (res.external) {
+            window.open(res.external, '_blank', 'noopener,noreferrer');
+            return;
+          }
+          if (res.ok) await render(res.progress);
+        });
+        choices.appendChild(btn);
+      }
     }
+
     const meta = document.createElement('div');
     meta.className = 'adv-meta';
-    meta.textContent = progress.guest
-      ? 'Guest steps are not saved'
-      : `Score ${progress.path_score || 0}`;
+    const bits = [];
+    if (progress.character_name) bits.push(progress.character_name);
+    if (progress.domain_id) bits.push('Domain ' + progress.domain_id);
+    bits.push(progress.guest ? 'Guest · not saved here' : 'Score ' + (progress.path_score || 0));
+    meta.textContent = bits.join(' · ');
+
     box.append(kicker, title, body, choices, meta);
     root.appendChild(box);
   };
