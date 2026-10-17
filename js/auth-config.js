@@ -4,8 +4,8 @@
  * Copy values from auth-config.EXAMPLE.js when going live.
  */
 export const AUTH_CONFIG = {
-  supabaseUrl: '', // https://xxxx.supabase.co
-  supabaseAnonKey: '',
+  supabaseUrl: '', 'https://beskzdlkrshkfyzqilia.supabase.co',
+  supabaseAnonKey: '', sb_publishable_T11LnzPXxtf2wPX6KY6i2A_lvoqJuvD, 
 
   prices: {
     supporter: '', // price_...
