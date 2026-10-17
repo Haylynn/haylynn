@@ -1,14 +1,14 @@
 /**
- * Plug-in: public keys only. Leave empty until backends are live.
- * Site stays visitor-safe while these are blank.
- * Copy values from auth-config.EXAMPLE.js when going live.
+ * Plug-in: public keys only.
+ * anon / publishable key is OK in the browser with RLS.
+ * Never put the service_role key here.
  */
 export const AUTH_CONFIG = {
-  supabaseUrl: '', 'https://beskzdlkrshkfyzqilia.supabase.co',
-  supabaseAnonKey: '', sb_publishable_T11LnzPXxtf2wPX6KY6i2A_lvoqJuvD, 
+  supabaseUrl: 'https://beskzdlkrshktyzqilia.supabase.co',
+  supabaseAnonKey: 'sb_publishable_T11LnzPXxtf2wPX6KY6i2A_lvoqJuvD',
 
   prices: {
-    supporter: '', // price_...
+    supporter: '',
     patron: '',
   },
 
