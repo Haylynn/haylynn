@@ -1,10 +1,5 @@
-/**
- * Plug-in: public keys only.
- * anon / publishable key is OK in the browser with RLS.
- * Never put the service_role key here.
- */
 export const AUTH_CONFIG = {
-  supabaseUrl: 'https://beskzdlkrshktyzqilia.supabase.co',
+  supabaseUrl: 'https://beskzdlkrshkfyzqilia.supabase.co',
   supabaseAnonKey: 'sb_publishable_T11LnzPXxtf2wPX6KY6i2A_lvoqJuvD',
 
   prices: {
