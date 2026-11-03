@@ -35,7 +35,7 @@ function injectStyles() {
   style.id = 'hy-auth-style';
   style.textContent = `
     #auth-badge {
-      position: fixed; top: 1rem; left: 1rem; z-index: 50;
+      position: fixed; top: max(0.75rem, env(safe-area-inset-top)); right: max(0.75rem, env(safe-area-inset-right)); left: auto; z-index: 50;
       font-family: 'Space Mono', monospace; font-size: 0.55rem;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--ink-dim, #9a92a4);

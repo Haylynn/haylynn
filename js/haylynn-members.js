@@ -38,6 +38,7 @@ import {
   getAccountProgress,
   unlockPathNode,
   listPathNodes,
+  listPathEdges,
 } from './haylynn-account-progress.js';
 
 function escapeHtml(s) {
@@ -75,6 +76,65 @@ const STYLE = `
 .hy-threshold .th-lead {
   font-size: 0.8rem; line-height: 1.55; color: var(--ink-dim, #9a92a4);
   margin: 0.45rem 0 0; max-width: 36rem;
+}
+
+.hy-threshold .th-path-tree {
+  position: relative; width: 100%; height: min(70vh, 520px);
+  margin: 0.75rem 0 1rem; border-radius: 12px;
+  border: 1px solid rgba(138,92,240,0.25);
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(138,92,240,0.14), transparent 50%),
+    radial-gradient(ellipse at 50% 10%, rgba(53,201,143,0.06), transparent 40%),
+    rgba(6,5,12,0.65);
+  overflow: auto;
+  touch-action: pan-x pan-y;
+}
+.hy-threshold .th-path-inner {
+  position: relative; width: 900px; height: 720px; margin: 0 auto;
+}
+.hy-threshold .th-path-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.hy-threshold .th-path-node {
+  position: absolute; transform: translate(-50%, -50%);
+  width: 4.6rem; min-height: 2.6rem; padding: 0.35rem 0.25rem;
+  border-radius: 999px; text-align: center; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(10,8,20,0.94);
+  font-family: 'Space Mono', monospace;
+  z-index: 2;
+}
+.hy-threshold .th-path-node.minor { width: 3.4rem; min-height: 2.2rem; border-radius: 8px; }
+.hy-threshold .th-path-node.major {
+  width: 5.4rem; border-color: rgba(138,92,240,0.45);
+  box-shadow: 0 0 10px rgba(138,92,240,0.15);
+}
+.hy-threshold .th-path-node.keystone {
+  width: 5.8rem; border-radius: 10px;
+  border-color: rgba(236,90,160,0.5);
+  box-shadow: 0 0 12px rgba(236,90,160,0.2);
+}
+.hy-threshold .th-path-node.start {
+  width: 5rem; border-color: rgba(53,201,143,0.45);
+}
+.hy-threshold .th-path-node .pn-name {
+  display: block; font-size: 0.42rem; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--ink, #efe9e0); line-height: 1.25;
+}
+.hy-threshold .th-path-node .pn-cost {
+  display: block; margin-top: 0.15rem; font-size: 0.4rem;
+  color: var(--ink-dim, #9a92a4);
+}
+.hy-threshold .th-path-node.on {
+  border-color: rgba(53,201,143,0.7) !important;
+  box-shadow: 0 0 14px rgba(53,201,143,0.3);
+}
+.hy-threshold .th-path-node.on .pn-cost { color: #35c98f; }
+.hy-threshold .th-path-node.locked { opacity: 0.45; }
+.hy-threshold .th-path-legend {
+  font-family: 'Space Mono', monospace; font-size: 0.5rem;
+  color: var(--ink-dim, #9a92a4); line-height: 1.45; margin: 0.5rem 0;
 }
 .hy-threshold .th-badge {
   flex-shrink: 0; text-align: center;
@@ -496,36 +556,59 @@ function renderDoors(panel, member) {
 async function renderPath(panel, member) {
   const prog = await getAccountProgress();
   const nodes = listPathNodes();
+  const edges = typeof listPathEdges === 'function' ? listPathEdges() : [];
   const unlocked = new Set(prog.unlocked || []);
   const src = prog.source === 'supabase' ? 'Account (cloud)' : 'Local preview — sign in to sync';
-  const rows = nodes
-    .map((n) => {
-      const on = unlocked.has(n.id);
-      const cost = n.cost ?? 0;
-      const btn = on
-        ? `<span class="th-empty" style="margin:0">Unlocked</span>`
-        : `<button type="button" class="th-btn" data-action="unlock-path" data-node="${escapeHtml(n.id)}">Unlock · ${cost} pt</button>`;
-      return `<div class="th-card" style="margin-bottom:0.6rem">
-        <h4 style="margin:0 0 0.25rem">${escapeHtml(n.name)}</h4>
-        <p class="th-empty" style="margin:0 0 0.5rem">${escapeHtml(n.blurb || '')}</p>
-        ${btn}
-      </div>`;
-    })
-    .join('');
+  const rate = 5;
+
+  const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
+  const lines = edges.map(([a, b]) => {
+    const A = byId[a];
+    const B = byId[b];
+    if (!A || !B) return '';
+    const on = unlocked.has(a) && unlocked.has(b);
+    return `<line x1="${A.x}%" y1="${A.y}%" x2="${B.x}%" y2="${B.y}%"
+      stroke="${on ? 'rgba(53,201,143,0.5)' : 'rgba(138,92,240,0.22)'}"
+      stroke-width="${on ? 2.5 : 1.5}" />`;
+  }).join('');
+
+  const nodeHtml = nodes.map((n) => {
+    const on = unlocked.has(n.id);
+    const cost = n.cost ?? 0;
+    const kind = n.kind || 'minor';
+    // reachable if any parent unlocked or start
+    const parents = edges.filter(([, t]) => t === n.id).map(([f]) => f);
+    const reachable = on || kind === 'start' || !parents.length || parents.some((p) => unlocked.has(p));
+    const costLabel = on ? 'On' : (cost === 0 ? 'Free' : `${cost}pt`);
+    return `<button type="button" class="th-path-node ${kind} ${on ? 'on' : ''} ${reachable ? '' : 'locked'}"
+      style="left:${n.x}%;top:${n.y}%"
+      data-action="unlock-path" data-node="${escapeHtml(n.id)}"
+      title="${escapeHtml((n.blurb || '') + (cost ? ` · ${cost} path points (or ${cost * rate} marks gap)` : ''))}">
+      <span class="pn-name">${escapeHtml(n.name)}</span>
+      <span class="pn-cost">${escapeHtml(costLabel)}</span>
+    </button>`;
+  }).join('');
+
   panel.innerHTML = `
     <div class="th-card">
       <h4>Path</h4>
-      <p class="th-empty">Account progression for the whole house — not only one game. Play realities to earn path points; unlock nodes the house and future games can honour.</p>
+      <p class="th-empty">Account web for the whole house. Minors are small; majors open doors; keystones define a lean. Travel along the lines.</p>
       <div class="th-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin:0.8rem 0">
         <div class="th-stat"><span class="v">${prog.marks ?? 0}</span><span class="k">Marks</span></div>
         <div class="th-stat"><span class="v">${prog.path_points ?? 0}</span><span class="k">Path points</span></div>
-        <div class="th-stat"><span class="v">${unlocked.size}</span><span class="k">Nodes</span></div>
+        <div class="th-stat"><span class="v">${unlocked.size}/${nodes.length}</span><span class="k">Nodes</span></div>
       </div>
+      <p class="th-path-legend">Path points first. Marks fill a gap at <strong style="color:var(--ink)">${rate} marks = 1 pt</strong>. Grey nodes need a neighbour unlocked. Scroll the web on small screens.</p>
       <p class="th-empty">${escapeHtml(src)}</p>
     </div>
-    ${rows}
-    <p class="th-empty">Demo: <button type="button" class="th-btn" data-action="grant-path-demo">+2 path points</button>
-    <button type="button" class="th-btn" data-action="grant-marks-demo">+5 marks</button></p>
+    <div class="th-path-tree"><div class="th-path-inner">
+      <svg class="th-path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
+      ${nodeHtml}
+    </div></div>
+    <p class="th-empty">Demo:
+      <button type="button" class="th-btn" data-action="grant-path-demo">+5 path points</button>
+      <button type="button" class="th-btn" data-action="grant-marks-demo">+25 marks</button>
+    </p>
   `;
 }
 
@@ -678,13 +761,13 @@ function bindRoot(root) {
     }
     if (action === 'grant-path-demo') {
       const { awardPathPoints } = await import('./haylynn-account-progress.js');
-      await awardPathPoints(2, 'demo');
+      await awardPathPoints(5, 'demo');
       await refreshRoot(root);
       return;
     }
     if (action === 'grant-marks-demo') {
       const { awardMarks } = await import('./haylynn-account-progress.js');
-      await awardMarks(5, 'demo');
+      await awardMarks(25, 'demo');
       await refreshRoot(root);
       return;
     }

@@ -1,22 +1,19 @@
 /**
- * Account progression — marks + thin Path on the Princess of Reality account.
- * Same user_id as Threshold / Cosmic Decay. No Stripe.
- *
- * - Online: Supabase account_marks + account_path + account_ledger
- * - Offline / preview: localStorage
+ * Account progression — marks + Path (Supabase or local).
+ * No Stripe.
  */
 import { authReady, supabase, getCurrentUser } from './haylynn-auth.js';
-import { PATH_NODES, STARTING_MARKS } from './account-progress-config.js';
+import {
+  PATH_NODES,
+  PATH_EDGES,
+  STARTING_MARKS,
+  MARKS_PER_PATH_POINT,
+} from './account-progress-config.js';
 
 const LOCAL_KEY = 'haylynn-account-progress-v1';
 
 function emptyState() {
-  return {
-    marks: STARTING_MARKS,
-    path_points: 0,
-    unlocked: [],
-    ledger: [],
-  };
+  return { marks: STARTING_MARKS, path_points: 0, unlocked: [], ledger: [] };
 }
 
 export function loadLocalProgress() {
@@ -41,9 +38,6 @@ export function saveLocalProgress(state) {
   } catch { /* ignore */ }
 }
 
-/**
- * Load progress for the current user (or local preview).
- */
 export async function getAccountProgress({ allowLocal = true } = {}) {
   if (authReady && supabase) {
     const user = await getCurrentUser();
@@ -72,23 +66,16 @@ export async function getAccountProgress({ allowLocal = true } = {}) {
           ledger: ledger || [],
           source: 'supabase',
         };
-      } catch {
-        /* fall through */
-      }
+      } catch { /* fall through */ }
     }
   }
   if (!allowLocal) return emptyState();
   return { ...loadLocalProgress(), source: 'local' };
 }
 
-/**
- * Award marks (e.g. after a Decay session or manual grant).
- * reason: short string for the ledger.
- */
 export async function awardMarks(amount, reason = 'grant') {
   const n = Math.floor(Number(amount) || 0);
   if (!n) return getAccountProgress();
-
   if (authReady && supabase) {
     const user = await getCurrentUser();
     if (user) {
@@ -106,20 +93,47 @@ export async function awardMarks(amount, reason = 'grant') {
       return getAccountProgress();
     }
   }
-
   const local = loadLocalProgress();
   local.marks = (local.marks || 0) + n;
-  local.ledger = [
-    { delta: n, reason, created_at: new Date().toISOString() },
-    ...(local.ledger || []),
-  ].slice(0, 40);
+  local.ledger = [{ delta: n, reason, created_at: new Date().toISOString() }, ...(local.ledger || [])].slice(0, 40);
   saveLocalProgress(local);
   return { ...local, source: 'local' };
 }
 
-/**
- * Spend path_points (or marks) to unlock a Path node.
- */
+export async function awardPathPoints(amount, reason = 'play') {
+  const n = Math.floor(Number(amount) || 0);
+  if (!n) return getAccountProgress();
+  if (authReady && supabase) {
+    const user = await getCurrentUser();
+    if (user) {
+      const cur = await getAccountProgress({ allowLocal: false });
+      const next = (cur.path_points || 0) + n;
+      await supabase.from('account_path').upsert(
+        {
+          user_id: user.id,
+          path_points: next,
+          unlocked: cur.unlocked || [],
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'user_id' },
+      );
+      return getAccountProgress();
+    }
+  }
+  const local = loadLocalProgress();
+  local.path_points = (local.path_points || 0) + n;
+  saveLocalProgress(local);
+  return { ...local, source: 'local' };
+}
+
+function canReach(nodeId, unlocked) {
+  const u = new Set(unlocked || []);
+  if (nodeId === 'start-known' || PATH_NODES.find((n) => n.id === nodeId)?.kind === 'start') return true;
+  const incoming = PATH_EDGES.filter(([, t]) => t === nodeId).map(([f]) => f);
+  if (!incoming.length) return true; // isolated allowed
+  return incoming.some((f) => u.has(f));
+}
+
 export async function unlockPathNode(nodeId) {
   const node = PATH_NODES.find((n) => n.id === nodeId);
   if (!node) return { ok: false, error: 'Unknown node' };
@@ -127,26 +141,32 @@ export async function unlockPathNode(nodeId) {
   const prog = await getAccountProgress();
   if (prog.unlocked?.includes(nodeId)) return { ok: true, progress: prog, already: true };
 
-  const cost = node.cost ?? 1;
-  const points = prog.path_points || 0;
-  if (points < cost) {
-    // allow spending marks as path points at 10:1 if short
-    const need = cost - points;
-    const markCost = need * 10;
-    if ((prog.marks || 0) < markCost) {
-      return { ok: false, error: 'Not enough path points or marks' };
+  if (!canReach(nodeId, prog.unlocked)) {
+    return { ok: false, error: 'Unlock a connected node first — travel the Path.' };
+  }
+
+  const cost = Math.max(0, node.cost ?? 0);
+  let nextPoints = prog.path_points || 0;
+  let nextMarks = prog.marks || 0;
+  const rate = MARKS_PER_PATH_POINT || 5;
+
+  if (cost > 0) {
+    if (nextPoints >= cost) {
+      nextPoints -= cost;
+    } else {
+      const needPts = cost - nextPoints;
+      const markCost = needPts * rate;
+      if (nextMarks < markCost) {
+        return {
+          ok: false,
+          error: `Need ${cost} path points (have ${nextPoints}) or ${markCost} marks for the gap (have ${nextMarks}).`,
+        };
+      }
+      nextMarks -= markCost;
+      nextPoints = 0;
     }
   }
 
-  let nextPoints = prog.path_points || 0;
-  let nextMarks = prog.marks || 0;
-  if (nextPoints >= cost) {
-    nextPoints -= cost;
-  } else {
-    const need = cost - nextPoints;
-    nextPoints = 0;
-    nextMarks -= need * 10;
-  }
   const unlocked = [...(prog.unlocked || []), nodeId];
 
   if (authReady && supabase) {
@@ -187,41 +207,12 @@ export async function unlockPathNode(nodeId) {
   return { ok: true, progress: { ...local, source: 'local' } };
 }
 
-/** Grant path points (from play milestones). */
-export async function awardPathPoints(amount, reason = 'play') {
-  const n = Math.floor(Number(amount) || 0);
-  if (!n) return getAccountProgress();
-
-  if (authReady && supabase) {
-    const user = await getCurrentUser();
-    if (user) {
-      const cur = await getAccountProgress({ allowLocal: false });
-      const next = (cur.path_points || 0) + n;
-      await supabase.from('account_path').upsert(
-        {
-          user_id: user.id,
-          path_points: next,
-          unlocked: cur.unlocked || [],
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: 'user_id' },
-      );
-      return getAccountProgress();
-    }
-  }
-
-  const local = loadLocalProgress();
-  local.path_points = (local.path_points || 0) + n;
-  local.ledger = [
-    { delta: 0, reason: `path_points:+${n}:${reason}`, created_at: new Date().toISOString() },
-    ...(local.ledger || []),
-  ].slice(0, 40);
-  saveLocalProgress(local);
-  return { ...local, source: 'local' };
-}
-
 export function listPathNodes() {
   return PATH_NODES.slice();
 }
 
-export { PATH_NODES, STARTING_MARKS };
+export function listPathEdges() {
+  return PATH_EDGES.slice();
+}
+
+export { PATH_NODES, PATH_EDGES, STARTING_MARKS, MARKS_PER_PATH_POINT };
