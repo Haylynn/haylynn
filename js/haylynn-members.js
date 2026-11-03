@@ -331,7 +331,7 @@ function renderClosed(panel) {
   panel.innerHTML = `
     <div class="th-card">
       <h4>Enter the threshold</h4>
-      <p class="th-empty">Create an account and tag up to <strong style="color:var(--ink)">three rooms</strong>. Each tag opens membership perks for that part of the house — music, story, markets, play, and more.</p>
+      <p class="th-empty">Create a free passport and tag up to <strong style="color:var(--ink)">three rooms</strong>. Each tag deepens that part of the house for you — Voice, Chronicle, Market, Play, and more.</p>
       <p class="th-empty">Cosmic Decay character save only appears if you tag it. Other rooms stay open as a visitor.</p>
       <div class="th-actions">
         <button type="button" class="th-btn primary" data-role="th-open-auth">Sign up · choose rooms</button>

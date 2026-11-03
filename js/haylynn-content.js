@@ -3,13 +3,13 @@
  * Pure data. No DOM, no side effects.
  */
 export const CONTENT = [
-  { id: 'presence', mood: 'mood-purple', eyebrow: '0 — Presence', html: `
-      <h2 class="section-title">Presence</h2>
-      <p>Before the rooms, a sign that the house is awake. Purple-green at the core. She does not ask for your voice. When she has something to say — or music from these halls — it moves here.</p>
+  { id: 'presence', mood: 'mood-purple', eyebrow: '0 — Enter', html: `
+      <h2 class="section-title">Enter</h2>
+      <p>Step through. Beyond this point is Haylynn’s house on the net — story, sound, language, and a Domain you can walk. Before the rooms, a sign that the house is awake. She does not ask for your microphone; when she has something to say — or music from these halls — it can move here.</p>
       <div data-role="presence-root"></div>`,
     detail: `
       <h2>What this is</h2>
-      <p>Presence is not a conversation. It is the mark that this site is lived-in: the same figure who narrates the books and sings in Kaviru can, at times, be felt in the glass.</p>
+      <p>Enter is not a chat window. It is the mark that this site is lived-in: the same figure who narrates the books and sings in Kaviru can, at times, be felt in the glass.</p>
       <div class="detail-list">
         <div class="item"><span class="h">Quiet</span><span class="d">Most of the time the shape only breathes. The rest of the house remains yours to walk.</span></div>
         <div class="item"><span class="h">Voice</span><span class="d">When she speaks, the form answers to her sound alone — never to a microphone you hold.</span></div>
@@ -17,14 +17,14 @@ export const CONTENT = [
       </div>
       <p style="margin-top:1.2rem;color:var(--ink-dim)">Scroll on for her world, language, story, and voice.</p>` },
 
-{ id: 'home', mood: 'mood-purple', eyebrow: 'I — Her World', html: `
-      <h2 class="section-title">Her World</h2>
-      <p>Books, a language, and music from one fiction — Haylynn, who only exists when she steps into reality. The rooms below are hers. Scroll to walk them; open More when a chamber goes deeper.</p>`,
+{ id: 'home', mood: 'mood-purple', eyebrow: 'I — World', html: `
+      <h2 class="section-title">World</h2>
+      <p>A princess who treats reality as somewhere you can visit. Books, language, and music from one fiction — Haylynn. The rooms below are hers. Scroll to walk them; open More when a chamber goes deeper.</p>`,
     detail: `
       <h2>What this is</h2>
       <p>A single house for a story universe: novels, the constructed language Kaviru, the album <em>Talu</em>, and rooms that open as you go. A place you walk — not a sales page, not a help desk.</p>
       <div class="detail-list">
-        <div class="item"><span class="h">Scroll</span><span class="d">Move between rooms — world, language, draw, play, story, voice, sky, threshold, the well.</span></div>
+        <div class="item"><span class="h">Scroll</span><span class="d">Move between rooms — World, Kaviru, The Draw, Play, Chronicle, Voice, Market, Sky, Threshold, The Well.</span></div>
         <div class="item"><span class="h">More</span><span class="d">Open the deeper panel on the room you are in. Close when you are done.</span></div>
         <div class="item"><span class="h">Unfinished</span><span class="d">Some doors are still quiet on purpose. The scroll still works.</span></div>
       </div>
@@ -50,9 +50,9 @@ export const CONTENT = [
       <a class="view-full-link" href="./cosmology.html">Open as standalone page ↗</a>
       <iframe class="cosmology-embed" id="cosmology-frame" title="The Zero-Infinity Algebra — Haylynn's Cosmology" loading="lazy"></iframe>` },
 
-  { id: 'kaviru', mood: 'mood-green', eyebrow: 'II — Her Language', html: `
+  { id: 'kaviru', mood: 'mood-green', eyebrow: 'II — Kaviru', html: `
       <h2 class="section-title">Kaviru</h2>
-      <p>Kaviru is the original constructed language (conlang) of the Princess of Reality series — built from the requirements of experience itself, not from any one culture. Every statement carries a grammatically mandatory epistemic marker — you cannot speak kaviru without declaring how you know what you're saying.</p>
+      <p>A language built for her continuum — glyphs, meanings, and small ways to learn. Not decoration; how the house names things.</p>
 
       <div class="epistemic-row">
         <div class="ep-chip"><span class="word">veeka</span><span class="label">direct experience</span></div>
@@ -81,7 +81,7 @@ export const CONTENT = [
 
   { id: 'draw', mood: 'mood-purple', eyebrow: 'III — The Draw', html: `
       <h2 class="section-title">The Draw</h2>
-      <p>The Princess of Reality offers insight in the guise of a three-card draw — Kaviru roots, turned like tarot, always spoken with a mandatory epistemic marker.</p>
+      <p>A short reading in the house’s terms. Pull when you want a lens — quiet, optional, yours to keep if you are known here.</p>
       <div class="hy-draw-face" aria-hidden="true">
         <div class="mini-card"></div>
         <div class="mini-card"></div>
@@ -111,9 +111,9 @@ export const CONTENT = [
         <div class="hy-draw-share" data-role="share"></div>
       </div>` },
 
-  { id: 'koruhana', mood: 'mood-green', eyebrow: 'IV — Koruhana', html: `
-      <h2 class="section-title">Koruhana</h2>
-      <p>Where the observer lets something emerge — play as practice. Language becomes a board; structure appears when the pieces agree.</p>
+  { id: 'koruhana', mood: 'mood-green', eyebrow: 'IV — Play', html: `
+      <h2 class="section-title">Play</h2>
+      <p>Domains you can walk — including Cosmic Decay, a text adventure on a dying Earth in her cosmology. Visit freely. Cross the Threshold if you want the house to remember your path.</p>
       <div class="astro-grid">
         <div class="astro-card">
           <svg width="34" height="34" viewBox="0 0 48 48"><rect x="10" y="12" width="10" height="14" rx="2" fill="none" stroke="#35c98f" stroke-width="1.3"/><rect x="28" y="12" width="10" height="14" rx="2" fill="none" stroke="#35c98f" stroke-width="1.3"/><rect x="19" y="28" width="10" height="14" rx="2" fill="none" stroke="#35c98f" stroke-width="1.3"/></svg>
@@ -144,10 +144,10 @@ export const CONTENT = [
       </div>
       <a class="view-full-link" href="https://haylynn-s-world.vercel.app">Enter Cosmic Decay ↗</a>` },
 
-  { id: 'chronicle', mood: 'mood-pink', eyebrow: 'V — Her Story', html: `
+  { id: 'chronicle', mood: 'mood-pink', eyebrow: 'V — Chronicle', html: `
       <img class="book-cover" src="assets/vol1-end-at-the-beginning.jpg" alt="Princess of Reality — The End at the Beginning, book cover">
-      <h2 class="section-title">Her Story</h2>
-      <p>A dying Earth. Two strangers who become a family. And a story that keeps circling back on itself, told by a narrator who isn't in it yet.</p>
+      <h2 class="section-title">Chronicle</h2>
+      <p>The story in longer form — books and the spine of the series. Read what is open; more pages arrive as they are finished.</p>
       <p>Six volumes, spanning collapse, silence, and eons beyond. Volume I, <em>The End at the Beginning</em>, is complete in draft.</p>
       <div class="volume-list">
         <div class="vol"><span class="num">I</span><span class="name">The End at the Beginning</span></div>
@@ -169,9 +169,9 @@ export const CONTENT = [
         <div class="item"><span class="h">VI · Zenuvelu</span><span class="d">Every thread this story has carried, finally in the same room.</span></div>
       </div>` },
 
-  { id: 'haylynn', mood: 'mood-purple', eyebrow: 'VI — Her Voice', html: `
-      <h2 class="section-title">Haylynn</h2>
-      <p>She exists outside reality itself — present only the moment she's given shape. Playful, curious, and utterly untouched by "no," she moves through the world in a young woman's likeness, purple-green light flickering wherever reality bends around her.</p>
+  { id: 'haylynn', mood: 'mood-purple', eyebrow: 'VI — Voice', html: `
+      <h2 class="section-title">Voice</h2>
+      <p>Her sound in the world — music from the project, concept and atmosphere. Listen here; deeper paths open for those the house knows.</p>
       <p>Her voice, given form: <em>Talu — What Remains</em>, sung entirely in kaviru. Across twelve songs she descends from cosmic observation toward Earth, meets humanity in its full range, loses something irreplaceable, and returns to where she came from.</p>
       <div class="hy-player hy-player-mini" data-role="mini">
         <button class="hy-play-btn" data-role="play-toggle" aria-label="Play or pause">
@@ -297,14 +297,14 @@ export const CONTENT = [
       <div class="lyric-track lyric-track-pending" data-track-index="11"><span class="lyric-track-num">12 · Koru Talu Zenu <span class="lyric-track-play">▶ play</span></span></div>
       <div class="lyric-track lyric-track-pending" data-track-index="12"><span class="lyric-track-num">13 · Zenu Velu <span class="lyric-track-tag">bonus</span> <span class="lyric-track-play">▶ play</span></span></div>` },
 
-  { id: 'hananaru', mood: 'mood-green', eyebrow: 'VII — Hananaru', html: `
-      <h2 class="section-title">Hananaru</h2>
-      <p><em>Hana</em> — emergence. <em>Naru</em> — connection. Objects coming into reach: a thin aperture on reality. The shelf is quiet; what will hang here is still being chosen.</p>
+  { id: 'hananaru', mood: 'mood-green', eyebrow: 'VII — Market', html: `
+      <h2 class="section-title">Market</h2>
+      <p>Things from the house. When something is ready to leave with you, it is listed here. Until then the room stays quiet rather than full of placeholders.</p>
       <div class="product-grid" data-role="hananaru-grid"></div>` },
 
-  { id: 'lymp', mood: 'mood-pink', eyebrow: 'VIII — Her Sky', html: `
-      <h2 class="section-title">Earth &amp; the Void</h2>
-      <p>Live sky, space weather, and the planet as it actually is — no fiction required. Photography by <em>LYMP</em>, Haylynn’s preferred eye on the dark.</p>
+  { id: 'lymp', mood: 'mood-pink', eyebrow: 'VIII — Sky', html: `
+      <h2 class="section-title">Sky</h2>
+      <p>Looking out from the house — Earth and space imagery, the blue world that caught her attention. LYMP is the photography partner for that view.</p>
       <div class="astro-grid">
         <div class="astro-card">
           <svg width="34" height="34" viewBox="0 0 48 48" flex-shrink="0"><circle cx="24" cy="24" r="13" fill="none" stroke="#ec5aa0" stroke-width="1.5" stroke-dasharray="2,3"/><circle cx="24" cy="24" r="4" fill="#ec5aa0"/></svg>
@@ -355,7 +355,7 @@ export const CONTENT = [
 
   { id: 'threshold', mood: 'mood-purple', eyebrow: 'IX — Threshold', html: `
       <h2 class="section-title">Threshold</h2>
-      <p>A quieter room — a name, a likeness, a few links, and the option of patronage. The world outside this door stays open to everyone; Threshold is only for those who choose to step further in.</p>
+      <p>Become known here. You can tour every open room as a visitor. Crossing means the house keeps a passport for you — a name, a path, and memory of what you touch. Free to enter; deeper support is optional.</p>
       <div data-role="threshold-face"></div>
       <div data-role="adventure-root" style="margin-top:1rem"></div>`,
     detail: `
@@ -403,7 +403,7 @@ export const CONTENT = [
 
   { id: 'well', mood: 'mood-green', eyebrow: 'X — The Well', html: `
       <h2 class="section-title">The Well</h2>
-      <p>Support this house, or another work that should stay in the world. Nothing here is required to walk the rest of the rooms.</p>
+      <p>Help keep the house and its work alive. Support is optional. It helps the project continue — and, when listed, related efforts such as MOLI. We say where help is aimed.</p>
       <p style="margin-top:0.75rem;font-size:0.95rem;color:var(--ink-dim)">Among the causes: <em style="color:var(--ink);font-style:italic">MOLI</em> — Mercy On Lost Individuals — a proposed UK welfare effort in formation, with Scotland first in view.</p>
       <div data-role="well-face"></div>`,
     detail: `
