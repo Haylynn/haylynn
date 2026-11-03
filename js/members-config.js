@@ -98,7 +98,7 @@ export const MEMBERS_CONFIG = {
     },
     {
       id: 'threshold',
-      label: 'Cosmic Decay',
+      label: 'Play · Cosmic Decay',
       eyebrow: 'IX — Threshold / Play',
       perkLine: 'Persistent character, passport, inventory.',
       features: ['cosmic_decay_passport', 'character_save', 'inventory'],

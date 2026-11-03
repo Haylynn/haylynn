@@ -6,6 +6,26 @@ import { authReady, supabase, getCurrentUser } from './haylynn-auth.js';
 
 export const COSMIC_DECAY_URL = 'https://haylynn-s-world.vercel.app/';
 
+const LOCAL_CHAR_KEY = 'haylynn-characters-cache-v1';
+
+export function cacheCharactersLocal(rows) {
+  try {
+    localStorage.setItem(LOCAL_CHAR_KEY, JSON.stringify(rows || []));
+  } catch { /* ignore */ }
+}
+
+export function loadCachedCharacters() {
+  try {
+    const raw = localStorage.getItem(LOCAL_CHAR_KEY);
+    if (!raw) return [];
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+
+
 export async function getActiveCharacter() {
   if (!authReady || !supabase) return null;
   const user = await getCurrentUser();
@@ -20,7 +40,10 @@ export async function getActiveCharacter() {
     .limit(1)
     .maybeSingle();
 
-  if (error) return null;
+  if (error || !data) {
+    const cached = loadCachedCharacters();
+    return cached.find((c) => c.is_active) || cached[0] || null;
+  }
   return data;
 }
 
@@ -35,7 +58,8 @@ export async function listCharacters() {
     .eq('user_id', user.id)
     .order('updated_at', { ascending: false });
 
-  if (error || !data) return [];
+  if (error || !data) return loadCachedCharacters();
+  cacheCharactersLocal(data);
   return data;
 }
 

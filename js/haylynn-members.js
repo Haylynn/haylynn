@@ -34,6 +34,11 @@ import {
   subscribeCharacterLive,
   enterCosmicDecay,
 } from './haylynn-character.js';
+import {
+  getAccountProgress,
+  unlockPathNode,
+  listPathNodes,
+} from './haylynn-account-progress.js';
 
 function escapeHtml(s) {
   return String(s ?? '')
@@ -351,7 +356,7 @@ function renderIdentity(panel, member, mode) {
   const accountId = member.id ? String(member.id).slice(0, 8) : (member.isMock ? 'preview' : '—');
   const roomPct = slots >= 99 ? 100 : Math.min(100, Math.round((tags.length / Math.max(slots, 1)) * 100));
   const benefits = {
-    free: ['Up to 3 room tags', 'Profile (name, bio, image, links)', 'Tagged-room perks only'],
+    free: ['Up to 3 room tags', 'Profile (name, bio, image, links)', 'Path & marks on this account', 'Tagged-room perks only'],
     supporter: ['More room tags', 'Priority doors', 'Billing portal'],
     patron: ['All rooms', 'Full passport', 'Deepest access'],
   };
@@ -487,6 +492,43 @@ function renderDoors(panel, member) {
     .join('');
 }
 
+
+async function renderPath(panel, member) {
+  const prog = await getAccountProgress();
+  const nodes = listPathNodes();
+  const unlocked = new Set(prog.unlocked || []);
+  const src = prog.source === 'supabase' ? 'Account (cloud)' : 'Local preview — sign in to sync';
+  const rows = nodes
+    .map((n) => {
+      const on = unlocked.has(n.id);
+      const cost = n.cost ?? 0;
+      const btn = on
+        ? `<span class="th-empty" style="margin:0">Unlocked</span>`
+        : `<button type="button" class="th-btn" data-action="unlock-path" data-node="${escapeHtml(n.id)}">Unlock · ${cost} pt</button>`;
+      return `<div class="th-card" style="margin-bottom:0.6rem">
+        <h4 style="margin:0 0 0.25rem">${escapeHtml(n.name)}</h4>
+        <p class="th-empty" style="margin:0 0 0.5rem">${escapeHtml(n.blurb || '')}</p>
+        ${btn}
+      </div>`;
+    })
+    .join('');
+  panel.innerHTML = `
+    <div class="th-card">
+      <h4>Path</h4>
+      <p class="th-empty">Account progression for the whole house — not only one game. Play realities to earn path points; unlock nodes the house and future games can honour.</p>
+      <div class="th-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin:0.8rem 0">
+        <div class="th-stat"><span class="v">${prog.marks ?? 0}</span><span class="k">Marks</span></div>
+        <div class="th-stat"><span class="v">${prog.path_points ?? 0}</span><span class="k">Path points</span></div>
+        <div class="th-stat"><span class="v">${unlocked.size}</span><span class="k">Nodes</span></div>
+      </div>
+      <p class="th-empty">${escapeHtml(src)}</p>
+    </div>
+    ${rows}
+    <p class="th-empty">Demo: <button type="button" class="th-btn" data-action="grant-path-demo">+2 path points</button>
+    <button type="button" class="th-btn" data-action="grant-marks-demo">+5 marks</button></p>
+  `;
+}
+
 async function renderPlay(panel, member) {
   if (!memberHasFeature(member, 'cosmic_decay_passport') && !memberHasSection(member, 'threshold')) {
     panel.innerHTML = `
@@ -546,6 +588,7 @@ async function renderPanel(root, tab, member) {
     return;
   }
   if (tab === 'identity') renderIdentity(panel, member, root._identityMode || 'view');
+  else if (tab === 'path') await renderPath(panel, member);
   else if (tab === 'doors') renderDoors(panel, member);
   else if (tab === 'play') await renderPlay(panel, member);
   else if (tab === 'markets') renderWatchlist(panel, member);
@@ -556,9 +599,15 @@ function buildTabs(member) {
   if (!member.isSignedIn) return [{ id: 'join', label: 'Join' }];
   const tabs = [
     { id: 'identity', label: 'Identity' },
+    { id: 'path', label: 'Path' },
     { id: 'doors', label: 'Your rooms' },
   ];
-  if (memberHasSection(member, 'threshold') || member.tier === 'patron') {
+  if (
+    memberHasSection(member, 'threshold') ||
+    memberHasSection(member, 'koruhana') ||
+    memberHasFeature(member, 'cosmic_decay_passport') ||
+    member.tier === 'patron'
+  ) {
     tabs.push({ id: 'play', label: 'Cosmic Decay' });
   }
   if (memberHasSection(member, 'markets') || memberHasFeature(member, 'watchlist') || member.tier === 'patron') {
@@ -618,6 +667,25 @@ function bindRoot(root) {
     }
     if (action === 'enter-decay') {
       enterCosmicDecay();
+      return;
+    }
+    if (action === 'unlock-path') {
+      const nodeId = btn.getAttribute('data-node');
+      const res = await unlockPathNode(nodeId);
+      if (!res.ok) window.alert(res.error || 'Could not unlock');
+      await refreshRoot(root);
+      return;
+    }
+    if (action === 'grant-path-demo') {
+      const { awardPathPoints } = await import('./haylynn-account-progress.js');
+      await awardPathPoints(2, 'demo');
+      await refreshRoot(root);
+      return;
+    }
+    if (action === 'grant-marks-demo') {
+      const { awardMarks } = await import('./haylynn-account-progress.js');
+      await awardMarks(5, 'demo');
+      await refreshRoot(root);
       return;
     }
     if (action === 'edit-profile') {
