@@ -2,7 +2,7 @@
  * Member session helper — works offline (local mock) and online (profile tags).
  * Pre-Supabase: preview the full tagged Threshold experience.
  */
-import { MEMBERS_CONFIG, tagSlotsForTier, hasSectionTag, hasFeature } from './members-config.js';
+import { MEMBERS_CONFIG, tagSlotsForTier, hasSectionTag, hasFeature, normalizeSectionTags } from './members-config.js';
 
 const MOCK_KEY = 'haylynn-member-mock-v1';
 const TAGS_KEY = 'haylynn-section-tags-v1';
@@ -61,16 +61,17 @@ export function normalizeMember({
       links: Array.isArray(mock.links) ? mock.links : [],
       wallet_address: mock.wallet_address || '',
       tier: mock.tier || 'free',
-      section_tags: Array.isArray(mock.section_tags) ? mock.section_tags : loadLocalTags(),
+      section_tags: normalizeSectionTags(Array.isArray(mock.section_tags) ? mock.section_tags : loadLocalTags()),
       isMock: true,
       isSignedIn: true,
     };
   }
   if (user) {
-    const tags =
+    const tags = normalizeSectionTags(
       (Array.isArray(profile?.section_tags) && profile.section_tags.length
         ? profile.section_tags
-        : loadLocalTags()) || [];
+        : loadLocalTags()) || []
+    );
     return {
       id: user.id,
       email: user.email,

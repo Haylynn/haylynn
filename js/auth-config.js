@@ -8,8 +8,8 @@ export const AUTH_CONFIG = {
   },
 
   tiers: {
-    free: { label: 'Visitor', blurb: 'The full surface of the site.' },
-    supporter: { label: 'Supporter', blurb: 'Profile, path, and doors that open first.' },
-    patron: { label: 'Patron', blurb: 'Deepest access — early thresholds and perks.' },
+    free: { label: 'Member', blurb: 'A passport in the house — Path, profile, and the rooms you claim.' },
+    supporter: { label: 'Supporter', blurb: 'More rooms, deeper doors, Path still yours.' },
+    patron: { label: 'Patron', blurb: 'All rooms, future doors, deepest seat in the house.' },
   },
 };

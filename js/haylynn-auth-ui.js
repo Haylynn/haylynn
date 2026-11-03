@@ -340,7 +340,7 @@ export async function initAuthUI() {
     }
     const user = await getCurrentUser();
     if (!user) {
-      badge.textContent = 'Sign in';
+      badge.textContent = 'Threshold';
       badge.onclick = () => {
         mode = 'signin';
         renderCard();

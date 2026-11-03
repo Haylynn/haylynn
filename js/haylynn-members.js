@@ -17,6 +17,7 @@ import { injectThemeStyles, renderProfileCard } from './haylynn-theme.js';
 import {
   MEMBERS_CONFIG,
   tagSlotsForTier,
+  normalizeSectionTags,
 } from './members-config.js';
 import {
   loadMockMember,
@@ -353,7 +354,7 @@ function shellHtml() {
           <div>
             <p class="th-eyebrow">IX · Membership</p>
             <h3>Threshold</h3>
-            <p class="th-lead" data-role="th-lead">Your passport in the house — rooms you tagged open doors; the rest stay visitor-side.</p>
+            <p class="th-lead" data-role="th-lead">You are known here. The Path is yours across the house; tagged rooms open deeper doors.</p>
           </div>
           <div class="th-badge" data-role="th-tier-badge" hidden>
             <span class="tb-v" data-role="th-tier-label">—</span>
@@ -416,9 +417,9 @@ function renderIdentity(panel, member, mode) {
   const accountId = member.id ? String(member.id).slice(0, 8) : (member.isMock ? 'preview' : '—');
   const roomPct = slots >= 99 ? 100 : Math.min(100, Math.round((tags.length / Math.max(slots, 1)) * 100));
   const benefits = {
-    free: ['Up to 3 room tags', 'Profile (name, bio, image, links)', 'Path & marks on this account', 'Tagged-room perks only'],
-    supporter: ['More room tags', 'Priority doors', 'Billing portal'],
-    patron: ['All rooms', 'Full passport', 'Deepest access'],
+    free: ['Free passport — known to the house', 'Path & marks (account-wide)', 'Profile (name, bio, image, links)', 'Up to 3 room tags for deeper doors'],
+    supporter: ['More room tags', 'Priority doors', 'Path & marks unchanged'],
+    patron: ['All rooms', 'Future doors', 'Deepest seat in the house'],
   };
   const blist = benefits[member.tier] || benefits.free;
   const initial = (member.display_name || '?').trim().charAt(0).toUpperCase();
@@ -505,8 +506,12 @@ function renderIdentity(panel, member, mode) {
         <div class="th-actions">
           ${
             member.tier === 'free'
-              ? `<button type="button" class="th-btn primary" data-action="upgrade">Expand rooms</button>`
-              : `<button type="button" class="th-btn" data-action="portal">Billing</button>`
+              ? (AUTH_CONFIG?.prices?.supporter
+                  ? `<button type="button" class="th-btn primary" data-action="upgrade">Expand rooms</button>`
+                  : '')
+              : (AUTH_CONFIG?.prices?.supporter || AUTH_CONFIG?.prices?.patron
+                  ? `<button type="button" class="th-btn" data-action="portal">Billing</button>`
+                  : '')
           }
           ${member.isMock ? `<button type="button" class="th-btn" data-action="end-preview">End preview</button>` : ''}
         </div>
@@ -643,7 +648,7 @@ async function renderPlay(panel, member) {
 }
 
 function renderWatchlist(panel, member) {
-  if (!memberHasFeature(member, 'watchlist') && !memberHasSection(member, 'markets')) {
+  if (!memberHasFeature(member, 'watchlist') && !memberHasSection(member, 'hananaru')) {
     panel.innerHTML = `<p class="th-empty">Tag <strong style="color:var(--ink)">Markets</strong> to keep a member watchlist.</p>`;
     return;
   }
@@ -693,8 +698,8 @@ function buildTabs(member) {
   ) {
     tabs.push({ id: 'play', label: 'Cosmic Decay' });
   }
-  if (memberHasSection(member, 'markets') || memberHasFeature(member, 'watchlist') || member.tier === 'patron') {
-    tabs.push({ id: 'markets', label: 'Markets' });
+  if (memberHasFeature(member, 'watchlist') || memberHasSection(member, 'hananaru') || member.tier === 'patron') {
+    tabs.push({ id: 'markets', label: 'Market' });
   }
   return tabs;
 }
@@ -851,7 +856,7 @@ function bindRoot(root) {
           alert(err.message || 'Checkout unavailable');
         }
       } else {
-        alert('Paid tiers connect with Stripe when accounts go live. Patron = all rooms + future.');
+        alert('Deeper seats in the house open when patronage is connected. For now the free passport and Path are enough.');
       }
       return;
     }

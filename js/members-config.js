@@ -9,22 +9,22 @@ export const MEMBERS_CONFIG = {
 
   tiers: {
     free: {
-      label: 'Visitor',
+      label: 'Member',
       tagSlots: 3,
       futureRooms: false,
-      blurb: 'Three rooms of the house treat you as a member.',
+      blurb: 'A free passport — Path & marks for the whole house, plus three rooms that open deeper doors.',
     },
     supporter: {
       label: 'Supporter',
       tagSlots: 6,
       futureRooms: false,
-      blurb: 'More rooms, deeper placement in the ones you chose.',
+      blurb: 'More room tags and priority doors — same Path, wider house.',
     },
     patron: {
       label: 'Patron',
       tagSlots: 99,
       futureRooms: true,
-      blurb: 'All current rooms and every room still to open.',
+      blurb: 'Every open room and every room still to open.',
     },
   },
 
@@ -35,8 +35,8 @@ export const MEMBERS_CONFIG = {
   sections: [
     {
       id: 'presence',
-      label: 'Presence',
-      eyebrow: '0 — Presence',
+      label: 'Enter',
+      eyebrow: '0 — Enter',
       perkLine: 'Marks when the house speaks; member listening log later.',
       features: ['presence_log'],
     },
@@ -87,7 +87,7 @@ export const MEMBERS_CONFIG = {
       label: 'Market',
       eyebrow: 'VII — Market',
       perkLine: 'Member drops and acquire windows.',
-      features: ['hananaru_drops'],
+      features: ['hananaru_drops', 'watchlist'],
     },
     {
       id: 'lymp',
@@ -109,16 +109,7 @@ export const MEMBERS_CONFIG = {
       eyebrow: 'X — The Well',
       perkLine: 'Follow causes and donor marks.',
       features: ['well_follow'],
-    },
-    {
-      id: 'markets',
-      label: 'Markets',
-      eyebrow: 'Tickers',
-      perkLine: 'Saved watchlist and member market strip.',
-      features: ['watchlist'],
-      /** Not a full scroll room everywhere — still taggable as a door */
-      virtual: true,
-    },
+    }
   ],
 
   demoTheme: {
@@ -168,4 +159,23 @@ export function hasFeature(tags, feature, tier = 'free') {
     sec?.features?.forEach((f) => owned.add(f));
   }
   return owned.has(feature);
+}
+
+
+/** Drop retired tag ids (e.g. virtual markets) so old accounts clean up. */
+export function normalizeSectionTags(tags) {
+  if (!Array.isArray(tags)) return [];
+  const retired = new Set(['markets']);
+  const map = { markets: 'hananaru' };
+  const out = [];
+  for (const t of tags) {
+    if (t === '*') {
+      out.push('*');
+      continue;
+    }
+    const id = map[t] || t;
+    if (retired.has(t) && id === t) continue;
+    if (!out.includes(id)) out.push(id);
+  }
+  return out;
 }
