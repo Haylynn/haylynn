@@ -79,15 +79,12 @@ const STYLE = `
   margin: 0.45rem 0 0; max-width: 36rem;
 }
 
+
 .hy-threshold .th-path-tree {
-  position: relative; width: 100%; height: min(70vh, 520px);
-  margin: 0.75rem 0 1rem; border-radius: 12px;
-  border: 1px solid rgba(138,92,240,0.25);
-  background:
-    radial-gradient(ellipse at 50% 48%, rgba(138,92,240,0.14), transparent 50%),
-    radial-gradient(ellipse at 50% 10%, rgba(53,201,143,0.06), transparent 40%),
-    rgba(6,5,12,0.65);
-  overflow: auto;
+  position: relative; width: 100%; height: min(52vh, 380px);
+  margin: 0.75rem 0 0.5rem; border-radius: 12px;
+  border: 1px solid rgba(138,92,240,0.28);
+  overflow: hidden;
   touch-action: pan-x pan-y;
 }
 .hy-threshold .th-path-inner {
@@ -137,6 +134,117 @@ const STYLE = `
   font-family: 'Space Mono', monospace; font-size: 0.5rem;
   color: var(--ink-dim, #9a92a4); line-height: 1.45; margin: 0.5rem 0;
 }
+/* Full Path pop-out */
+.hy-path-overlay {
+  position: fixed; inset: 0; z-index: 80;
+  display: none; flex-direction: column;
+  background: #06050c;
+}
+.hy-path-overlay.open { display: flex; }
+.hy-path-overlay .po-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(138,92,240,0.22), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(53,201,143,0.1), transparent 50%),
+    radial-gradient(ellipse 50% 35% at 85% 60%, rgba(236,90,160,0.08), transparent 45%),
+    radial-gradient(circle at 50% 50%, #0c0a14 0%, #06050c 70%);
+}
+.hy-path-overlay .po-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.35), transparent),
+    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1.5px 1.5px at 50% 50%, rgba(255,255,255,0.15), transparent),
+    radial-gradient(1px 1px at 15% 55%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 60% 15%, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1px 1px at 80% 45%, rgba(255,255,255,0.2), transparent);
+  background-size: 100% 100%;
+  opacity: 0.85;
+}
+.hy-path-overlay .po-top {
+  position: relative; z-index: 2;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 0.75rem; padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(138,92,240,0.25);
+  background: rgba(6,5,12,0.72); backdrop-filter: blur(10px);
+}
+.hy-path-overlay .po-top h3 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: 1.35rem; margin: 0; color: var(--ink, #efe9e0);
+}
+.hy-path-overlay .po-top .po-sub {
+  font-family: 'Space Mono', monospace; font-size: 0.5rem;
+  color: var(--ink-dim, #9a92a4); margin: 0.25rem 0 0; line-height: 1.4;
+}
+.hy-path-overlay .po-stats {
+  display: flex; gap: 0.65rem; flex-wrap: wrap;
+  font-family: 'Space Mono', monospace; font-size: 0.5rem;
+  color: var(--ink-dim, #9a92a4);
+}
+.hy-path-overlay .po-stats span strong { color: var(--ink, #efe9e0); }
+.hy-path-overlay .po-close {
+  font-family: 'Space Mono', monospace; font-size: 0.55rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.2); border-radius: 999px;
+  background: transparent; color: var(--ink, #efe9e0);
+  padding: 0.45rem 0.75rem; cursor: pointer;
+}
+.hy-path-overlay .po-body {
+  position: relative; z-index: 1; flex: 1; display: flex; min-height: 0;
+}
+.hy-path-overlay .po-map {
+  flex: 1; overflow: auto; touch-action: pan-x pan-y;
+  position: relative;
+}
+.hy-path-overlay .po-map .th-path-inner {
+  width: 960px; height: 780px;
+}
+.hy-path-overlay .po-detail {
+  width: min(100%, 300px); max-width: 100%;
+  border-left: 1px solid rgba(138,92,240,0.25);
+  background: rgba(8,6,16,0.92); backdrop-filter: blur(12px);
+  padding: 1rem 0.9rem; overflow: auto;
+  font-family: 'Space Mono', monospace;
+}
+@media (max-width: 720px) {
+  .hy-path-overlay .po-body { flex-direction: column; }
+  .hy-path-overlay .po-detail {
+    width: 100%; border-left: none;
+    border-top: 1px solid rgba(138,92,240,0.25);
+    max-height: 42%;
+  }
+}
+.hy-path-overlay .po-detail h4 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: 1.25rem; margin: 0 0 0.35rem; color: var(--ink, #efe9e0);
+}
+.hy-path-overlay .po-kind {
+  font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #8a5cf0; margin-bottom: 0.65rem;
+}
+.hy-path-overlay .po-kind.major { color: #a78bfa; }
+.hy-path-overlay .po-kind.keystone { color: #ec5aa0; }
+.hy-path-overlay .po-kind.start { color: #35c98f; }
+.hy-path-overlay .po-detail p {
+  font-size: 0.62rem; line-height: 1.55; color: var(--ink-dim, #9a92a4); margin: 0 0 0.65rem;
+}
+.hy-path-overlay .po-detail .po-effect {
+  border: 1px solid rgba(53,201,143,0.3);
+  background: rgba(53,201,143,0.08);
+  border-radius: 10px; padding: 0.55rem 0.65rem;
+  font-size: 0.58rem; color: var(--ink, #efe9e0); line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+.hy-path-overlay .po-detail .po-meta {
+  font-size: 0.5rem; color: var(--ink-dim, #9a92a4); margin-bottom: 0.75rem;
+}
+.hy-path-overlay .po-detail .th-btn { margin-top: 0.25rem; }
+.hy-path-overlay .po-placeholder {
+  font-size: 0.58rem; color: var(--ink-dim, #9a92a4); line-height: 1.5;
+}
+
 .hy-threshold .th-badge {
   flex-shrink: 0; text-align: center;
   border: 1px solid rgba(53,201,143,0.35); border-radius: 12px;
@@ -567,54 +675,230 @@ async function renderPath(panel, member) {
   const rate = 5;
 
   const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
-  const lines = edges.map(([a, b]) => {
-    const A = byId[a];
-    const B = byId[b];
-    if (!A || !B) return '';
-    const on = unlocked.has(a) && unlocked.has(b);
-    return `<line x1="${A.x}%" y1="${A.y}%" x2="${B.x}%" y2="${B.y}%"
-      stroke="${on ? 'rgba(53,201,143,0.5)' : 'rgba(138,92,240,0.22)'}"
-      stroke-width="${on ? 2.5 : 1.5}" />`;
-  }).join('');
 
-  const nodeHtml = nodes.map((n) => {
-    const on = unlocked.has(n.id);
-    const cost = n.cost ?? 0;
-    const kind = n.kind || 'minor';
-    // reachable if any parent unlocked or start
-    const parents = edges.filter(([, t]) => t === n.id).map(([f]) => f);
-    const reachable = on || kind === 'start' || !parents.length || parents.some((p) => unlocked.has(p));
-    const costLabel = on ? 'On' : (cost === 0 ? 'Free' : `${cost}pt`);
-    return `<button type="button" class="th-path-node ${kind} ${on ? 'on' : ''} ${reachable ? '' : 'locked'}"
-      style="left:${n.x}%;top:${n.y}%"
-      data-action="unlock-path" data-node="${escapeHtml(n.id)}"
-      title="${escapeHtml((n.blurb || '') + (cost ? ` · ${cost} path points (or ${cost * rate} marks gap)` : ''))}">
-      <span class="pn-name">${escapeHtml(n.name)}</span>
-      <span class="pn-cost">${escapeHtml(costLabel)}</span>
-    </button>`;
-  }).join('');
+  function effectFor(n) {
+    if (n.effect) return n.effect;
+    const cluster = n.cluster || '';
+    const hints = {
+      start: 'Opens the Path. Your passport is real in the house.',
+      play: 'Game flag: Cosmic Decay / future realities can read this and change slots, intros, or rules.',
+      market: 'House flag: Market can apply discount, early shelf, or handmade eligibility when checkout is live.',
+      house: 'Passport / desk / presence: how the house shows and remembers you.',
+      voice: 'Voice flag: radio submit or listening perks when those doors open.',
+      chronicle: 'Chronicle flag: early pages or guest spine when those doors open.',
+      sky: 'Sky / LYMP flag: print windows and cross-house perks when linked.',
+      draw: 'Draw flag: deeper readings or cloud history when enabled.',
+      well: 'Well flag: cause follows and highlights on the passport.',
+    };
+    return hints[cluster] || hints[n.kind] || 'Stored on your account. Systems that recognise this node can honour it.';
+  }
+
+  function treeMarkup(wide) {
+    const lines = edges.map(([a, b]) => {
+      const A = byId[a];
+      const B = byId[b];
+      if (!A || !B) return '';
+      const on = unlocked.has(a) && unlocked.has(b);
+      return `<line x1="${A.x}%" y1="${A.y}%" x2="${B.x}%" y2="${B.y}%"
+        stroke="${on ? 'rgba(53,201,143,0.55)' : 'rgba(138,92,240,0.22)'}"
+        stroke-width="${on ? 2.5 : 1.5}" />`;
+    }).join('');
+    const nodeHtml = nodes.map((n) => {
+      const on = unlocked.has(n.id);
+      const cost = n.cost ?? 0;
+      const kind = n.kind || 'minor';
+      const parents = edges.filter(([, t]) => t === n.id).map(([f]) => f);
+      const reachable = on || kind === 'start' || !parents.length || parents.some((p) => unlocked.has(p));
+      const costLabel = on ? 'On' : (cost === 0 ? 'Free' : `${cost}pt`);
+      return `<button type="button" class="th-path-node ${kind} ${on ? 'on' : ''} ${reachable ? '' : 'locked'}"
+        style="left:${n.x}%;top:${n.y}%"
+        data-action="path-inspect" data-node="${escapeHtml(n.id)}"
+        title="${escapeHtml(n.name)}">
+        <span class="pn-name">${escapeHtml(n.name)}</span>
+        <span class="pn-cost">${escapeHtml(costLabel)}</span>
+      </button>`;
+    }).join('');
+    return `<div class="th-path-inner" style="${wide ? '' : ''}">
+      <svg class="th-path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
+      ${nodeHtml}
+    </div>`;
+  }
 
   panel.innerHTML = `
     <div class="th-card">
       <h4>Path</h4>
-      <p class="th-empty">Account web for the whole house. Minors are small; majors open doors; keystones define a lean. Travel along the lines.</p>
+      <p class="th-empty">Account web for the whole house. Minors are small; majors open doors; keystones define a lean.</p>
       <div class="th-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin:0.8rem 0">
         <div class="th-stat"><span class="v">${prog.marks ?? 0}</span><span class="k">Marks</span></div>
         <div class="th-stat"><span class="v">${prog.path_points ?? 0}</span><span class="k">Path points</span></div>
         <div class="th-stat"><span class="v">${unlocked.size}/${nodes.length}</span><span class="k">Nodes</span></div>
       </div>
-      <p class="th-path-legend">Path points first. Marks fill a gap at <strong style="color:var(--ink)">${rate} marks = 1 pt</strong>. Grey nodes need a neighbour unlocked. Scroll the web on small screens.</p>
+      <p class="th-path-legend">${rate} marks = 1 path point when filling a gap. Tap <strong style="color:var(--ink)">Open Path</strong> for the full web and what each unlock does.</p>
       <p class="th-empty">${escapeHtml(src)}</p>
+      <button type="button" class="th-btn primary" data-action="path-open">Open Path</button>
     </div>
-    <div class="th-path-tree"><div class="th-path-inner">
-      <svg class="th-path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
-      ${nodeHtml}
-    </div></div>
+    <div class="th-path-tree">${treeMarkup(false)}</div>
     <p class="th-empty">Demo:
       <button type="button" class="th-btn" data-action="grant-path-demo">+5 path points</button>
       <button type="button" class="th-btn" data-action="grant-marks-demo">+25 marks</button>
     </p>
   `;
+}
+
+function ensurePathOverlay() {
+  let el = document.getElementById('hy-path-overlay');
+  if (el) return el;
+  el = document.createElement('div');
+  el.id = 'hy-path-overlay';
+  el.className = 'hy-path-overlay';
+  el.innerHTML = `
+    <div class="po-bg" aria-hidden="true"></div>
+    <div class="po-top">
+      <div>
+        <h3>Path</h3>
+        <p class="po-sub">Your account web in the house. Select a node to see what it does.</p>
+        <div class="po-stats" data-role="po-stats"></div>
+      </div>
+      <button type="button" class="po-close" data-action="path-close">Close</button>
+    </div>
+    <div class="po-body">
+      <div class="po-map" data-role="po-map"></div>
+      <aside class="po-detail" data-role="po-detail">
+        <p class="po-placeholder">Select a node on the web to read its cost, what it unlocks, and claim it if you can.</p>
+      </aside>
+    </div>
+  `;
+  document.body.appendChild(el);
+  el.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const action = btn.getAttribute('data-action');
+    if (action === 'path-close') {
+      closePathOverlay();
+      return;
+    }
+    if (action === 'path-inspect') {
+      renderPathDetail(el, btn.getAttribute('data-node'));
+      return;
+    }
+    if (action === 'unlock-path') {
+      const nodeId = btn.getAttribute('data-node');
+      const res = await unlockPathNode(nodeId);
+      if (!res.ok) window.alert(res.error || 'Could not unlock');
+      else {
+        const root = el._pathCtx?.root;
+        if (root) await refreshRoot(root);
+        await openPathOverlay(el._pathCtx?.root);
+        renderPathDetail(el, nodeId);
+      }
+    }
+  });
+  return el;
+}
+
+async function openPathOverlay(root) {
+  const prog = await getAccountProgress();
+  const nodes = listPathNodes();
+  const edges = typeof listPathEdges === 'function' ? listPathEdges() : [];
+  const unlocked = new Set(prog.unlocked || []);
+  const rate = 5;
+  const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
+  const overlay = ensurePathOverlay();
+
+  const effectFor = (n) => {
+    if (n.effect) return n.effect;
+    const hints = {
+      start: 'Opens the Path. Your passport is real in the house.',
+      play: 'Game flag: Cosmic Decay / future realities can read this and change slots, intros, or rules.',
+      market: 'House flag: Market can apply discount, early shelf, or handmade eligibility when checkout is live.',
+      house: 'Passport / desk / presence: how the house shows and remembers you.',
+      voice: 'Voice flag: radio submit or listening perks when those doors open.',
+      chronicle: 'Chronicle flag: early pages or guest spine when those doors open.',
+      sky: 'Sky / LYMP flag: print windows and cross-house perks when linked.',
+      draw: 'Draw flag: deeper readings or cloud history when enabled.',
+      well: 'Well flag: cause follows and highlights on the passport.',
+    };
+    return hints[n.cluster] || 'Stored on your account for systems that recognise this node.';
+  };
+
+  const lines = edges.map(([a, b]) => {
+    const A = byId[a]; const B = byId[b];
+    if (!A || !B) return '';
+    const on = unlocked.has(a) && unlocked.has(b);
+    return `<line x1="${A.x}%" y1="${A.y}%" x2="${B.x}%" y2="${B.y}%"
+      stroke="${on ? 'rgba(53,201,143,0.55)' : 'rgba(138,92,240,0.25)'}"
+      stroke-width="${on ? 2.5 : 1.5}" />`;
+  }).join('');
+
+  const nodeHtml = nodes.map((n) => {
+    const on = unlocked.has(n.id);
+    const kind = n.kind || 'minor';
+    const parents = edges.filter(([, t]) => t === n.id).map(([f]) => f);
+    const reachable = on || kind === 'start' || !parents.length || parents.some((p) => unlocked.has(p));
+    const cost = n.cost ?? 0;
+    const costLabel = on ? 'On' : (cost === 0 ? 'Free' : `${cost}pt`);
+    return `<button type="button" class="th-path-node ${kind} ${on ? 'on' : ''} ${reachable ? '' : 'locked'}"
+      style="left:${n.x}%;top:${n.y}%"
+      data-action="path-inspect" data-node="${escapeHtml(n.id)}">
+      <span class="pn-name">${escapeHtml(n.name)}</span>
+      <span class="pn-cost">${escapeHtml(costLabel)}</span>
+    </button>`;
+  }).join('');
+
+  overlay.querySelector('[data-role="po-stats"]').innerHTML =
+    `<span><strong>${prog.marks ?? 0}</strong> marks</span>
+     <span><strong>${prog.path_points ?? 0}</strong> path pts</span>
+     <span><strong>${unlocked.size}/${nodes.length}</strong> nodes</span>`;
+
+  overlay.querySelector('[data-role="po-map"]').innerHTML =
+    `<div class="th-path-inner">
+      <svg class="th-path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
+      ${nodeHtml}
+    </div>`;
+
+  const detail = overlay.querySelector('[data-role="po-detail"]');
+  detail.innerHTML = `<p class="po-placeholder">Select a node on the web to read its cost, what it unlocks, and claim it if you can.</p>`;
+
+  overlay._pathCtx = { prog, nodes, edges, unlocked, rate, byId, effectFor, root };
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderPathDetail(overlay, nodeId) {
+  const ctx = overlay._pathCtx;
+  if (!ctx) return;
+  const n = ctx.byId[nodeId];
+  if (!n) return;
+  const on = ctx.unlocked.has(n.id);
+  const cost = n.cost ?? 0;
+  const kind = n.kind || 'minor';
+  const parents = ctx.edges.filter(([, t]) => t === n.id).map(([f]) => f);
+  const reachable = on || kind === 'start' || !parents.length || parents.some((p) => ctx.unlocked.has(p));
+  const markAlt = cost * ctx.rate;
+  const detail = overlay.querySelector('[data-role="po-detail"]');
+  detail.innerHTML = `
+    <div class="po-kind ${escapeHtml(kind)}">${escapeHtml(kind)} · ${escapeHtml(n.cluster || 'house')}</div>
+    <h4>${escapeHtml(n.name)}</h4>
+    <p>${escapeHtml(n.blurb || '')}</p>
+    <div class="po-effect"><strong style="color:#35c98f">What it does</strong><br>${escapeHtml(ctx.effectFor(n))}</div>
+    <div class="po-meta">
+      ${on ? 'Status: unlocked on your account' : reachable ? `Cost: ${cost} path point(s)` + (cost ? ` (or ${markAlt} marks if you have no points)` : '') : 'Locked — unlock a connected node first'}
+    </div>
+    ${
+      on
+        ? `<p class="po-placeholder">Already on your Path.</p>`
+        : reachable
+          ? `<button type="button" class="th-btn primary" data-action="unlock-path" data-node="${escapeHtml(n.id)}">Unlock</button>`
+          : ''
+    }
+  `;
+}
+
+function closePathOverlay() {
+  const el = document.getElementById('hy-path-overlay');
+  if (el) el.classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 async function renderPlay(panel, member) {
@@ -753,6 +1037,25 @@ function bindRoot(root) {
       window.dispatchEvent(new CustomEvent('haylynn:auth'));
       return;
     }
+    if (action === 'path-open') {
+      await openPathOverlay(root);
+      return;
+    }
+    if (action === 'path-close') {
+      closePathOverlay();
+      return;
+    }
+    if (action === 'path-inspect') {
+      const nodeId = btn.getAttribute('data-node');
+      const overlay = document.getElementById('hy-path-overlay');
+      if (overlay?.classList.contains('open')) {
+        renderPathDetail(overlay, nodeId);
+      } else {
+        await openPathOverlay(root);
+        renderPathDetail(document.getElementById('hy-path-overlay'), nodeId);
+      }
+      return;
+    }
     if (action === 'enter-decay') {
       enterCosmicDecay();
       return;
@@ -762,6 +1065,11 @@ function bindRoot(root) {
       const res = await unlockPathNode(nodeId);
       if (!res.ok) window.alert(res.error || 'Could not unlock');
       await refreshRoot(root);
+      const overlay = document.getElementById('hy-path-overlay');
+      if (overlay?.classList.contains('open')) {
+        await openPathOverlay(root);
+        if (nodeId) renderPathDetail(overlay, nodeId);
+      }
       return;
     }
     if (action === 'grant-path-demo') {
