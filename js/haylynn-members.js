@@ -35,6 +35,19 @@ import {
   subscribeCharacterLive,
   enterCosmicDecay,
 } from './haylynn-character.js';
+
+import {
+  getZeroInfinityLedger,
+  buyZeroInfinityWithBtc,
+  grantSimBtc,
+  buyPathSkuWithZero,
+  formatZero,
+  formatBtc,
+  getTokenMeta,
+  connectChainWallet,
+  zeroFromBtc,
+} from './haylynn-zero-infinity.js';
+
 import {
   getAccountProgress,
   unlockPathNode,
@@ -532,8 +545,8 @@ function renderIdentity(panel, member, mode) {
   const accountId = member.id ? String(member.id).slice(0, 8) : (member.isMock ? 'preview' : '—');
   const roomPct = slots >= 99 ? 100 : Math.min(100, Math.round((tags.length / Math.max(slots, 1)) * 100));
   const benefits = {
-    free: ['Free passport — known to the house', 'Path — shards & cores across the house', 'Profile (name, bio, image, links)', 'Up to 3 room tags for deeper doors'],
-    supporter: ['More room tags', 'Priority doors', 'Path — shards & cores unchanged'],
+    free: ['Free passport — known to the house', 'Path & marks (account-wide)', 'Profile (name, bio, image, links)', 'Up to 3 room tags for deeper doors'],
+    supporter: ['More room tags', 'Priority doors', 'Path & marks unchanged'],
     patron: ['All rooms', 'Future doors', 'Deepest seat in the house'],
   };
   const blist = benefits[member.tier] || benefits.free;
@@ -676,45 +689,88 @@ function renderDoors(panel, member) {
 async function renderPath(panel, member) {
   const prog = await getAccountProgress();
   const nodes = listPathNodes();
+  const edges = typeof listPathEdges === 'function' ? listPathEdges() : [];
   const unlocked = new Set(prog.unlocked || []);
-  const src = prog.source === 'supabase' ? 'Held in the house (cloud)' : 'Held on this device — sign in to keep them across the continuum';
+  const src = prog.source === 'supabase' ? 'Account (cloud)' : 'Local preview — sign in to sync';
   const rate = 5;
+
+  const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
+
+  function effectFor(n) {
+    if (n.effect) return n.effect;
+    const cluster = n.cluster || '';
+    const hints = {
+      start: 'Opens the Path. Your passport is real in the house.',
+      play: 'Game flag: Cosmic Decay / future realities can read this and change slots, intros, or rules.',
+      market: 'House flag: Market can apply discount, early shelf, or handmade eligibility when checkout is live.',
+      house: 'Passport / desk / presence: how the house shows and remembers you.',
+      voice: 'Voice flag: radio submit or listening perks when those doors open.',
+      chronicle: 'Chronicle flag: early pages or guest spine when those doors open.',
+      sky: 'Sky / LYMP flag: print windows and cross-house perks when linked.',
+      draw: 'Draw flag: deeper readings or cloud history when enabled.',
+      well: 'Well flag: cause follows and highlights on the passport.',
+    };
+    return hints[cluster] || hints[n.kind] || 'Stored on your account. Systems that recognise this node can honour it.';
+  }
+
+  function treeMarkup(wide) {
+    const lines = edges.map(([a, b]) => {
+      const A = byId[a];
+      const B = byId[b];
+      if (!A || !B) return '';
+      const on = unlocked.has(a) && unlocked.has(b);
+      return `<line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}"
+      stroke="${on ? 'rgba(53,201,143,0.7)' : 'rgba(138,92,240,0.4)'}"
+      stroke-width="${on ? 0.35 : 0.22}" stroke-linecap="round" />`;
+    }).join('');
+    const nodeHtml = nodes.map((n) => {
+      const on = unlocked.has(n.id);
+      const cost = n.cost ?? 0;
+      const kind = n.kind || 'minor';
+      const parents = edges.filter(([, t]) => t === n.id).map(([f]) => f);
+      const reachable = on || kind === 'start' || !parents.length || parents.some((p) => unlocked.has(p));
+      const costLabel = on ? 'On' : (cost === 0 ? 'Free' : `${cost}pt`);
+      return `<button type="button" class="th-path-node ${kind} ${on ? 'on' : ''} ${reachable ? '' : 'locked'}"
+        style="left:${(n.x/100)*900}px;top:${(n.y/100)*720}px"
+        data-action="path-inspect" data-node="${escapeHtml(n.id)}"
+        title="${escapeHtml(n.name)}">
+        <span class="pn-name">${escapeHtml(n.name)}</span>
+        <span class="pn-cost">${escapeHtml(costLabel)}</span>
+      </button>`;
+    }).join('');
+    return `<div class="th-path-inner" style="${wide ? '' : ''}">
+      <svg class="th-path-svg" width="900" height="720" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
+      ${nodeHtml}
+    </div>`;
+  }
 
   panel.innerHTML = `
     <div class="th-card">
       <h4>Path</h4>
-      <p class="th-empty">Fragments of reality gather here. Spend <strong style="color:var(--ink)">cores</strong> to open nodes on the web; <strong style="color:var(--ink)">shards</strong> can stand in when cores run short.</p>
-      <div class="th-currency-row">
-        <div class="th-currency">
-          <img class="th-currency-icon" src="assets/shard.svg" alt="" width="28" height="28" onerror="this.style.display='none'">
-          <div>
-            <span class="v">${prog.marks ?? 0}</span>
-            <span class="k">Shards</span>
-          </div>
-        </div>
-        <div class="th-currency">
-          <img class="th-currency-icon" src="assets/core.svg" alt="" width="28" height="28" onerror="this.style.display='none'">
-          <div>
-            <span class="v">${prog.path_points ?? 0}</span>
-            <span class="k">Cores</span>
-          </div>
-        </div>
-        <div class="th-currency">
-          <div>
-            <span class="v">${unlocked.size}/${nodes.length}</span>
-            <span class="k">Opened</span>
-          </div>
-        </div>
+      <p class="th-empty">Account web for the whole house. Minors are small; majors open doors; keystones define a lean.</p>
+      <div class="th-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin:0.8rem 0">
+        <div class="th-stat"><span class="v">${prog.marks ?? 0}</span><span class="k">Marks</span></div>
+        <div class="th-stat"><span class="v">${prog.path_points ?? 0}</span><span class="k">Path points</span></div>
+        <div class="th-stat"><span class="v">${unlocked.size}/${nodes.length}</span><span class="k">Nodes</span></div>
       </div>
-      <p class="th-path-legend">${rate} shards can stand for 1 core when a node asks more than you hold. The full web lives beyond this card.</p>
+      <p class="th-path-legend">${rate} marks = 1 path point when filling a gap. Tap <strong style="color:var(--ink)">Open Path</strong> for the full web and what each unlock does.</p>
       <p class="th-empty">${escapeHtml(src)}</p>
-      <button type="button" class="th-btn primary" data-action="path-open">Enter the Path</button>
+      <button type="button" class="th-btn primary" data-action="path-open">Open Path</button>
     </div>
-    <p class="th-empty" style="margin-top:0.75rem">Trial gifts (remove when live):
-      <button type="button" class="th-btn" data-action="grant-path-demo">+5 cores</button>
-      <button type="button" class="th-btn" data-action="grant-marks-demo">+25 shards</button>
+    <div class="th-path-tree">${treeMarkup(false)}</div>
+    <p class="th-empty">Demo:
+      <button type="button" class="th-btn" data-action="grant-path-demo">+5 path points</button>
+      <button type="button" class="th-btn" data-action="grant-marks-demo">+25 marks</button>
     </p>
   `;
+}
+
+function pathFragmentsUrl() {
+  try {
+    return new URL('assets/path-fragments.jpg', document.baseURI).href;
+  } catch {
+    return 'assets/path-fragments.jpg';
+  }
 }
 
 function ensurePathOverlay() {
@@ -729,7 +785,7 @@ function ensurePathOverlay() {
     <div class="po-top">
       <div>
         <h3>Path</h3>
-        <p class="po-sub">Fragments of reality — walk the web. Touch a node to learn what it opens.</p>
+        <p class="po-sub">Fragments of reality — your account web. Select a node to see what it does.</p>
         <div class="po-stats" data-role="po-stats"></div>
       </div>
       <button type="button" class="po-close" data-action="path-close">Close</button>
@@ -737,7 +793,7 @@ function ensurePathOverlay() {
     <div class="po-body">
       <div class="po-map" data-role="po-map"></div>
       <aside class="po-detail" data-role="po-detail">
-        <p class="po-placeholder">Touch a fragment to read its cost, what it opens in the house, and claim it if you can.</p>
+        <p class="po-placeholder">Select a node on the web to read its cost, what it unlocks, and claim it if you can.</p>
       </aside>
     </div>
   `;
@@ -781,15 +837,15 @@ async function openPathOverlay(root) {
   const effectFor = (n) => {
     if (n.effect) return n.effect;
     const hints = {
-      start: 'The first fracture — the house knows your name.',
-      play: 'A door into Domains — Cosmic Decay and later realities may honour this.',
-      market: 'A favour in the Market — shelves and handmade doors may open sooner when those rooms wake.',
-      house: 'How the house shows you — passport, desk, and presence.',
-      voice: 'A thread in Voice — radio and listening gifts when that current runs.',
-      chronicle: 'A mark in the Chronicle — early pages when the story allows.',
-      sky: 'A window in the Sky — prints and LYMP when that link is live.',
-      draw: 'Deeper draws — memory of readings when the house keeps them.',
-      well: 'A mark by the Well — causes you choose to stand near.',
+      start: 'Opens the Path. Your passport is real in the house.',
+      play: 'Game flag: Cosmic Decay / future realities can read this and change slots, intros, or rules.',
+      market: 'House flag: Market can apply discount, early shelf, or handmade eligibility when checkout is live.',
+      house: 'Passport / desk / presence: how the house shows and remembers you.',
+      voice: 'Voice flag: radio submit or listening perks when those doors open.',
+      chronicle: 'Chronicle flag: early pages or guest spine when those doors open.',
+      sky: 'Sky / LYMP flag: print windows and cross-house perks when linked.',
+      draw: 'Draw flag: deeper readings or cloud history when enabled.',
+      well: 'Well flag: cause follows and highlights on the passport.',
     };
     return hints[n.cluster] || 'Stored on your account for systems that recognise this node.';
   };
@@ -819,9 +875,9 @@ async function openPathOverlay(root) {
   }).join('');
 
   overlay.querySelector('[data-role="po-stats"]').innerHTML =
-    `<span class="po-cur"><img src="assets/shard.svg" alt="" width="16" height="16" onerror="this.remove()"><strong>${prog.marks ?? 0}</strong> shards</span>
-     <span class="po-cur"><img src="assets/core.svg" alt="" width="16" height="16" onerror="this.remove()"><strong>${prog.path_points ?? 0}</strong> cores</span>
-     <span><strong>${unlocked.size}/${nodes.length}</strong> opened</span>`;
+    `<span><strong>${prog.marks ?? 0}</strong> marks</span>
+     <span><strong>${prog.path_points ?? 0}</strong> path pts</span>
+     <span><strong>${unlocked.size}/${nodes.length}</strong> nodes</span>`;
 
   overlay.querySelector('[data-role="po-map"]').innerHTML =
     `<div class="th-path-inner">
@@ -830,7 +886,7 @@ async function openPathOverlay(root) {
     </div>`;
 
   const detail = overlay.querySelector('[data-role="po-detail"]');
-  detail.innerHTML = `<p class="po-placeholder">Touch a fragment to read its cost, what it opens in the house, and claim it if you can.</p>`;
+  detail.innerHTML = `<p class="po-placeholder">Select a node on the web to read its cost, what it unlocks, and claim it if you can.</p>`;
 
   overlay._pathCtx = { prog, nodes, edges, unlocked, rate, byId, effectFor, root };
 
@@ -864,13 +920,13 @@ function renderPathDetail(overlay, nodeId) {
     <p>${escapeHtml(n.blurb || '')}</p>
     <div class="po-effect"><strong style="color:#35c98f">What it does</strong><br>${escapeHtml(ctx.effectFor(n))}</div>
     <div class="po-meta">
-      ${on ? 'Already open on your Path' : reachable ? `Cost: ${cost} core(s)` + (cost ? ` — or ${markAlt} shards if cores run short` : '') : 'Sealed — open a connected fragment first'}
+      ${on ? 'Status: unlocked on your account' : reachable ? `Cost: ${cost} path point(s)` + (cost ? ` (or ${markAlt} marks if you have no points)` : '') : 'Locked — unlock a connected node first'}
     </div>
     ${
       on
-        ? `<p class="po-placeholder">This fragment is already yours.</p>`
+        ? `<p class="po-placeholder">Already on your Path.</p>`
         : reachable
-          ? `<button type="button" class="th-btn primary" data-action="unlock-path" data-node="${escapeHtml(n.id)}">Open</button>`
+          ? `<button type="button" class="th-btn primary" data-action="unlock-path" data-node="${escapeHtml(n.id)}">Unlock</button>`
           : ''
     }
   `;
@@ -942,10 +998,67 @@ async function renderPanel(root, tab, member) {
   }
   if (tab === 'identity') renderIdentity(panel, member, root._identityMode || 'view');
   else if (tab === 'path') await renderPath(panel, member);
+  else if (tab === 'chain') await renderChain(panel, member);
   else if (tab === 'doors') renderDoors(panel, member);
   else if (tab === 'play') await renderPlay(panel, member);
   else if (tab === 'markets') renderWatchlist(panel, member);
   else renderDoors(panel, member);
+}
+
+
+async function renderChain(panel, member) {
+  const meta = getTokenMeta();
+  const led = await getZeroInfinityLedger();
+  const modeLabel = meta.mode === 'simulation' ? 'Simulation' : 'Chain';
+  const per001 = meta.zeroPerOneHundredthBtc;
+  const skus = (meta.shop?.skus || []).map((s) =>
+    `<button type="button" class="th-btn" data-action="zi-sku" data-sku="${escapeHtml(s.id)}">${escapeHtml(s.label)} · ${s.zeroCost} ${escapeHtml(meta.symbol)}</button>`
+  ).join(' ');
+
+  const txs = (led.txs || []).slice(0, 8).map((t) => {
+    const when = (t.at || '').slice(0, 19).replace('T', ' ');
+    return `<div class="th-empty" style="margin:0.25rem 0">${escapeHtml(when)} · ${escapeHtml(t.kind || '')} · BTC ${t.btc_delta >= 0 ? '+' : ''}${formatBtc(t.btc_delta)} · 0∞ ${t.zero_delta >= 0 ? '+' : ''}${formatZero(t.zero_delta)}</div>`;
+  }).join('') || '<p class="th-empty">No movements yet.</p>';
+
+  panel.innerHTML = `
+    <div class="th-card">
+      <h4>${escapeHtml(meta.symbol)} · ${escapeHtml(meta.name)}</h4>
+      <p class="th-empty">Web3 rail: pegged to <strong style="color:var(--ink)">BTC only</strong> — not fiat. <strong style="color:var(--ink)">0.01 BTC</strong> always yields <strong style="color:var(--ink)">${formatZero(per001)} ${escapeHtml(meta.symbol)}</strong>, whatever dollars do.</p>
+      <p class="th-empty">Mode: <strong style="color:var(--ink)">${escapeHtml(modeLabel)}</strong>. Fiat / Stripe is a separate door for non–Web3 guests later.</p>
+      <div class="th-currency-row" style="margin-top:0.75rem">
+        <div class="th-currency"><div><span class="v">${formatZero(led.zero)}</span><span class="k">${escapeHtml(meta.symbol)}</span></div></div>
+        <div class="th-currency"><div><span class="v">${formatBtc(led.btc)}</span><span class="k">BTC (sim)</span></div></div>
+      </div>
+      <p class="th-path-legend">Peg: <strong style="color:var(--ink)">1 BTC → ${meta.rateZeroPerBtc.toLocaleString()} ${escapeHtml(meta.symbol)}</strong></p>
+    </div>
+    <div class="th-card th-form" style="margin-top:0.75rem">
+      <h4>Acquire with BTC</h4>
+      <label for="zi-btc">BTC to spend</label>
+      <input id="zi-btc" type="number" min="0" step="0.0001" value="0.01" inputmode="decimal">
+      <p class="hint">Preview: <span data-role="zi-preview">${formatZero(per001)}</span> ${escapeHtml(meta.symbol)} at the fixed peg.</p>
+      <div class="th-actions">
+        <button type="button" class="th-btn primary" data-action="zi-buy">Buy ${escapeHtml(meta.symbol)}</button>
+        <button type="button" class="th-btn" data-action="zi-faucet">+0.01 BTC (test)</button>
+        <button type="button" class="th-btn ghost" data-action="zi-connect">Connect wallet</button>
+      </div>
+      <p class="th-empty" data-role="zi-status" style="margin-top:0.5rem"></p>
+    </div>
+    <div class="th-card" style="margin-top:0.75rem">
+      <h4>Path — shards & cores</h4>
+      <p class="th-empty">Spend ${escapeHtml(meta.symbol)} if you do not grind Domains. Same Path nodes free players open with play.</p>
+      <div class="th-actions" style="flex-direction:column;align-items:stretch">${skus}</div>
+    </div>
+    <div class="th-card" style="margin-top:0.75rem">
+      <h4>Recent</h4>
+      ${txs}
+    </div>
+  `;
+
+  const btcInput = panel.querySelector('#zi-btc');
+  const preview = panel.querySelector('[data-role="zi-preview"]');
+  btcInput?.addEventListener('input', () => {
+    if (preview) preview.textContent = formatZero(zeroFromBtc(parseFloat(btcInput.value) || 0));
+  });
 }
 
 function buildTabs(member) {
@@ -953,6 +1066,7 @@ function buildTabs(member) {
   const tabs = [
     { id: 'identity', label: 'Identity' },
     { id: 'path', label: 'Path' },
+    { id: 'chain', label: '0∞' },
     { id: 'doors', label: 'Your rooms' },
   ];
   if (
@@ -1035,6 +1149,37 @@ function bindRoot(root) {
         await openPathOverlay(root);
         renderPathDetail(document.getElementById('hy-path-overlay'), nodeId);
       }
+      return;
+    }
+    if (action === 'zi-buy') {
+      const input = root.querySelector('#zi-btc');
+      const status = root.querySelector('[data-role="zi-status"]');
+      const btc = parseFloat(input?.value || '0');
+      if (status) status.textContent = 'Working…';
+      const res = await buyZeroInfinityWithBtc(btc);
+      if (!res.ok) { if (status) status.textContent = res.error; return; }
+      if (status) status.textContent = `Received ${formatZero(res.received)} ${getTokenMeta().symbol}`;
+      await refreshRoot(root);
+      return;
+    }
+    if (action === 'zi-faucet') {
+      await grantSimBtc(0.01);
+      await refreshRoot(root);
+      return;
+    }
+    if (action === 'zi-sku') {
+      const id = btn.getAttribute('data-sku');
+      const res = await buyPathSkuWithZero(id);
+      const status = root.querySelector('[data-role="zi-status"]');
+      if (!res.ok) { if (status) status.textContent = res.error; else alert(res.error); return; }
+      if (status) status.textContent = `Opened ${res.sku.label}`;
+      await refreshRoot(root);
+      return;
+    }
+    if (action === 'zi-connect') {
+      const res = await connectChainWallet();
+      const status = root.querySelector('[data-role="zi-status"]');
+      if (status) status.textContent = res.error || 'Ready';
       return;
     }
     if (action === 'enter-decay') {
