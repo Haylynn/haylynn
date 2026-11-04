@@ -532,8 +532,8 @@ function renderIdentity(panel, member, mode) {
   const accountId = member.id ? String(member.id).slice(0, 8) : (member.isMock ? 'preview' : '—');
   const roomPct = slots >= 99 ? 100 : Math.min(100, Math.round((tags.length / Math.max(slots, 1)) * 100));
   const benefits = {
-    free: ['Free passport — known to the house', 'Path & marks (account-wide)', 'Profile (name, bio, image, links)', 'Up to 3 room tags for deeper doors'],
-    supporter: ['More room tags', 'Priority doors', 'Path & marks unchanged'],
+    free: ['Free passport — known to the house', 'Path — shards & cores across the house', 'Profile (name, bio, image, links)', 'Up to 3 room tags for deeper doors'],
+    supporter: ['More room tags', 'Priority doors', 'Path — shards & cores unchanged'],
     patron: ['All rooms', 'Future doors', 'Deepest seat in the house'],
   };
   const blist = benefits[member.tier] || benefits.free;
@@ -676,88 +676,45 @@ function renderDoors(panel, member) {
 async function renderPath(panel, member) {
   const prog = await getAccountProgress();
   const nodes = listPathNodes();
-  const edges = typeof listPathEdges === 'function' ? listPathEdges() : [];
   const unlocked = new Set(prog.unlocked || []);
-  const src = prog.source === 'supabase' ? 'Account (cloud)' : 'Local preview — sign in to sync';
+  const src = prog.source === 'supabase' ? 'Held in the house (cloud)' : 'Held on this device — sign in to keep them across the continuum';
   const rate = 5;
-
-  const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
-
-  function effectFor(n) {
-    if (n.effect) return n.effect;
-    const cluster = n.cluster || '';
-    const hints = {
-      start: 'Opens the Path. Your passport is real in the house.',
-      play: 'Game flag: Cosmic Decay / future realities can read this and change slots, intros, or rules.',
-      market: 'House flag: Market can apply discount, early shelf, or handmade eligibility when checkout is live.',
-      house: 'Passport / desk / presence: how the house shows and remembers you.',
-      voice: 'Voice flag: radio submit or listening perks when those doors open.',
-      chronicle: 'Chronicle flag: early pages or guest spine when those doors open.',
-      sky: 'Sky / LYMP flag: print windows and cross-house perks when linked.',
-      draw: 'Draw flag: deeper readings or cloud history when enabled.',
-      well: 'Well flag: cause follows and highlights on the passport.',
-    };
-    return hints[cluster] || hints[n.kind] || 'Stored on your account. Systems that recognise this node can honour it.';
-  }
-
-  function treeMarkup(wide) {
-    const lines = edges.map(([a, b]) => {
-      const A = byId[a];
-      const B = byId[b];
-      if (!A || !B) return '';
-      const on = unlocked.has(a) && unlocked.has(b);
-      return `<line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}"
-      stroke="${on ? 'rgba(53,201,143,0.7)' : 'rgba(138,92,240,0.4)'}"
-      stroke-width="${on ? 0.35 : 0.22}" stroke-linecap="round" />`;
-    }).join('');
-    const nodeHtml = nodes.map((n) => {
-      const on = unlocked.has(n.id);
-      const cost = n.cost ?? 0;
-      const kind = n.kind || 'minor';
-      const parents = edges.filter(([, t]) => t === n.id).map(([f]) => f);
-      const reachable = on || kind === 'start' || !parents.length || parents.some((p) => unlocked.has(p));
-      const costLabel = on ? 'On' : (cost === 0 ? 'Free' : `${cost}pt`);
-      return `<button type="button" class="th-path-node ${kind} ${on ? 'on' : ''} ${reachable ? '' : 'locked'}"
-        style="left:${(n.x/100)*900}px;top:${(n.y/100)*720}px"
-        data-action="path-inspect" data-node="${escapeHtml(n.id)}"
-        title="${escapeHtml(n.name)}">
-        <span class="pn-name">${escapeHtml(n.name)}</span>
-        <span class="pn-cost">${escapeHtml(costLabel)}</span>
-      </button>`;
-    }).join('');
-    return `<div class="th-path-inner" style="${wide ? '' : ''}">
-      <svg class="th-path-svg" width="900" height="720" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
-      ${nodeHtml}
-    </div>`;
-  }
 
   panel.innerHTML = `
     <div class="th-card">
       <h4>Path</h4>
-      <p class="th-empty">Account web for the whole house. Minors are small; majors open doors; keystones define a lean.</p>
-      <div class="th-stats" style="display:flex;gap:1rem;flex-wrap:wrap;margin:0.8rem 0">
-        <div class="th-stat"><span class="v">${prog.marks ?? 0}</span><span class="k">Marks</span></div>
-        <div class="th-stat"><span class="v">${prog.path_points ?? 0}</span><span class="k">Path points</span></div>
-        <div class="th-stat"><span class="v">${unlocked.size}/${nodes.length}</span><span class="k">Nodes</span></div>
+      <p class="th-empty">Fragments of reality gather here. Spend <strong style="color:var(--ink)">cores</strong> to open nodes on the web; <strong style="color:var(--ink)">shards</strong> can stand in when cores run short.</p>
+      <div class="th-currency-row">
+        <div class="th-currency">
+          <img class="th-currency-icon" src="assets/shard.svg" alt="" width="28" height="28" onerror="this.style.display='none'">
+          <div>
+            <span class="v">${prog.marks ?? 0}</span>
+            <span class="k">Shards</span>
+          </div>
+        </div>
+        <div class="th-currency">
+          <img class="th-currency-icon" src="assets/core.svg" alt="" width="28" height="28" onerror="this.style.display='none'">
+          <div>
+            <span class="v">${prog.path_points ?? 0}</span>
+            <span class="k">Cores</span>
+          </div>
+        </div>
+        <div class="th-currency">
+          <div>
+            <span class="v">${unlocked.size}/${nodes.length}</span>
+            <span class="k">Opened</span>
+          </div>
+        </div>
       </div>
-      <p class="th-path-legend">${rate} marks = 1 path point when filling a gap. Tap <strong style="color:var(--ink)">Open Path</strong> for the full web and what each unlock does.</p>
+      <p class="th-path-legend">${rate} shards can stand for 1 core when a node asks more than you hold. The full web lives beyond this card.</p>
       <p class="th-empty">${escapeHtml(src)}</p>
-      <button type="button" class="th-btn primary" data-action="path-open">Open Path</button>
+      <button type="button" class="th-btn primary" data-action="path-open">Enter the Path</button>
     </div>
-    <div class="th-path-tree">${treeMarkup(false)}</div>
-    <p class="th-empty">Demo:
-      <button type="button" class="th-btn" data-action="grant-path-demo">+5 path points</button>
-      <button type="button" class="th-btn" data-action="grant-marks-demo">+25 marks</button>
+    <p class="th-empty" style="margin-top:0.75rem">Trial gifts (remove when live):
+      <button type="button" class="th-btn" data-action="grant-path-demo">+5 cores</button>
+      <button type="button" class="th-btn" data-action="grant-marks-demo">+25 shards</button>
     </p>
   `;
-}
-
-function pathFragmentsUrl() {
-  try {
-    return new URL('assets/path-fragments.jpg', document.baseURI).href;
-  } catch {
-    return 'assets/path-fragments.jpg';
-  }
 }
 
 function ensurePathOverlay() {
@@ -772,7 +729,7 @@ function ensurePathOverlay() {
     <div class="po-top">
       <div>
         <h3>Path</h3>
-        <p class="po-sub">Fragments of reality — your account web. Select a node to see what it does.</p>
+        <p class="po-sub">Fragments of reality — walk the web. Touch a node to learn what it opens.</p>
         <div class="po-stats" data-role="po-stats"></div>
       </div>
       <button type="button" class="po-close" data-action="path-close">Close</button>
@@ -780,7 +737,7 @@ function ensurePathOverlay() {
     <div class="po-body">
       <div class="po-map" data-role="po-map"></div>
       <aside class="po-detail" data-role="po-detail">
-        <p class="po-placeholder">Select a node on the web to read its cost, what it unlocks, and claim it if you can.</p>
+        <p class="po-placeholder">Touch a fragment to read its cost, what it opens in the house, and claim it if you can.</p>
       </aside>
     </div>
   `;
@@ -824,15 +781,15 @@ async function openPathOverlay(root) {
   const effectFor = (n) => {
     if (n.effect) return n.effect;
     const hints = {
-      start: 'Opens the Path. Your passport is real in the house.',
-      play: 'Game flag: Cosmic Decay / future realities can read this and change slots, intros, or rules.',
-      market: 'House flag: Market can apply discount, early shelf, or handmade eligibility when checkout is live.',
-      house: 'Passport / desk / presence: how the house shows and remembers you.',
-      voice: 'Voice flag: radio submit or listening perks when those doors open.',
-      chronicle: 'Chronicle flag: early pages or guest spine when those doors open.',
-      sky: 'Sky / LYMP flag: print windows and cross-house perks when linked.',
-      draw: 'Draw flag: deeper readings or cloud history when enabled.',
-      well: 'Well flag: cause follows and highlights on the passport.',
+      start: 'The first fracture — the house knows your name.',
+      play: 'A door into Domains — Cosmic Decay and later realities may honour this.',
+      market: 'A favour in the Market — shelves and handmade doors may open sooner when those rooms wake.',
+      house: 'How the house shows you — passport, desk, and presence.',
+      voice: 'A thread in Voice — radio and listening gifts when that current runs.',
+      chronicle: 'A mark in the Chronicle — early pages when the story allows.',
+      sky: 'A window in the Sky — prints and LYMP when that link is live.',
+      draw: 'Deeper draws — memory of readings when the house keeps them.',
+      well: 'A mark by the Well — causes you choose to stand near.',
     };
     return hints[n.cluster] || 'Stored on your account for systems that recognise this node.';
   };
@@ -862,9 +819,9 @@ async function openPathOverlay(root) {
   }).join('');
 
   overlay.querySelector('[data-role="po-stats"]').innerHTML =
-    `<span><strong>${prog.marks ?? 0}</strong> marks</span>
-     <span><strong>${prog.path_points ?? 0}</strong> path pts</span>
-     <span><strong>${unlocked.size}/${nodes.length}</strong> nodes</span>`;
+    `<span class="po-cur"><img src="assets/shard.svg" alt="" width="16" height="16" onerror="this.remove()"><strong>${prog.marks ?? 0}</strong> shards</span>
+     <span class="po-cur"><img src="assets/core.svg" alt="" width="16" height="16" onerror="this.remove()"><strong>${prog.path_points ?? 0}</strong> cores</span>
+     <span><strong>${unlocked.size}/${nodes.length}</strong> opened</span>`;
 
   overlay.querySelector('[data-role="po-map"]').innerHTML =
     `<div class="th-path-inner">
@@ -873,7 +830,7 @@ async function openPathOverlay(root) {
     </div>`;
 
   const detail = overlay.querySelector('[data-role="po-detail"]');
-  detail.innerHTML = `<p class="po-placeholder">Select a node on the web to read its cost, what it unlocks, and claim it if you can.</p>`;
+  detail.innerHTML = `<p class="po-placeholder">Touch a fragment to read its cost, what it opens in the house, and claim it if you can.</p>`;
 
   overlay._pathCtx = { prog, nodes, edges, unlocked, rate, byId, effectFor, root };
 
@@ -907,13 +864,13 @@ function renderPathDetail(overlay, nodeId) {
     <p>${escapeHtml(n.blurb || '')}</p>
     <div class="po-effect"><strong style="color:#35c98f">What it does</strong><br>${escapeHtml(ctx.effectFor(n))}</div>
     <div class="po-meta">
-      ${on ? 'Status: unlocked on your account' : reachable ? `Cost: ${cost} path point(s)` + (cost ? ` (or ${markAlt} marks if you have no points)` : '') : 'Locked — unlock a connected node first'}
+      ${on ? 'Already open on your Path' : reachable ? `Cost: ${cost} core(s)` + (cost ? ` — or ${markAlt} shards if cores run short` : '') : 'Sealed — open a connected fragment first'}
     </div>
     ${
       on
-        ? `<p class="po-placeholder">Already on your Path.</p>`
+        ? `<p class="po-placeholder">This fragment is already yours.</p>`
         : reachable
-          ? `<button type="button" class="th-btn primary" data-action="unlock-path" data-node="${escapeHtml(n.id)}">Unlock</button>`
+          ? `<button type="button" class="th-btn primary" data-action="unlock-path" data-node="${escapeHtml(n.id)}">Open</button>`
           : ''
     }
   `;

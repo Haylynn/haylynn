@@ -136,13 +136,13 @@ function canReach(nodeId, unlocked) {
 
 export async function unlockPathNode(nodeId) {
   const node = PATH_NODES.find((n) => n.id === nodeId);
-  if (!node) return { ok: false, error: 'Unknown node' };
+  if (!node) return { ok: false, error: 'Unknown fragment' };
 
   const prog = await getAccountProgress();
   if (prog.unlocked?.includes(nodeId)) return { ok: true, progress: prog, already: true };
 
   if (!canReach(nodeId, prog.unlocked)) {
-    return { ok: false, error: 'Unlock a connected node first — travel the Path.' };
+    return { ok: false, error: 'Open a connected fragment first — walk the Path.' };
   }
 
   const cost = Math.max(0, node.cost ?? 0);
@@ -159,7 +159,7 @@ export async function unlockPathNode(nodeId) {
       if (nextMarks < markCost) {
         return {
           ok: false,
-          error: `Need ${cost} path points (have ${nextPoints}) or ${markCost} marks for the gap (have ${nextMarks}).`,
+          error: `Need ${cost} core(s) (you hold ${nextPoints}) or ${markCost} shards for the gap (you hold ${nextMarks}).`,
         };
       }
       nextMarks -= markCost;
