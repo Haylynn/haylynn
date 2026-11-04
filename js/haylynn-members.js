@@ -80,57 +80,75 @@ const STYLE = `
 }
 
 
-.hy-threshold .th-path-tree {
+
+/* Path map (preview + full overlay share these) */
+.th-path-tree {
   position: relative; width: 100%; height: min(52vh, 380px);
   margin: 0.75rem 0 0.5rem; border-radius: 12px;
   border: 1px solid rgba(138,92,240,0.28);
-  overflow: hidden;
+  overflow: auto;
   touch-action: pan-x pan-y;
+  background: radial-gradient(ellipse at 50% 40%, rgba(138,92,240,0.12), transparent 55%), #08060f;
 }
-.hy-threshold .th-path-inner {
-  position: relative; width: 900px; height: 720px; margin: 0 auto;
+.th-path-inner {
+  position: relative;
+  width: 900px;
+  height: 720px;
+  margin: 0 auto;
+  flex-shrink: 0;
 }
-.hy-threshold .th-path-svg {
-  position: absolute; inset: 0; width: 100%; height: 100%;
+.th-path-svg {
+  position: absolute;
+  left: 0; top: 0;
+  width: 900px;
+  height: 720px;
   pointer-events: none;
+  overflow: visible;
+  z-index: 1;
 }
-.hy-threshold .th-path-node {
-  position: absolute; transform: translate(-50%, -50%);
-  width: 4.6rem; min-height: 2.6rem; padding: 0.35rem 0.25rem;
-  border-radius: 999px; text-align: center; cursor: pointer;
+.th-path-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 4.6rem;
+  min-height: 2.6rem;
+  padding: 0.35rem 0.25rem;
+  border-radius: 999px;
+  text-align: center;
+  cursor: pointer;
   border: 1px solid rgba(255,255,255,0.16);
   background: rgba(10,8,20,0.94);
   font-family: 'Space Mono', monospace;
   z-index: 2;
+  box-sizing: border-box;
 }
-.hy-threshold .th-path-node.minor { width: 3.4rem; min-height: 2.2rem; border-radius: 8px; }
-.hy-threshold .th-path-node.major {
+.th-path-node.minor { width: 3.4rem; min-height: 2.2rem; border-radius: 8px; }
+.th-path-node.major {
   width: 5.4rem; border-color: rgba(138,92,240,0.45);
   box-shadow: 0 0 10px rgba(138,92,240,0.15);
 }
-.hy-threshold .th-path-node.keystone {
+.th-path-node.keystone {
   width: 5.8rem; border-radius: 10px;
   border-color: rgba(236,90,160,0.5);
   box-shadow: 0 0 12px rgba(236,90,160,0.2);
 }
-.hy-threshold .th-path-node.start {
+.th-path-node.start {
   width: 5rem; border-color: rgba(53,201,143,0.45);
 }
-.hy-threshold .th-path-node .pn-name {
+.th-path-node .pn-name {
   display: block; font-size: 0.42rem; letter-spacing: 0.04em;
   text-transform: uppercase; color: var(--ink, #efe9e0); line-height: 1.25;
 }
-.hy-threshold .th-path-node .pn-cost {
+.th-path-node .pn-cost {
   display: block; margin-top: 0.15rem; font-size: 0.4rem;
   color: var(--ink-dim, #9a92a4);
 }
-.hy-threshold .th-path-node.on {
+.th-path-node.on {
   border-color: rgba(53,201,143,0.7) !important;
   box-shadow: 0 0 14px rgba(53,201,143,0.3);
 }
-.hy-threshold .th-path-node.on .pn-cost { color: #35c98f; }
-.hy-threshold .th-path-node.locked { opacity: 0.45; }
-.hy-threshold .th-path-legend {
+.th-path-node.on .pn-cost { color: #35c98f; }
+.th-path-node.locked { opacity: 0.45; }
+.th-path-legend {
   font-family: 'Space Mono', monospace; font-size: 0.5rem;
   color: var(--ink-dim, #9a92a4); line-height: 1.45; margin: 0.5rem 0;
 }
@@ -143,32 +161,19 @@ const STYLE = `
 .hy-path-overlay.open { display: flex; }
 .hy-path-overlay .po-bg {
   position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(138,92,240,0.22), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(53,201,143,0.1), transparent 50%),
-    radial-gradient(ellipse 50% 35% at 85% 60%, rgba(236,90,160,0.08), transparent 45%),
-    radial-gradient(circle at 50% 50%, #0c0a14 0%, #06050c 70%);
-}
-.hy-path-overlay .po-bg::after {
-  content: '';
-  position: absolute; inset: 0;
-  background-image: radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.25), transparent),
-    radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.2), transparent),
-    radial-gradient(1.5px 1.5px at 50% 50%, rgba(255,255,255,0.15), transparent),
-    radial-gradient(1px 1px at 15% 55%, rgba(255,255,255,0.2), transparent),
-    radial-gradient(1px 1px at 60% 15%, rgba(255,255,255,0.25), transparent),
-    radial-gradient(1px 1px at 80% 45%, rgba(255,255,255,0.2), transparent);
-  background-size: 100% 100%;
-  opacity: 0.85;
+  background-color: #06050c;
+  background-image:
+    linear-gradient(180deg, rgba(6,5,12,0.55) 0%, rgba(6,5,12,0.3) 45%, rgba(6,5,12,0.72) 100%),
+    url('assets/path-fragments.jpg');
+  background-size: cover;
+  background-position: center;
 }
 .hy-path-overlay .po-top {
   position: relative; z-index: 2;
   display: flex; align-items: flex-start; justify-content: space-between;
   gap: 0.75rem; padding: 0.85rem 1rem;
   border-bottom: 1px solid rgba(138,92,240,0.25);
-  background: rgba(6,5,12,0.72); backdrop-filter: blur(10px);
+  background: rgba(6,5,12,0.8); backdrop-filter: blur(10px);
 }
 .hy-path-overlay .po-top h3 {
   font-family: 'Cormorant Garamond', serif; font-weight: 400;
@@ -195,25 +200,26 @@ const STYLE = `
   position: relative; z-index: 1; flex: 1; display: flex; min-height: 0;
 }
 .hy-path-overlay .po-map {
-  flex: 1; overflow: auto; touch-action: pan-x pan-y;
-  position: relative;
+  flex: 1; overflow: auto; touch-action: pan-x pan-y; position: relative;
+  -webkit-overflow-scrolling: touch;
 }
 .hy-path-overlay .po-map .th-path-inner {
-  width: 960px; height: 780px;
+  width: 900px; height: 720px; margin: 1rem auto;
 }
 .hy-path-overlay .po-detail {
   width: min(100%, 300px); max-width: 100%;
   border-left: 1px solid rgba(138,92,240,0.25);
-  background: rgba(8,6,16,0.92); backdrop-filter: blur(12px);
+  background: rgba(8,6,16,0.94); backdrop-filter: blur(12px);
   padding: 1rem 0.9rem; overflow: auto;
   font-family: 'Space Mono', monospace;
+  z-index: 3;
 }
 @media (max-width: 720px) {
   .hy-path-overlay .po-body { flex-direction: column; }
   .hy-path-overlay .po-detail {
     width: 100%; border-left: none;
     border-top: 1px solid rgba(138,92,240,0.25);
-    max-height: 42%;
+    max-height: 38%;
   }
 }
 .hy-path-overlay .po-detail h4 {
@@ -230,7 +236,7 @@ const STYLE = `
 .hy-path-overlay .po-detail p {
   font-size: 0.62rem; line-height: 1.55; color: var(--ink-dim, #9a92a4); margin: 0 0 0.65rem;
 }
-.hy-path-overlay .po-detail .po-effect {
+.hy-path-overlay .po-effect {
   border: 1px solid rgba(53,201,143,0.3);
   background: rgba(53,201,143,0.08);
   border-radius: 10px; padding: 0.55rem 0.65rem;
@@ -699,9 +705,9 @@ async function renderPath(panel, member) {
       const B = byId[b];
       if (!A || !B) return '';
       const on = unlocked.has(a) && unlocked.has(b);
-      return `<line x1="${A.x}%" y1="${A.y}%" x2="${B.x}%" y2="${B.y}%"
-        stroke="${on ? 'rgba(53,201,143,0.55)' : 'rgba(138,92,240,0.22)'}"
-        stroke-width="${on ? 2.5 : 1.5}" />`;
+      return `<line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}"
+      stroke="${on ? 'rgba(53,201,143,0.7)' : 'rgba(138,92,240,0.4)'}"
+      stroke-width="${on ? 0.35 : 0.22}" stroke-linecap="round" />`;
     }).join('');
     const nodeHtml = nodes.map((n) => {
       const on = unlocked.has(n.id);
@@ -711,7 +717,7 @@ async function renderPath(panel, member) {
       const reachable = on || kind === 'start' || !parents.length || parents.some((p) => unlocked.has(p));
       const costLabel = on ? 'On' : (cost === 0 ? 'Free' : `${cost}pt`);
       return `<button type="button" class="th-path-node ${kind} ${on ? 'on' : ''} ${reachable ? '' : 'locked'}"
-        style="left:${n.x}%;top:${n.y}%"
+        style="left:${(n.x/100)*900}px;top:${(n.y/100)*720}px"
         data-action="path-inspect" data-node="${escapeHtml(n.id)}"
         title="${escapeHtml(n.name)}">
         <span class="pn-name">${escapeHtml(n.name)}</span>
@@ -719,7 +725,7 @@ async function renderPath(panel, member) {
       </button>`;
     }).join('');
     return `<div class="th-path-inner" style="${wide ? '' : ''}">
-      <svg class="th-path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
+      <svg class="th-path-svg" width="900" height="720" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
       ${nodeHtml}
     </div>`;
   }
@@ -756,7 +762,7 @@ function ensurePathOverlay() {
     <div class="po-top">
       <div>
         <h3>Path</h3>
-        <p class="po-sub">Your account web in the house. Select a node to see what it does.</p>
+        <p class="po-sub">Fragments of reality — your account web. Select a node to see what it does.</p>
         <div class="po-stats" data-role="po-stats"></div>
       </div>
       <button type="button" class="po-close" data-action="path-close">Close</button>
@@ -825,9 +831,9 @@ async function openPathOverlay(root) {
     const A = byId[a]; const B = byId[b];
     if (!A || !B) return '';
     const on = unlocked.has(a) && unlocked.has(b);
-    return `<line x1="${A.x}%" y1="${A.y}%" x2="${B.x}%" y2="${B.y}%"
-      stroke="${on ? 'rgba(53,201,143,0.55)' : 'rgba(138,92,240,0.25)'}"
-      stroke-width="${on ? 2.5 : 1.5}" />`;
+    return `<line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}"
+      stroke="${on ? 'rgba(53,201,143,0.7)' : 'rgba(138,92,240,0.4)'}"
+      stroke-width="${on ? 0.35 : 0.22}" stroke-linecap="round" />`;
   }).join('');
 
   const nodeHtml = nodes.map((n) => {
@@ -838,7 +844,7 @@ async function openPathOverlay(root) {
     const cost = n.cost ?? 0;
     const costLabel = on ? 'On' : (cost === 0 ? 'Free' : `${cost}pt`);
     return `<button type="button" class="th-path-node ${kind} ${on ? 'on' : ''} ${reachable ? '' : 'locked'}"
-      style="left:${n.x}%;top:${n.y}%"
+      style="left:${(n.x/100)*900}px;top:${(n.y/100)*720}px"
       data-action="path-inspect" data-node="${escapeHtml(n.id)}">
       <span class="pn-name">${escapeHtml(n.name)}</span>
       <span class="pn-cost">${escapeHtml(costLabel)}</span>
@@ -852,7 +858,7 @@ async function openPathOverlay(root) {
 
   overlay.querySelector('[data-role="po-map"]').innerHTML =
     `<div class="th-path-inner">
-      <svg class="th-path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
+      <svg class="th-path-svg" width="900" height="720" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
       ${nodeHtml}
     </div>`;
 
@@ -863,6 +869,14 @@ async function openPathOverlay(root) {
 
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => {
+    const map = overlay.querySelector('[data-role="po-map"]');
+    const inner = map?.querySelector('.th-path-inner');
+    if (map && inner) {
+      map.scrollLeft = Math.max(0, (inner.scrollWidth - map.clientWidth) / 2);
+      map.scrollTop = Math.max(0, (inner.scrollHeight - map.clientHeight) / 2 - 40);
+    }
+  });
 }
 
 function renderPathDetail(overlay, nodeId) {
