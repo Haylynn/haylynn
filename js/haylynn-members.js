@@ -35,25 +35,21 @@ import {
   subscribeCharacterLive,
   enterCosmicDecay,
 } from './haylynn-character.js';
-
-import {
-  getZeroInfinityLedger,
-  buyZeroInfinityWithBtc,
-  grantSimBtc,
-  buyPathSkuWithZero,
-  formatZero,
-  formatBtc,
-  getTokenMeta,
-  connectChainWallet,
-  zeroFromBtc,
-} from './haylynn-zero-infinity.js';
-
 import {
   getAccountProgress,
   unlockPathNode,
   listPathNodes,
   listPathEdges,
 } from './haylynn-account-progress.js';
+import {
+  getZeroInfinityLedger,
+  buyZeroInfinityWithBtc,
+  grantSimBtc,
+  formatZero,
+  formatBtc,
+  getTokenMeta,
+  connectChainWallet,
+} from './haylynn-zero-infinity.js';
 
 function escapeHtml(s) {
   return String(s ?? '')
@@ -1010,11 +1006,6 @@ async function renderChain(panel, member) {
   const meta = getTokenMeta();
   const led = await getZeroInfinityLedger();
   const modeLabel = meta.mode === 'simulation' ? 'Simulation' : 'Chain';
-  const per001 = meta.zeroPerOneHundredthBtc;
-  const skus = (meta.shop?.skus || []).map((s) =>
-    `<button type="button" class="th-btn" data-action="zi-sku" data-sku="${escapeHtml(s.id)}">${escapeHtml(s.label)} · ${s.zeroCost} ${escapeHtml(meta.symbol)}</button>`
-  ).join(' ');
-
   const txs = (led.txs || []).slice(0, 8).map((t) => {
     const when = (t.at || '').slice(0, 19).replace('T', ' ');
     return `<div class="th-empty" style="margin:0.25rem 0">${escapeHtml(when)} · ${escapeHtml(t.kind || '')} · BTC ${t.btc_delta >= 0 ? '+' : ''}${formatBtc(t.btc_delta)} · 0∞ ${t.zero_delta >= 0 ? '+' : ''}${formatZero(t.zero_delta)}</div>`;
@@ -1023,19 +1014,28 @@ async function renderChain(panel, member) {
   panel.innerHTML = `
     <div class="th-card">
       <h4>${escapeHtml(meta.symbol)} · ${escapeHtml(meta.name)}</h4>
-      <p class="th-empty">Web3 rail: pegged to <strong style="color:var(--ink)">BTC only</strong> — not fiat. <strong style="color:var(--ink)">0.01 BTC</strong> always yields <strong style="color:var(--ink)">${formatZero(per001)} ${escapeHtml(meta.symbol)}</strong>, whatever dollars do.</p>
-      <p class="th-empty">Mode: <strong style="color:var(--ink)">${escapeHtml(modeLabel)}</strong>. Fiat / Stripe is a separate door for non–Web3 guests later.</p>
+      <p class="th-empty">House token for the continuum. <strong style="color:var(--ink)">${escapeHtml(modeLabel)}</strong> — not real Bitcoin or on-chain value until chain mode is connected.</p>
       <div class="th-currency-row" style="margin-top:0.75rem">
-        <div class="th-currency"><div><span class="v">${formatZero(led.zero)}</span><span class="k">${escapeHtml(meta.symbol)}</span></div></div>
-        <div class="th-currency"><div><span class="v">${formatBtc(led.btc)}</span><span class="k">BTC (sim)</span></div></div>
+        <div class="th-currency">
+          <div>
+            <span class="v">${formatZero(led.zero)}</span>
+            <span class="k">${escapeHtml(meta.symbol)}</span>
+          </div>
+        </div>
+        <div class="th-currency">
+          <div>
+            <span class="v">${formatBtc(led.btc)}</span>
+            <span class="k">BTC (sim)</span>
+          </div>
+        </div>
       </div>
-      <p class="th-path-legend">Peg: <strong style="color:var(--ink)">1 BTC → ${meta.rateZeroPerBtc.toLocaleString()} ${escapeHtml(meta.symbol)}</strong></p>
+      <p class="th-path-legend">Rate (sim): <strong style="color:var(--ink)">1 BTC → ${meta.rateZeroPerBtc.toLocaleString()} ${escapeHtml(meta.symbol)}</strong>. Buys spend simulated BTC only.</p>
     </div>
     <div class="th-card th-form" style="margin-top:0.75rem">
-      <h4>Acquire with BTC</h4>
-      <label for="zi-btc">BTC to spend</label>
-      <input id="zi-btc" type="number" min="0" step="0.0001" value="0.01" inputmode="decimal">
-      <p class="hint">Preview: <span data-role="zi-preview">${formatZero(per001)}</span> ${escapeHtml(meta.symbol)} at the fixed peg.</p>
+      <h4>Acquire ${escapeHtml(meta.symbol)}</h4>
+      <label for="zi-btc">BTC to spend (simulation)</label>
+      <input id="zi-btc" type="number" min="0" step="0.0001" value="0.001" inputmode="decimal">
+      <p class="hint">You will receive simulated ${escapeHtml(meta.symbol)} at the rate above.</p>
       <div class="th-actions">
         <button type="button" class="th-btn primary" data-action="zi-buy">Buy ${escapeHtml(meta.symbol)}</button>
         <button type="button" class="th-btn" data-action="zi-faucet">+0.01 BTC (test)</button>
@@ -1044,21 +1044,10 @@ async function renderChain(panel, member) {
       <p class="th-empty" data-role="zi-status" style="margin-top:0.5rem"></p>
     </div>
     <div class="th-card" style="margin-top:0.75rem">
-      <h4>Path — shards & cores</h4>
-      <p class="th-empty">Spend ${escapeHtml(meta.symbol)} if you do not grind Domains. Same Path nodes free players open with play.</p>
-      <div class="th-actions" style="flex-direction:column;align-items:stretch">${skus}</div>
-    </div>
-    <div class="th-card" style="margin-top:0.75rem">
-      <h4>Recent</h4>
+      <h4>Recent (this device)</h4>
       ${txs}
     </div>
   `;
-
-  const btcInput = panel.querySelector('#zi-btc');
-  const preview = panel.querySelector('[data-role="zi-preview"]');
-  btcInput?.addEventListener('input', () => {
-    if (preview) preview.textContent = formatZero(zeroFromBtc(parseFloat(btcInput.value) || 0));
-  });
 }
 
 function buildTabs(member) {
@@ -1157,7 +1146,11 @@ function bindRoot(root) {
       const btc = parseFloat(input?.value || '0');
       if (status) status.textContent = 'Working…';
       const res = await buyZeroInfinityWithBtc(btc);
-      if (!res.ok) { if (status) status.textContent = res.error; return; }
+      if (!res.ok) {
+        if (status) status.textContent = res.error || 'Buy failed';
+        else window.alert(res.error || 'Buy failed');
+        return;
+      }
       if (status) status.textContent = `Received ${formatZero(res.received)} ${getTokenMeta().symbol}`;
       await refreshRoot(root);
       return;
@@ -1167,19 +1160,11 @@ function bindRoot(root) {
       await refreshRoot(root);
       return;
     }
-    if (action === 'zi-sku') {
-      const id = btn.getAttribute('data-sku');
-      const res = await buyPathSkuWithZero(id);
-      const status = root.querySelector('[data-role="zi-status"]');
-      if (!res.ok) { if (status) status.textContent = res.error; else alert(res.error); return; }
-      if (status) status.textContent = `Opened ${res.sku.label}`;
-      await refreshRoot(root);
-      return;
-    }
     if (action === 'zi-connect') {
       const res = await connectChainWallet();
       const status = root.querySelector('[data-role="zi-status"]');
-      if (status) status.textContent = res.error || 'Ready';
+      if (status) status.textContent = res.error || 'Wallet ready';
+      else window.alert(res.error || 'Wallet ready');
       return;
     }
     if (action === 'enter-decay') {

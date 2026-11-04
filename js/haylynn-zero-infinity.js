@@ -1,10 +1,9 @@
 /**
- * Zero Infinity ledger — BTC-pegged Web3 rail (simulation now).
- * Fiat/Stripe is a separate path later (config.fiat).
+ * Zero Infinity (0∞) ledger — simulation now, chain-shaped for later.
+ * Balances: simulated BTC (buy currency) + 0∞ (house token).
  */
 import { ZERO_INFINITY } from './zero-infinity-config.js';
 import { authReady, supabase, getCurrentUser } from './haylynn-auth.js';
-import { awardMarks, awardPathPoints } from './haylynn-account-progress.js';
 
 const LOCAL_KEY = 'haylynn-zero-infinity-v1';
 
@@ -39,15 +38,13 @@ function saveLocal(state) {
   } catch { /* ignore */ }
 }
 
-/** 0∞ for a BTC amount at the fixed peg (no fiat). */
-export function zeroFromBtc(btcAmount) {
-  const btc = Number(btcAmount) || 0;
-  return btc * ZERO_INFINITY.rateZeroPerBtc;
-}
-
+/**
+ * Public read — simulation uses local or Supabase zero_infinity_balances when present.
+ */
 export async function getZeroInfinityLedger() {
   if (ZERO_INFINITY.mode === 'chain') {
-    return { btc: 0, zero: 0, txs: [], mode: 'chain', source: 'chain' };
+    // Future: read on-chain balances via chain adapter
+    return getChainLedgerPlaceholder();
   }
 
   if (authReady && supabase) {
@@ -60,17 +57,21 @@ export async function getZeroInfinityLedger() {
           .eq('user_id', user.id)
           .maybeSingle();
         if (data) {
+          const local = loadLocal();
           return {
             btc: Number(data.btc_sim) || 0,
             zero: Number(data.zero_balance) || 0,
-            txs: loadLocal().txs || [],
+            txs: local.txs || [],
             mode: 'simulation',
             source: 'supabase',
           };
         }
-      } catch { /* optional */ }
+      } catch {
+        /* table may not exist yet */
+      }
     }
   }
+
   return { ...loadLocal(), source: 'local' };
 }
 
@@ -104,15 +105,17 @@ async function persistBalances(btc, zero, tx) {
             note: tx.note || '',
           });
         }
-      } catch { /* optional */ }
+      } catch {
+        /* optional tables */
+      }
     }
   }
   return getZeroInfinityLedger();
 }
 
 /**
- * Buy 0∞ with BTC at the fixed peg.
- * 0.01 BTC always → rateZeroPerBtc * 0.01 0∞ (fiat irrelevant).
+ * Buy 0∞ with simulated BTC.
+ * @param {number} btcAmount — BTC to spend (simulation)
  */
 export async function buyZeroInfinityWithBtc(btcAmount) {
   const btcIn = Number(btcAmount);
@@ -122,30 +125,41 @@ export async function buyZeroInfinityWithBtc(btcAmount) {
   if (btcIn < ZERO_INFINITY.minBtcBuy) {
     return {
       ok: false,
-      error: `Minimum is ${ZERO_INFINITY.minBtcBuy} BTC.`,
+      error: `Minimum buy is ${ZERO_INFINITY.minBtcBuy} BTC (simulation).`,
     };
   }
+
   if (ZERO_INFINITY.mode === 'chain') {
-    return { ok: false, error: 'On-chain BTC→0∞ not connected yet.' };
+    return {
+      ok: false,
+      error: 'On-chain buys are not connected yet. Mode is still simulation.',
+    };
   }
 
   const led = await getZeroInfinityLedger();
   if (btcIn > led.btc) {
-    return { ok: false, error: `Not enough simulated BTC (you hold ${led.btc}).` };
+    return {
+      ok: false,
+      error: `Not enough simulated BTC (you hold ${led.btc}).`,
+    };
   }
 
-  const zeroOut = zeroFromBtc(btcIn);
+  const zeroOut = btcIn * ZERO_INFINITY.rateZeroPerBtc;
+  const nextBtc = led.btc - btcIn;
+  const nextZero = led.zero + zeroOut;
   const tx = {
     kind: 'buy_zero_with_btc',
     btc_delta: -btcIn,
     zero_delta: zeroOut,
-    note: `peg ${ZERO_INFINITY.rateZeroPerBtc} 0∞ / BTC`,
+    note: `simulation buy @ ${ZERO_INFINITY.rateZeroPerBtc} 0∞ per BTC`,
     at: new Date().toISOString(),
   };
-  const next = await persistBalances(led.btc - btcIn, led.zero + zeroOut, tx);
+
+  const next = await persistBalances(nextBtc, nextZero, tx);
   return { ok: true, ledger: next, received: zeroOut };
 }
 
+/** Test faucet — top up simulated BTC (not real). */
 export async function grantSimBtc(amount = 0.01) {
   const n = Number(amount) || 0;
   if (n <= 0) return getZeroInfinityLedger();
@@ -160,38 +174,7 @@ export async function grantSimBtc(amount = 0.01) {
   return persistBalances(led.btc + n, led.zero, tx);
 }
 
-/** Spend 0∞ on a Path shop SKU (shards / cores). */
-export async function buyPathSkuWithZero(skuId) {
-  const sku = ZERO_INFINITY.shop?.skus?.find((s) => s.id === skuId);
-  if (!sku) return { ok: false, error: 'Unknown offering.' };
-
-  const led = await getZeroInfinityLedger();
-  if (led.zero < sku.zeroCost) {
-    return {
-      ok: false,
-      error: `Need ${sku.zeroCost} ${ZERO_INFINITY.symbol} (you hold ${led.zero}).`,
-    };
-  }
-
-  const tx = {
-    kind: 'spend_zero_path',
-    btc_delta: 0,
-    zero_delta: -sku.zeroCost,
-    note: sku.id,
-    at: new Date().toISOString(),
-  };
-  await persistBalances(led.btc, led.zero - sku.zeroCost, tx);
-
-  if (sku.shards) await awardMarks(sku.shards, `0∞:${sku.id}`);
-  if (sku.cores) await awardPathPoints(sku.cores, `0∞:${sku.id}`);
-
-  return {
-    ok: true,
-    ledger: await getZeroInfinityLedger(),
-    sku,
-  };
-}
-
+/** Format helpers */
 export function formatZero(n) {
   const x = Number(n) || 0;
   if (x >= 1e6) return x.toLocaleString(undefined, { maximumFractionDigits: 0 });
@@ -209,15 +192,24 @@ export function getTokenMeta() {
     symbol: ZERO_INFINITY.symbol,
     mode: ZERO_INFINITY.mode,
     rateZeroPerBtc: ZERO_INFINITY.rateZeroPerBtc,
-    zeroPerOneHundredthBtc: ZERO_INFINITY.rateZeroPerBtc * 0.01,
-    shop: ZERO_INFINITY.shop,
   };
 }
 
+/** Future adapter stub — real wallet connect plugs here */
 export async function connectChainWallet() {
   return {
     ok: false,
-    error: 'Chain rail not live. BTC→0∞ peg is ready in config for when you connect it.',
+    error: 'Chain mode is not live. Zero Infinity is running in simulation.',
+  };
+}
+
+function getChainLedgerPlaceholder() {
+  return {
+    btc: 0,
+    zero: 0,
+    txs: [],
+    mode: 'chain',
+    source: 'chain',
   };
 }
 
