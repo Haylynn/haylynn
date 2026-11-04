@@ -160,13 +160,14 @@ const STYLE = `
 }
 .hy-path-overlay.open { display: flex; }
 .hy-path-overlay .po-bg {
-  position: absolute; inset: 0; pointer-events: none;
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
   background-color: #06050c;
   background-image:
-    linear-gradient(180deg, rgba(6,5,12,0.55) 0%, rgba(6,5,12,0.3) 45%, rgba(6,5,12,0.72) 100%),
-    url('assets/path-fragments.jpg');
+    linear-gradient(180deg, rgba(6,5,12,0.4) 0%, rgba(6,5,12,0.2) 40%, rgba(6,5,12,0.55) 100%),
+    var(--path-bg-image, none);
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 .hy-path-overlay .po-top {
   position: relative; z-index: 2;
@@ -751,12 +752,21 @@ async function renderPath(panel, member) {
   `;
 }
 
+function pathFragmentsUrl() {
+  try {
+    return new URL('assets/path-fragments.jpg', document.baseURI).href;
+  } catch {
+    return 'assets/path-fragments.jpg';
+  }
+}
+
 function ensurePathOverlay() {
   let el = document.getElementById('hy-path-overlay');
   if (el) return el;
   el = document.createElement('div');
   el.id = 'hy-path-overlay';
   el.className = 'hy-path-overlay';
+  el.style.setProperty('--path-bg-image', 'url("' + pathFragmentsUrl() + '")');
   el.innerHTML = `
     <div class="po-bg" aria-hidden="true"></div>
     <div class="po-top">
