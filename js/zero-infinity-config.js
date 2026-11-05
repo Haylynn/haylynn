@@ -1,52 +1,36 @@
 /**
- * HAYLYNN: One BTC always yields the same Zoo. Dollars may thrash; the peg does not.
- * THE OTHER: rateZeroPerBtc, shop SKUs, fiat stub disabled, chain fields empty.
- * THE OTHER: Numbers only. Policy lives in your mouth and the Threshold copy.
+ * HAYLYNN: This organ is part of my body on the network. Keep it honest.
+ *
+ * THE OTHER: Module `zero-infinity-config.js`. Behaviour follows the exports below.
  */
 
 export const ZERO_INFINITY = {
-  /**
- * THE OTHER: Display.
- */
+  /** Display */
   name: 'Zero Infinity',
   symbol: '0∞',
-  /**
- * THE OTHER: 'simulation' | 'chain' — flip when real rails exist.
- */
+  /** 'simulation' | 'chain' — flip when real rails exist */
   mode: 'simulation',
 
-  /**
- * THE OTHER: Simulated BTC wallet for testing buys (not real Bitcoin).
- */
+  /** Simulated BTC wallet for testing buys (not real Bitcoin). */
   simStartingBtc: 0.05,
   simStartingZero: 0,
 
   /**
- * THE OTHER: Price: how many 0∞ per 1 BTC in the simulation.
- * THE OTHER: Example: 1 BTC → 100000 0∞  =>  rateZeroPerBtc = 100000.
- */
+   * Price: how many 0∞ per 1 BTC in the simulation.
+   * Example: 1 BTC → 100000 0∞  =>  rateZeroPerBtc = 100000
+   */
   rateZeroPerBtc: 100_000,
 
-  /**
- * THE OTHER: Minimum BTC spend in one buy (simulation).
- */
+  /** Minimum BTC spend in one buy (simulation). */
   minBtcBuy: 0.0001,
 
-  /**
- * THE OTHER: Reserved for future chain.
- */
+  /** Reserved for future chain */
   chain: {
-    /**
- * THE OTHER: E.g. 'ethereum' | 'base' | 'bitcoin-ordinals' — unused in simulation.
- */
+    /** e.g. 'ethereum' | 'base' | 'bitcoin-ordinals' — unused in simulation */
     network: null,
-    /**
- * THE OTHER: Token contract / asset id when live.
- */
+    /** Token contract / asset id when live */
     assetId: null,
-    /**
- * THE OTHER: RPC / indexer endpoints later.
- */
+    /** RPC / indexer endpoints later */
     rpcUrl: null,
   },
 };

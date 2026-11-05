@@ -1,10 +1,7 @@
 /**
- * HAYLYNN: Remember them only when they allow it. Anon key in the open; weight
- * behind rules.
+ * HAYLYNN: Remember them only when they allow it.
  *
- * THE OTHER: Supabase wrappers — sign in, session, tier helpers. Empty config
- * means the door stays shut without drama. RLS is your real wall; I will not
- * paper over a missing policy with clever client code.
+ * THE OTHER: Supabase wrappers. Empty config keeps the door shut. RLS is the wall.
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
@@ -38,7 +35,7 @@ export async function signIn(email, password) {
 
 export async function signInWithOAuth(provider) {
   if (!supabase) throw new Error('Sign-in is closed for now.');
-  // THE OTHER: Same-origin only — never accept redirect from query string.
+  // Same-origin only — never accept redirect from query string
   const redirectTo = window.location.origin + window.location.pathname;
   const { error } = await supabase.auth.signInWithOAuth({
     provider,
@@ -64,9 +61,7 @@ export async function getSession() {
   return session;
 }
 
-/**
- * THE OTHER: Returns 'free' | 'supporter' | 'patron', or null if not logged in.
- */
+/** Returns 'free' | 'supporter' | 'patron', or null if not logged in. */
 export async function getCurrentTier() {
   const user = await getCurrentUser();
   if (!user) return null;
@@ -121,7 +116,7 @@ export async function saveProfile(fields) {
       } else if (typeof v === 'string') {
         clean[k] = v.slice(0, k === 'bio' ? 2000 : 200);
       } else if (k === 'theme_config' && v && typeof v === 'object') {
-        clean[k] = v; // THE OTHER: Validated further server-side / theme module.
+        clean[k] = v; // validated further server-side / theme module
       }
     }
   }

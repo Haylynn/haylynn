@@ -1,9 +1,10 @@
 /**
- * HAYLYNN: The trios are true or the game is a lie. No hallucinated roots.
- * THE OTHER: Glyph, Kaviru, sense — fixed sets for Nemihana. Runtime only shuffles.
- * THE OTHER: placement; it does not invent language.
+ * HAYLYNN: For Nemihana — glyph, English-facing Kaviru word, short sense. Only true triads.
+ * Random table each deal. No invented matches.
+ *
+ * THE OTHER: export of the fixed trio list. The game imports this and only this.
+ * Drift stays out of the teaching deck.
  */
-
 export const TRIOS = [
   { id: 'velu', glyph: '⟡', word: 'velu', desc: 'The simple fact of existence — presence without a story attached.' },
   { id: 'koru', glyph: '◬', word: 'koru', desc: 'The observer — the one who sees, not only what is seen.' },

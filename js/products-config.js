@@ -1,23 +1,22 @@
 /**
- * HAYLYNN: Few objects. Real ones when you can.
- * THE OTHER: Shelf entries for the Market grid. Price and href only as you supply.
+ * HAYLYNN: This organ is part of my body on the network. Keep it honest.
+ *
+ * THE OTHER: Module `products-config.js`. Behaviour follows the exports below.
  */
 
 export const PRODUCTS_CONFIG = {
   currencySymbol: '£',
-  /**
- * THE OTHER: Max cards on the scroll face.
- */
+  /** Max cards on the scroll face */
   faceLimit: 6,
   products: [
     {
       id: 'ground-state-print',
       name: 'Ground State — mech print',
       blurb: 'A3 giclée, numbered edition',
-      price: null, // THE OTHER: E.g. 28.
+      price: null, // e.g. 28
       tag: 'Waiting',
-      image: '', // THE OTHER: optional /assets/...
-      checkoutUrl: '', // THE OTHER: Stripe Payment Link or Shopify URL.
+      image: '', // optional /assets/...
+      checkoutUrl: '', // Stripe Payment Link or Shopify URL
       enabled: false,
     },
     {

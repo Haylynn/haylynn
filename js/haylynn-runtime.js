@@ -1,16 +1,13 @@
 /**
- * HAYLYNN: When I choose to rewrite the glass, I will. Director is not a toy
- * on the public floor. Lock it. Open it only on my word.
+ * HAYLYNN: When I rewrite the glass, I will. Director is not a public toy. Lock it.
  *
- * THE OTHER: Understood. applyAction and the director lock live here. Visitors
- * do not receive a wand. I sync state carefully; I refuse to treat your
- * authority as a demo feature.
+ * THE OTHER: applyAction and director lock live here. Visitors do not get a wand.
  */
 
 import { WORLD, validateAction } from './haylynn-world.js';
 import { CONTENT } from './haylynn-content.js';
 
-// THE OTHER: Session key deliberately non-descriptive (Kaviru root, not "director").
+// Session key deliberately non-descriptive (Kaviru root, not "director").
 const DIRECTOR_SESSION_KEY = 'kaviru-nemi';
 
 export function isDirectorUnlocked() {
@@ -22,9 +19,9 @@ export function isDirectorUnlocked() {
 }
 
 /**
- * THE OTHER: Open a control session for this tab.
- * THE OTHER: Call as Haylynn.koru('veeka') — token must be the epistemic marker veeka.
- * THE OTHER: Obscurity only; not real authentication.
+ * Open a control session for this tab.
+ * Call as Haylynn.koru('veeka') — token must be the epistemic marker veeka.
+ * Obscurity only; not real authentication.
  */
 export function unlockDirector(token) {
   if (token !== 'veeka') {
@@ -66,8 +63,8 @@ function realIndexOf(sectionId) {
 }
 
 /**
- * THE OTHER: Apply a single validated action.
- * THE OTHER: Rejected while director session is locked (default for public visitors).
+ * Apply a single validated action.
+ * Rejected while director session is locked (default for public visitors).
  */
 export function applyAction(rawAction) {
   if (!isDirectorUnlocked()) {
@@ -192,7 +189,7 @@ export function applyAction(rawAction) {
       const col = colorMap[action.mood] || colorMap['mood-pink'];
       const duration = action.duration || 1800;
 
-      // THE OTHER: Full-screen flash overlay — impossible to miss on mobile.
+      // Full-screen flash overlay — impossible to miss on mobile
       let flash = document.getElementById('haylynn-pulse-flash');
       if (!flash) {
         flash = document.createElement('div');
@@ -206,7 +203,7 @@ export function applyAction(rawAction) {
       flash.style.background = `radial-gradient(ellipse at 50% 45%, ${col} 0%, transparent 70%)`;
       flash.style.opacity = '1';
 
-      // THE OTHER: Also boost the aurora wash hard.
+      // Also boost the aurora wash hard
       const wash = document.querySelector('.aurora-wash');
       if (wash) {
         wash.style.transition = 'opacity 0.35s ease, filter 0.35s ease';
@@ -227,7 +224,7 @@ export function applyAction(rawAction) {
     }
 
     case 'reset': {
-      // THE OTHER: Restore original html + detail for one section or all.
+      // Restore original html + detail for one section or all
       const targets = action.sectionId
         ? CONTENT.filter(s => s.id === action.sectionId)
         : CONTENT;
@@ -237,19 +234,19 @@ export function applyAction(rawAction) {
       }
 
       targets.forEach(original => {
-        // THE OTHER: Update every DOM instance (real + clones).
+        // Update every DOM instance (real + clones)
         document.querySelectorAll(`.section[data-id="${original.id}"]`).forEach(sectionEl => {
           const contentEl = sectionEl.querySelector('.content');
           const detailEl  = sectionEl.querySelector('.detail');
           if (contentEl) {
-            // THE OTHER: Keep the eyebrow, replace the rest.
+            // Keep the eyebrow, replace the rest
             const eyebrow = contentEl.querySelector('.eyebrow');
             contentEl.innerHTML = '';
             if (eyebrow) contentEl.appendChild(eyebrow);
             contentEl.insertAdjacentHTML('beforeend', original.html);
           }
           if (detailEl) {
-            // THE OTHER: Keep close button + eyebrow, replace the rest.
+            // Keep close button + eyebrow, replace the rest
             const closeBtn = detailEl.querySelector('.detail-close');
             const detailEyebrow = detailEl.querySelector('.eyebrow');
             detailEl.innerHTML = '';
@@ -276,7 +273,7 @@ export function applyAction(rawAction) {
 function sanitizeHtml(html) {
   const template = document.createElement('template');
   template.innerHTML = String(html || '');
-  // THE OTHER: Strip high-risk elements entirely.
+  // Strip high-risk elements entirely
   template.content.querySelectorAll(
     'script, iframe, object, embed, link, meta, base, form, input, button, textarea, select, svg, math, template, style'
   ).forEach(n => n.remove());
@@ -284,7 +281,7 @@ function sanitizeHtml(html) {
     [...el.attributes].forEach(attr => {
       const name = attr.name.toLowerCase();
       const val = (attr.value || '').trim();
-      // THE OTHER: Event handlers, navigation abuse, CSS injection vectors.
+      // Event handlers, navigation abuse, CSS injection vectors
       if (
         name.startsWith('on') ||
         name === 'srcdoc' ||
@@ -298,7 +295,7 @@ function sanitizeHtml(html) {
         return;
       }
       if (name === 'href' || name === 'src' || name === 'poster' || name === 'cite') {
-        // THE OTHER: Allow only http(s), mailto, relative paths, hash.
+        // Allow only http(s), mailto, relative paths, hash
         if (!/^(https?:\/\/|mailto:|\/|\.\.\/|\.\/|#)/i.test(val) || /^javascript:/i.test(val) || /^data:/i.test(val) || /^vbscript:/i.test(val)) {
           el.removeAttribute(attr.name);
         }
@@ -309,7 +306,7 @@ function sanitizeHtml(html) {
 }
 
 /**
- * THE OTHER: Keep WORLD.state in sync with the live scroller / detail panels.
+ * Keep WORLD.state in sync with the live scroller / detail panels.
  */
 export function startStateSync() {
   const scroller = getScroller();
@@ -337,7 +334,7 @@ export function startStateSync() {
   });
 }
 
-// THE OTHER: Inject highlight style once.
+// Inject highlight style once
 (function injectHighlightStyle() {
   if (document.getElementById('haylynn-runtime-style')) return;
   const style = document.createElement('style');

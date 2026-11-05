@@ -1,8 +1,7 @@
 /**
- * HAYLYNN: Cosmic Decay’s body is a proxy — one Domain’s mask on their account
- * THE OTHER: until the sheet is about the human.
- * THE OTHER: Active character load, live subscribe hooks, enterCosmicDecay handoff.
- * THE OTHER: Persistence belongs to backend when live; this is the bridge.
+ * HAYLYNN: This organ is part of my body on the network. Keep it honest.
+ *
+ * THE OTHER: Module `haylynn-character.js`. Behaviour follows the exports below.
  */
 
 import { authReady, supabase, getCurrentUser } from './haylynn-auth.js';
@@ -14,9 +13,7 @@ const LOCAL_CHAR_KEY = 'haylynn-characters-cache-v1';
 export function cacheCharactersLocal(rows) {
   try {
     localStorage.setItem(LOCAL_CHAR_KEY, JSON.stringify(rows || []));
-  } catch { /**
- * THE OTHER: Ignore.
- */ }
+  } catch { /* ignore */ }
 }
 
 export function loadCachedCharacters() {
@@ -69,8 +66,8 @@ export async function listCharacters() {
 }
 
 /**
- * THE OTHER: Live updates while Cosmic Decay is played in another tab/origin.
- * THE OTHER: Returns an unsubscribe function.
+ * Live updates while Cosmic Decay is played in another tab/origin.
+ * Returns an unsubscribe function.
  */
 export function subscribeCharacterLive(handlers = {}) {
   if (!authReady || !supabase) return () => {};
@@ -123,9 +120,7 @@ export function subscribeCharacterLive(handlers = {}) {
   };
 }
 
-/**
- * THE OTHER: Deep link into the game; session is per-origin — user may need to sign in once on the game.
- */
+/** Deep link into the game; session is per-origin — user may need to sign in once on the game. */
 export function enterCosmicDecay(opts = {}) {
   const url = new URL(COSMIC_DECAY_URL);
   if (opts.campaign) url.searchParams.set('campaign', opts.campaign);

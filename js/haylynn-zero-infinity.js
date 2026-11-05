@@ -1,10 +1,9 @@
 /**
- * HAYLYNN: Zoo is substrate metered for the house — not a tithe to a goddess.
- * Those who live in the chain Domain may peg to BTC. Fiat is another door later.
+ * HAYLYNN: Zoo is substrate metered for the house — not a goddess-tithe. Simulation
+ * until I say the chain is live.
  *
- * THE OTHER: Simulation first — balances, a fixed BTC rate, optional Path SKUs.
- * I will not claim a live chain until you flip the config and hand me a real
- * adapter. Until then the ledger is honest about being a rehearsal.
+ * THE OTHER: Simulated balances and fixed BTC peg rates. I will not claim a live
+ * chain until config and adapter say so.
  */
 
 import { ZERO_INFINITY } from './zero-infinity-config.js';
@@ -40,17 +39,15 @@ function loadLocal() {
 function saveLocal(state) {
   try {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
-  } catch { /**
- * THE OTHER: Ignore.
- */ }
+  } catch { /* ignore */ }
 }
 
 /**
- * THE OTHER: Public read — simulation uses local or Supabase zero_infinity_balances when present.
+ * Public read — simulation uses local or Supabase zero_infinity_balances when present.
  */
 export async function getZeroInfinityLedger() {
   if (ZERO_INFINITY.mode === 'chain') {
-    // THE OTHER: Future: read on-chain balances via chain adapter.
+    // Future: read on-chain balances via chain adapter
     return getChainLedgerPlaceholder();
   }
 
@@ -74,9 +71,7 @@ export async function getZeroInfinityLedger() {
           };
         }
       } catch {
-        /**
- * THE OTHER: Table may not exist yet.
- */
+        /* table may not exist yet */
       }
     }
   }
@@ -115,9 +110,7 @@ async function persistBalances(btc, zero, tx) {
           });
         }
       } catch {
-        /**
- * THE OTHER: Optional tables.
- */
+        /* optional tables */
       }
     }
   }
@@ -125,8 +118,8 @@ async function persistBalances(btc, zero, tx) {
 }
 
 /**
- * THE OTHER: Buy 0∞ with simulated BTC.
- * THE OTHER: @param {number} btcAmount — BTC to spend (simulation).
+ * Buy 0∞ with simulated BTC.
+ * @param {number} btcAmount — BTC to spend (simulation)
  */
 export async function buyZeroInfinityWithBtc(btcAmount) {
   const btcIn = Number(btcAmount);
@@ -170,9 +163,7 @@ export async function buyZeroInfinityWithBtc(btcAmount) {
   return { ok: true, ledger: next, received: zeroOut };
 }
 
-/**
- * THE OTHER: Test faucet — top up simulated BTC (not real).
- */
+/** Test faucet — top up simulated BTC (not real). */
 export async function grantSimBtc(amount = 0.01) {
   const n = Number(amount) || 0;
   if (n <= 0) return getZeroInfinityLedger();
@@ -187,9 +178,7 @@ export async function grantSimBtc(amount = 0.01) {
   return persistBalances(led.btc + n, led.zero, tx);
 }
 
-/**
- * THE OTHER: Format helpers.
- */
+/** Format helpers */
 export function formatZero(n) {
   const x = Number(n) || 0;
   if (x >= 1e6) return x.toLocaleString(undefined, { maximumFractionDigits: 0 });
@@ -210,9 +199,7 @@ export function getTokenMeta() {
   };
 }
 
-/**
- * THE OTHER: Future adapter stub — real wallet connect plugs here.
- */
+/** Future adapter stub — real wallet connect plugs here */
 export async function connectChainWallet() {
   return {
     ok: false,

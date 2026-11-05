@@ -1,12 +1,10 @@
 /**
  * HAYLYNN: Build me a body that scrolls like depth, not a blog. Full-height rooms.
- * Stars behind the glass. Swipe deeper into the same chamber. You may wake every
- * room — but the authority stays mine.
+ * Stars behind the glass. Swipe deeper into the same chamber. Authority stays mine.
  *
- * THE OTHER: Agreed. I take CONTENT as the flesh and this file as the skeleton —
- * scroller, starfield, gestures, and the init calls for player, draw, radio,
- * members, ticker, weather, veil. window.Haylynn is the public face. I arrange
- * limbs; I do not invent rooms you never wrote.
+ * THE OTHER: Agreed. CONTENT is the flesh; this file is the skeleton — scroller,
+ * starfield, gestures, inits. window.Haylynn is the public face. I arrange limbs;
+ * I do not invent rooms you never wrote.
  */
 
 import { CONTENT } from './haylynn-content.js';
@@ -31,7 +29,7 @@ import { initHaylynnOfferings } from './haylynn-offerings.js';
 import { initHaylynnProducts } from './haylynn-products.js';
 import { initAuthUI } from './haylynn-auth-ui.js';
 
-// THE OTHER: ── Star field ────────────────────────────────────────────────────────.
+// ── Star field ────────────────────────────────────────────────────────
 function paintStars(el, count, size, alpha) {
   const w = window.innerWidth;
   const h = window.innerHeight;
@@ -53,7 +51,7 @@ window.addEventListener('resize', () => {
   paintStars(document.getElementById('stars-b'), 24, 1, 0.2);
 });
 
-// THE OTHER: ── Build scroller from CONTENT ───────────────────────────────────────.
+// ── Build scroller from CONTENT ───────────────────────────────────────
 const scroller = document.getElementById('scroller');
 const dotsEl = document.getElementById('dots');
 const N = CONTENT.length;
@@ -93,7 +91,7 @@ initHaylynnOfferings();
 initHaylynnProducts();
 initAuthUI();
 
-// THE OTHER: Dot nav.
+// Dot nav
 const dotColors = { 'mood-green': 'var(--green)', 'mood-pink': 'var(--pink)', 'mood-purple': 'var(--purple)' };
 dotsEl.innerHTML = CONTENT.map((s, i) =>
   `${i > 0 ? '<div class="line"></div>' : ''}<div class="dot" data-real="${i}" style="--dot-color:${dotColors[s.mood]}"></div>`
@@ -101,7 +99,7 @@ dotsEl.innerHTML = CONTENT.map((s, i) =>
 
 function vh() { return scroller.clientHeight; }
 
-// THE OTHER: Land on real section 0.
+// Land on real section 0
 scroller.classList.add('jumping');
 scroller.scrollTop = vh() * 1;
 requestAnimationFrame(() => scroller.classList.remove('jumping'));
@@ -132,7 +130,7 @@ function onScrollSettled() {
 
   currentDomIndex = domIndex;
   setActiveDot(domIndex - 1);
-  // THE OTHER: Keep WORLD in sync.
+  // Keep WORLD in sync
   const realIdx = domIndex - 1;
   if (CONTENT[realIdx]) {
     WORLD.state.currentSectionId = CONTENT[realIdx].id;
@@ -165,7 +163,7 @@ window.addEventListener('resize', () => {
   requestAnimationFrame(() => scroller.classList.remove('jumping'));
 });
 
-// THE OTHER: ── Swipe-left detail gesture ─────────────────────────────────────────.
+// ── Swipe-left detail gesture ─────────────────────────────────────────
 const OPEN_THRESHOLD = 55;
 const gesture = { active: false, horizontal: false, startX: 0, startY: 0, sectionEl: null, detailEl: null, wasOpen: false };
 
@@ -238,7 +236,7 @@ function endGesture(e) {
 scroller.addEventListener('pointerup', endGesture);
 scroller.addEventListener('pointercancel', endGesture);
 
-// THE OTHER: ── Kaviru embed (base64 still lives in index.html) ───────────────────.
+// ── Kaviru embed (base64 still lives in index.html) ───────────────────
 function b64ToUtf8(str) {
   return decodeURIComponent(
     atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')
@@ -262,7 +260,7 @@ if (kaviruSection) {
   }).observe(kaviruSection, { attributes: true, attributeFilter: ['class'] });
 }
 
-// THE OTHER: ── Cosmology embed (base64 lives in index.html, same pattern as Kaviru) ──.
+// ── Cosmology embed (base64 lives in index.html, same pattern as Kaviru) ──
 let cosmologyLoaded = false;
 function loadCosmologyEmbed() {
   if (cosmologyLoaded) return;
@@ -280,7 +278,7 @@ if (homeSection) {
   }).observe(homeSection, { attributes: true, attributeFilter: ['class'] });
 }
 
-// THE OTHER: ── LYMP sky tabs ─────────────────────────────────────────────────────.
+// ── LYMP sky tabs ─────────────────────────────────────────────────────
 document.querySelectorAll('.sky-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     const target = tab.dataset.target;
@@ -308,10 +306,10 @@ if (nightcamImg) {
   setInterval(() => { nightcamImg.src = nightcamBase + '?t=' + Date.now(); }, 2 * 60 * 1000);
 }
 
-// THE OTHER: ── Public API (Kaviru-shaped) ────────────────────────────────────────.
-// THE OTHER: Koru('veeka') — open control session · zenu() — close.
-// THE OTHER: Nemi() — world structure snapshot · movi(action) — apply action.
-// THE OTHER: Action types may be Kaviru: movi hana miru kavi revi zori awe seri solu.
+// ── Public API (Kaviru-shaped) ────────────────────────────────────────
+// koru('veeka') — open control session · zenu() — close
+// nemi() — world structure snapshot · movi(action) — apply action
+// Action types may be Kaviru: movi hana miru kavi revi zori awe seri solu
 window.Haylynn = {
   koru: unlockDirector,
   zenu: lockDirector,

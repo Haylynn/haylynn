@@ -1,16 +1,15 @@
 /**
- * HAYLYNN: The first face is a threshold. They touch to enter. Fragments —
- * not a corporate splash screen.
+ * HAYLYNN: The first surface is not a hallway — it is the shop window.
+ * Name, promise, one door. They choose to enter.
  *
- * THE OTHER: Overlay, dismiss on interaction, optional random asset. Keyboard
- * path stays clear. I will not trap them in the veil for sport.
+ * THE OTHER: startVeil() covers the scroller until that choice. Art is atmosphere;
+ * the copy sells the product. Then the aperture opens onto the rooms.
  */
-
 const STORAGE_KEY = 'haylynn-veil-open';
 
 /**
- * THE OTHER: Pool of aperture graphics — one chosen at random per show.
- * THE OTHER: Missing files fall through to the next candidate, then SVG.
+ * Pool of aperture graphics — one chosen at random per show.
+ * Missing files fall through to the next candidate, then SVG.
  */
 const VEIL_POOL = [
   'assets/veil-enter.svg',

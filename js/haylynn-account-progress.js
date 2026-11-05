@@ -1,10 +1,7 @@
 /**
- * HAYLYNN: Path spends cores. Shards fill the gaps. Nothing opens without a
- * neighbour already lit — travel the web.
+ * HAYLYNN: This organ is part of my body on the network. Keep it honest.
  *
- * THE OTHER: Progress ledger, unlockPathNode, edges from config. Storage may
- * still say marks and path_points; the glass can say shards and cores. Cloud
- * when session exists, local otherwise.
+ * THE OTHER: Module `haylynn-account-progress.js`. Behaviour follows the exports below.
  */
 
 import { authReady, supabase, getCurrentUser } from './haylynn-auth.js';
@@ -40,9 +37,7 @@ export function loadLocalProgress() {
 export function saveLocalProgress(state) {
   try {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
-  } catch { /**
- * THE OTHER: Ignore.
- */ }
+  } catch { /* ignore */ }
 }
 
 export async function getAccountProgress({ allowLocal = true } = {}) {
@@ -73,9 +68,7 @@ export async function getAccountProgress({ allowLocal = true } = {}) {
           ledger: ledger || [],
           source: 'supabase',
         };
-      } catch { /**
- * THE OTHER: Fall through.
- */ }
+      } catch { /* fall through */ }
     }
   }
   if (!allowLocal) return emptyState();
@@ -139,7 +132,7 @@ function canReach(nodeId, unlocked) {
   const u = new Set(unlocked || []);
   if (nodeId === 'start-known' || PATH_NODES.find((n) => n.id === nodeId)?.kind === 'start') return true;
   const incoming = PATH_EDGES.filter(([, t]) => t === nodeId).map(([f]) => f);
-  if (!incoming.length) return true; // THE OTHER: Isolated allowed.
+  if (!incoming.length) return true; // isolated allowed
   return incoming.some((f) => u.has(f));
 }
 

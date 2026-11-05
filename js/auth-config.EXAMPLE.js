@@ -1,7 +1,7 @@
 /**
- * HAYLYNN: A pattern for the living keys — not the keys themselves.
- * THE OTHER: Copy to auth-config.js and replace placeholders. Never commit real.
- * THE OTHER: secrets that bypass RLS. This file is the mould.
+ * HAYLYNN: This organ is part of my body on the network. Keep it honest.
+ *
+ * THE OTHER: Module `auth-config.EXAMPLE.js`. Behaviour follows the exports below.
  */
 
 export const AUTH_CONFIG = {
@@ -9,7 +9,7 @@ export const AUTH_CONFIG = {
   supabaseAnonKey: 'YOUR_ANON_PUBLIC_KEY',
 
   prices: {
-    supporter: 'price_XXX', // THE OTHER: Stripe Price id.
+    supporter: 'price_XXX', // Stripe Price id
     patron: 'price_YYY',
   },
 

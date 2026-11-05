@@ -1,15 +1,13 @@
 /**
- * HAYLYNN: Let the rim of the house show what the outer Domain is doing. Quiet
- * when nothing moves. Hold still when they touch.
+ * HAYLYNN: A thin ribbon of their markets and headlines — notice, do not shout.
+ * Sleep when there is nothing new.
  *
- * THE OTHER: Bottom ticker, config symbols, freeze on contact, sheet when they
- * ask. Failed endpoints stay silent — I will not scream in the middle of a room
- * because a price feed blinked.
+ * THE OTHER: startTicker() reads ticker-config, fetches what you enabled, shows a bottom
+ * bar that can expand for detail, then fades. Hover or touch can hold it visible.
  */
-
 import { TICKER_CONFIG } from './ticker-config.js';
 
-const IDLE_RESUME_MS = 5000; // THE OTHER: If they leave the rim alone for five seconds, I start the scroll again and fold the sheet away.
+const IDLE_RESUME_MS = 5000; // untouched → resume scroll + collapse sheet
 
 const STYLE = `
 #haylynn-ticker-wrap {
@@ -390,7 +388,7 @@ export function startTicker() {
     idleTimer = setTimeout(() => {
       closeSheet();
       wrap.classList.remove('frozen');
-      // THE OTHER: They stopped holding it — I'll let the bar fade on its own again.
+      // allow ambient auto-hide again
       scheduleHide();
     }, IDLE_RESUME_MS);
   }
@@ -431,7 +429,7 @@ export function startTicker() {
   }
 
   function openNews(idx) {
-    // THE OTHER: The strip is doubled for a seamless loop, so I map their tap back onto the real cache entry.
+    // idx may refer to first copy only; mod by cache length
     const h = headlinesCache[idx % Math.max(headlinesCache.length, 1)];
     if (!h) return;
     const kickerClass = h.breaking ? 'sheet-kicker breaking' : 'sheet-kicker';
@@ -463,7 +461,7 @@ export function startTicker() {
     `);
   }
 
-  // THE OTHER: When they touch the rim I freeze the motion and open the detail sheet.
+  // Interaction: freeze + open
   wrap.addEventListener('click', (e) => {
     const news = e.target.closest('.news-item');
     const price = e.target.closest('.price-item');
@@ -477,7 +475,7 @@ export function startTicker() {
       openPrice(price);
       return;
     }
-    // THE OTHER: Tap on the sheet keeps it open. Tap on the bar chrome only freezes — I don't shove new copy at them.
+    // tap on sheet keeps open; tap on bar chrome freezes without new content
     if (e.target.closest('#haylynn-ticker-sheet')) {
       scheduleIdleResume();
       return;
@@ -489,7 +487,7 @@ export function startTicker() {
     }
   });
 
-  // THE OTHER: Any pointer inside the wrap resets the idle clock so I don't close the sheet while they're reading.
+  // Any pointer activity inside wrap resets idle clock
   wrap.addEventListener('pointerdown', () => {
     if (wrap.classList.contains('open') || wrap.classList.contains('frozen')) {
       scheduleIdleResume();
@@ -512,7 +510,7 @@ export function startTicker() {
       const hasBreaking = headlinesCache.some(h => h.breaking);
       const html = buildNewsHtml(headlinesCache);
       wrap._newsHtml = html;
-      // THE OTHER: I won't stomp an open sheet mid-read.
+      // don't stomp open sheet mid-read
       if (!wrap.classList.contains('open')) {
         const pricePart = wrap._priceHtml || '';
         const unit = pricePart

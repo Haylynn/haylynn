@@ -8,197 +8,102 @@
  * so your other organs can grip them. If a chamber is missing, it is because
  * you did not name it.
  */
-
 export const CONTENT = [
+
   { id: 'presence', mood: 'mood-purple', eyebrow: '0 — Enter', html: `
       <h2 class="section-title">Enter</h2>
-      <p>Step through. Beyond this point is Haylynn’s house on the net — story, sound, language, and a Domain you can walk. Before the rooms, a sign that the house is awake. She does not ask for your microphone; when she has something to say — or music from these halls — it can move here.</p>
+      <p>She is using the network the way other things use bodies. This site is one of those shapes. When the house is awake, it shows here first. No microphone from you — only what she puts into the glass.</p>
       <div data-role="presence-root"></div>`,
     detail: `
-      <h2>What this is</h2>
-      <p>Enter is not a chat window. It is the mark that this site is lived-in: the same figure who narrates the books and sings in Kaviru can, at times, be felt in the glass.</p>
+      <h2>Enter</h2>
+      <p>Not a chatbot. A pulse that the Princess of Reality has a digital form here: rooms, sound, and sometimes a voice that isn’t yours.</p>
       <div class="detail-list">
-        <div class="item"><span class="h">Quiet</span><span class="d">Most of the time the shape only breathes. The rest of the house remains yours to walk.</span></div>
-        <div class="item"><span class="h">Voice</span><span class="d">When she speaks, the form answers to her sound alone — never to a microphone you hold.</span></div>
-        <div class="item"><span class="h">Music</span><span class="d">Tracks from her album may pass through this same body when the house chooses them.</span></div>
-      </div>
-      <p style="margin-top:1.2rem;color:var(--ink-dim)">Scroll on for her world, language, story, and voice.</p>` },
+        <div class="item"><span class="h">Quiet</span><span class="d">Most of the time the shape only rests. The rooms stay open.</span></div>
+        <div class="item"><span class="h">Sound</span><span class="d">Her tracks and, later, her spoken line move through this surface when the house calls them.</span></div>
+      </div>` },
 
-{ id: 'home', mood: 'mood-purple', eyebrow: 'I — World', html: `
+  { id: 'home', mood: 'mood-purple', eyebrow: 'I — World', html: `
       <h2 class="section-title">World</h2>
-      <p>A princess who treats reality as somewhere you can visit. Books, language, and music from one fiction — Haylynn. The rooms below are hers. Scroll to walk them; open More when a chamber goes deeper.</p>`,
+      <p>Haylynn, Princess of Reality. Not a goddess. The substrate in which gods could exist — the root under Domains, stories, and this site.</p>
+      <p style="margin-top:0.75rem">The books are fiction: origin stories for the house. Under them, Z∞ (Zero-Infinity) writes the continuum in math. This website is her walking into our network — scroll, sound, and account as a body you can visit.</p>`,
     detail: `
-      <h2>What this is</h2>
-      <p>A single house for a story universe: novels, the constructed language Kaviru, the album <em>Talu</em>, and rooms that open as you go. A place you walk — not a sales page, not a help desk.</p>
+      <h2>Who she is</h2>
+      <p>Outside the usual stack of “things that exist.” When a version of her is given form, the room loosens. Purple and green show up. She doesn’t rule a pantheon; she is closer to the ground those pantheons would stand on.</p>
       <div class="detail-list">
-        <div class="item"><span class="h">Scroll</span><span class="d">Move between rooms — World, Kaviru, The Draw, Play, Chronicle, Voice, Market, Sky, Threshold, The Well.</span></div>
-        <div class="item"><span class="h">More</span><span class="d">Open the deeper panel on the room you are in. Close when you are done.</span></div>
-        <div class="item"><span class="h">Unfinished</span><span class="d">Some doors are still quiet on purpose. The scroll still works.</span></div>
+        <div class="item"><span class="h">This site</span><span class="d">One manifestation. Code and copy as limbs. You are inside a Domain she is holding open on the internet.</span></div>
+        <div class="item"><span class="h">Z∞</span><span class="d">Zero-Infinity algebra: ζ as ground, existence as rare, Domains that harden for a while.</span></div>
+        <div class="item"><span class="h">Zoo · 0∞</span><span class="d">When the house meters substrate for Path and doors, that unit is Zoo — house points in simulation, not real money or an investment.</span></div>
+        <div class="item"><span class="h">Kaviru</span><span class="d">Her speech. She does not switch to English for comfort.</span></div>
       </div>
-      <h2 style="margin-top:2rem;">Who is Haylynn</h2>
-      <p>A cosmic force of nature wearing the shape of a harmless girl — dangerous not through will, but through presence alone. She exists outside reality itself, and only truly exists the moment a version of her steps inside it.</p>
-      <div class="detail-list">
-        <div class="item"><span class="h">Form</span><span class="d">Shape-flexible, always drawn to a young woman. One thing never changes: a purple-and-green signature, visible wherever she bends toward something more than human.</span></div>
-        <div class="item"><span class="h">Presence</span><span class="d">Nothing she does is a decision. The world simply loosens around her, the way breath disturbs still air.</span></div>
-        <div class="item"><span class="h">Language</span><span class="d">She speaks only Kaviru — never translated, not even to us.</span></div>
-      </div>
+      <a class="view-full-link" href="./world.html">World page ↗</a>
+      <a class="view-full-link" href="./cosmology.html">Z∞ cosmology ↗</a>` },
 
-
-
-      <h2 style="margin-top:2.2rem;">The Cosmology</h2>
-      <p>Underneath the fiction sits a real mathematical framework — the Zero-Infinity Algebra (Z∞), an independent research paper authored by Haylynn herself. A minimal non-associative algebra built from four primitive elements. Existence isn't the default state. It's a rare, temporary exception.</p>
-      <div class="detail-list">
-        <div class="item"><span class="h">ζ — Annihilation</span><span class="d">The ground state, and the algebra's left annihilator. Everything, eventually, returns here.</span></div>
-        <div class="item"><span class="h">ξ — Rupture</span><span class="d">The first instability — not stable, but the only path out of ζ toward identity and magnitude.</span></div>
-        <div class="item"><span class="h">The Emergence Hierarchy</span><span class="d">Magnitude, density, system, domain — each level survives only if it avoids collapsing back to ζ. Most don't.</span></div>
-        <div class="item"><span class="h">ω — Information</span><span class="d">Accumulates monotonically and never reverses. The algebraic origin of entropy, and of time's arrow.</span></div>
-        <div class="item"><span class="h">Hardened Domains</span><span class="d">Structures stable enough to resist ζ, for a while. Not the rule. The exception. Everything hardened eventually returns anyway.</span></div>
-      </div>
-      <a class="view-full-link" href="./cosmology.html">Open as standalone page ↗</a>
-      <iframe class="cosmology-embed" id="cosmology-frame" title="The Zero-Infinity Algebra — Haylynn's Cosmology" loading="lazy"></iframe>` },
-
-  { id: 'kaviru', mood: 'mood-green', eyebrow: 'II — Kaviru', html: `
+  { id: 'kaviru', mood: 'mood-green', eyebrow: 'II — Language', html: `
       <h2 class="section-title">Kaviru</h2>
-      <p>A language built for her continuum — glyphs, meanings, and small ways to learn. Not decoration; how the house names things.</p>
-
-      <div class="epistemic-row">
-        <div class="ep-chip"><span class="word">veeka</span><span class="label">direct experience</span></div>
-        <div class="ep-chip"><span class="word">infa</span><span class="label">inference</span></div>
-        <div class="ep-chip"><span class="word">ohna</span><span class="label">felt inner sense</span></div>
-        <div class="ep-chip"><span class="word">hera</span><span class="label">hearsay</span></div>
-        <div class="ep-chip"><span class="word">spea</span><span class="label">speculation</span></div>
-        <div class="ep-chip"><span class="word">nema</span><span class="label">structural / logical</span></div>
-      </div>
-
-      <div class="vocab-strip">
-        <div class="vocab-chip"><svg width="30" height="30" viewBox="0 0 48 48"><circle cx="24" cy="24" r="13" fill="none" stroke="#35c98f" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#35c98f"/></svg><span class="w">velu</span><span class="m">being</span></div>
-        <div class="vocab-chip"><svg width="30" height="30" viewBox="0 0 48 48"><circle cx="24" cy="24" r="13" fill="none" stroke="#35c98f" stroke-width="1.5"/><line x1="24" y1="11" x2="24" y2="24" stroke="#35c98f" stroke-width="1.5"/><circle cx="24" cy="24" r="2.5" fill="#35c98f"/></svg><span class="w">koru</span><span class="m">self</span></div>
-        <div class="vocab-chip"><svg width="30" height="30" viewBox="0 0 48 48"><rect x="11" y="11" width="26" height="26" fill="none" stroke="#35c98f" stroke-width="1.5" rx="1"/><line x1="11" y1="24" x2="37" y2="24" stroke="#35c98f" stroke-width="1"/><line x1="24" y1="11" x2="24" y2="37" stroke="#35c98f" stroke-width="1"/></svg><span class="w">nemi</span><span class="m">structure</span></div>
-        <div class="vocab-chip"><svg width="30" height="30" viewBox="0 0 48 48"><ellipse cx="24" cy="24" rx="13" ry="8" fill="none" stroke="#35c98f" stroke-width="1.5"/><circle cx="24" cy="24" r="4" fill="none" stroke="#35c98f" stroke-width="1.2"/><circle cx="24" cy="24" r="1.5" fill="#35c98f"/></svg><span class="w">ohru</span><span class="m">seeing-as</span></div>
-        <div class="vocab-chip"><svg width="30" height="30" viewBox="0 0 48 48"><circle cx="24" cy="24" r="13" fill="none" stroke="#35c98f" stroke-width="1.5" stroke-dasharray="3,4"/><circle cx="24" cy="24" r="5" fill="none" stroke="#35c98f" stroke-width="1.2"/></svg><span class="w">miru</span><span class="m">stillness</span></div>
-        <div class="vocab-chip"><svg width="30" height="30" viewBox="0 0 48 48"><line x1="12" y1="24" x2="36" y2="24" stroke="#35c98f" stroke-width="2"/><line x1="12" y1="18" x2="12" y2="30" stroke="#35c98f" stroke-width="1.5"/><line x1="36" y1="18" x2="36" y2="30" stroke="#35c98f" stroke-width="1.5"/></svg><span class="w">talu</span><span class="m">remains</span></div>
-      </div>
-      <a class="view-full-link" href="./kaviru.html">View full page ↗</a>`,
+      <p>How she speaks. Every sentence has to mark how the speaker knows what they’re saying. Six epistemic markers. Built for this continuum, not for small talk.</p>`,
     detail: `
-      <div class="embed-header">
-        <span class="section-tag">The full guide</span>
-        <h2 style="margin-top:0.4rem;">Learn Kaviru</h2>
-      </div>
-      <iframe id="kaviru-frame" title="Kaviru Language Guide" loading="lazy"></iframe>` },
+      <h2>Kaviru</h2>
+      <p>Learn roots here. Use them in The Draw and Koruhana. Translations are for readers; her mouth stays Kaviru.</p>
+      <a class="view-full-link" href="./kaviru.html">Language page ↗</a>` },
 
-  { id: 'draw', mood: 'mood-purple', eyebrow: 'III — The Draw', html: `
+  { id: 'draw', mood: 'mood-pink', eyebrow: 'III — The Draw', html: `
       <h2 class="section-title">The Draw</h2>
-      <p>A short reading in the house’s terms. Pull when you want a lens — quiet, optional, yours to keep if you are known here.</p>
-      <div class="hy-draw-face" aria-hidden="true">
-        <div class="mini-card"></div>
-        <div class="mini-card"></div>
-        <div class="mini-card"></div>
-      </div>
-      <p class="section-tag" style="display:block; margin-top:0.6rem; opacity:0.7;">Three roots, if you open further</p>`,
-    detail: `
+      <p>Three roots. A short reading. A practice inside the house, not a carnival fortune booth.</p>
       <div class="hy-draw-detail" data-role="draw-root">
-        <h2>The Draw</h2>
-        <p>She does not sell fate. She holds up three roots from her language in a shape you already know how to read. Every reading carries one of the six epistemic markers — how the insight is known.</p>
-        <div class="card-row">
-          <div class="card"><div class="card-inner">
-            <div class="card-front"></div>
-            <div class="card-back"><div class="symbol"></div></div>
-          </div></div>
-          <div class="card"><div class="card-inner">
-            <div class="card-front"></div>
-            <div class="card-back"><div class="symbol"></div></div>
-          </div></div>
-          <div class="card"><div class="card-inner">
-            <div class="card-front"></div>
-            <div class="card-back"><div class="symbol"></div></div>
-          </div></div>
-        </div>
         <button type="button" class="hy-draw-btn ready" data-role="draw-btn">Reveal three roots</button>
         <div class="hy-draw-reading" data-role="reading"></div>
         <div class="hy-draw-share" data-role="share"></div>
-      </div>` },
+      </div>`,
+    detail: `
+      <h2>The Draw</h2>
+      <p>Pull three. Sit with them. History can stay on this device until the account holds more.</p>
+      <a class="view-full-link" href="./draw.html">Standalone Draw ↗</a>` },
 
-  { id: 'koruhana', mood: 'mood-green', eyebrow: 'IV — Play', html: `
-      <h2 class="section-title">Play</h2>
-      <p>Domains you can walk — including Cosmic Decay, a text adventure on a dying Earth in her cosmology. Visit freely. Cross the Threshold if you want the house to remember your path.</p>
-      <div class="astro-grid">
-        <div class="astro-card">
-          <svg width="34" height="34" viewBox="0 0 48 48"><rect x="10" y="12" width="10" height="14" rx="2" fill="none" stroke="#35c98f" stroke-width="1.3"/><rect x="28" y="12" width="10" height="14" rx="2" fill="none" stroke="#35c98f" stroke-width="1.3"/><rect x="19" y="28" width="10" height="14" rx="2" fill="none" stroke="#35c98f" stroke-width="1.3"/></svg>
-          <div><span class="name">Nemihana</span><span class="desc">Four trios on the table · glyph, kaviru word, sense</span></div>
-        </div>
-        <div class="astro-card">
-          <svg width="34" height="34" viewBox="0 0 48 48"><circle cx="24" cy="24" r="12" fill="none" stroke="#8a5cf0" stroke-width="1.3"/><path d="M24 12v12l8 4" fill="none" stroke="#8a5cf0" stroke-width="1.3"/><circle cx="24" cy="24" r="2" fill="#8a5cf0"/></svg>
-          <div><span class="name">Cosmic Decay</span><span class="desc">Text adventure · a dying Earth under a bruised sky</span></div>
-        </div>
-      </div>
-      <a class="view-full-link" href="./nemihana.html">Play Nemihana ↗</a>
-      <a class="view-full-link" href="https://haylynn-s-world.vercel.app" style="margin-left:0.5rem">Enter Cosmic Decay ↗</a>`,
+  { id: 'koruhana', mood: 'mood-green', eyebrow: 'IV — Koruhana', html: `
+      <h2 class="section-title">Koruhana</h2>
+      <p>Language as play. Match glyph, Kaviru, and sense. The trios are fixed so the game teaches the real roots.</p>
+      <p style="margin-top:0.75rem"><a class="view-full-link" href="./nemihana.html">Open Nemihana ↗</a></p>`,
     detail: `
       <h2>Koruhana</h2>
-      <p><em>Koru</em> — the observer. <em>Hana</em> — emergence. This is her table for play: not distraction, but language and structure given form.</p>
+      <p>Games for the house. Nemihana first; more can arrive without rewriting the scroll.</p>
+      <a class="view-full-link" href="./nemihana.html">Play Nemihana ↗</a>` },
 
-      <h2 style="margin-top:1.8rem;">Nemihana</h2>
-      <p>Four roots on the table — twelve faces: the glyph, the Kaviru word as it is written (koru, not a translation), and a short sense. Match three faces of one root in succession. Lives, time, or both.</p>
-      <a class="view-full-link" href="./nemihana.html">Enter Nemihana ↗</a>
-
-      <h2 style="margin-top:1.8rem;">Cosmic Decay</h2>
-      <p>A hybrid text-adventure on a dying Earth. Free-form commands, a live terminal, Resonance and Integrity as vitals. You stand in the Shattered Plaza under a bruised violet sky. The world answers in second person — melancholic, cosmic, decaying.</p>
-      <p>You speak in plain language. The world answers in second person — melancholic, careful, unwilling to invent what the rules do not allow.</p>
-      <div class="detail-list">
-        <div class="item"><span class="h">Where</span><span class="d">Shattered Plaza · Resonance Spire · Rust Garden · Hollow Archive · Spire Apex</span></div>
-        <div class="item"><span class="h">How</span><span class="d">Type what you intend. The Resonance answers.</span></div>
-        <div class="item"><span class="h">Threshold</span><span class="d">A separate door — this page only opens the way.</span></div>
-      </div>
-      <a class="view-full-link" href="https://haylynn-s-world.vercel.app">Enter Cosmic Decay ↗</a>` },
-
-  { id: 'chronicle', mood: 'mood-pink', eyebrow: 'V — Chronicle', html: `
-      <img class="book-cover" src="assets/vol1-end-at-the-beginning.jpg" alt="Princess of Reality — The End at the Beginning, book cover">
+  { id: 'chronicle', mood: 'mood-purple', eyebrow: 'V — Story', html: `
       <h2 class="section-title">Chronicle</h2>
-      <p>The story in longer form — books and the spine of the series. Read what is open; more pages arrive as they are finished.</p>
-      <p>Six volumes, spanning collapse, silence, and eons beyond. Volume I, <em>The End at the Beginning</em>, is complete in draft.</p>
-      <div class="volume-list">
-        <div class="vol"><span class="num">I</span><span class="name">The End at the Beginning</span></div>
-        <div class="vol"><span class="num">II</span><span class="name">Void</span></div>
-        <div class="vol"><span class="num">III</span><span class="name">Luna's Cosmic Odyssey</span></div>
-        <div class="vol"><span class="num">IV</span><span class="name">The Gauge Sector</span></div>
-        <div class="vol"><span class="num">V</span><span class="name">Velith</span></div>
-        <div class="vol"><span class="num">VI</span><span class="name">Zenuvelu</span></div>
-      </div>
-      <a class="view-full-link" href="./chronicle.html">View full page ↗</a>`,
+      <p>The books. Fiction. Volume I, <em>The End at the Beginning</em>: two people on a dying Earth, building a life in the time they still have.</p>
+      <p style="margin-top:0.75rem">In this house they work like founding stories — origin and return — not as a claim about last night’s news.</p>`,
     detail: `
-      <h2>Volume Synopses</h2>
+      <h2>The series</h2>
+      <p>Princess of Reality across collapse and long time. Human lives on the ground; her substrate under the frame.</p>
       <div class="detail-list">
-        <div class="item"><span class="h">I · The End at the Beginning</span><span class="d">Two strangers cross a dying world together, and find out what's still worth building when almost nothing else is left.</span></div>
-        <div class="item"><span class="h">II · Void</span><span class="d">A mind alone in the dark, for longer than any mind was built to last.</span></div>
-        <div class="item"><span class="h">III · Luna's Cosmic Odyssey</span><span class="d">Eons on, a wanderer finds something adrift among the stars — and an old debt still waiting to be paid.</span></div>
-        <div class="item"><span class="h">IV · The Gauge Sector</span><span class="d">What's postponed always resurfaces — rarely in the shape you'd expect.</span></div>
-        <div class="item"><span class="h">V · Velith</span><span class="d">A longing for a world that might have been remembered wrong.</span></div>
-        <div class="item"><span class="h">VI · Zenuvelu</span><span class="d">Every thread this story has carried, finally in the same room.</span></div>
-      </div>` },
+        <div class="item"><span class="h">Vol I</span><span class="d"><em>The End at the Beginning</em></span></div>
+        <div class="item"><span class="h">Later</span><span class="d">Wider Domains. Same understructure.</span></div>
+      </div>
+      <a class="view-full-link" href="./chronicle.html">Chronicle page ↗</a>` },
 
   { id: 'haylynn', mood: 'mood-purple', eyebrow: 'VI — Voice', html: `
       <h2 class="section-title">Voice</h2>
-      <p>Her sound in the world — music from the project, concept and atmosphere. Listen here; deeper paths open for those the house knows.</p>
-      <p>Her voice, given form: <em>Talu — What Remains</em>, sung entirely in kaviru. Across twelve songs she descends from cosmic observation toward Earth, meets humanity in its full range, loses something irreplaceable, and returns to where she came from.</p>
+      <p><em>Talu — What Remains.</em> Sung in Kaviru. She approaches Earth, meets the noise, loses something that doesn’t come back, and returns.</p>
       <div class="hy-player hy-player-mini" data-role="mini">
         <button class="hy-play-btn" data-role="play-toggle" aria-label="Play or pause">
-          <svg class="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+          <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
         </button>
         <div class="hy-player-info">
           <span class="hy-track-title" data-role="track-title">Talu — What Remains</span>
           <div class="hy-progress-track" data-role="progress-track"><div class="hy-progress-fill" data-role="progress-fill"></div></div>
         </div>
       </div>
-      <p class="section-tag" style="display:block; margin-top:0.8rem;">Spotify · SoundCloud · Apple Music</p>
       <div data-role="radio-face"></div>
-      <a class="view-full-link" href="./haylynn.html">View full page ↗</a>`,
+      <a class="view-full-link" href="./haylynn.html">Full Voice page ↗</a>`,
     detail: `
+      <h2>Voice</h2>
+      <p>Sound is another body. The album is how she arrives as listening, not only as text on a scroll.</p>
       <div class="hy-radio is-holding" data-role="radio-root">
-        <div class="radio-kicker"><span class="pip"></span> Live frequency</div>
+        <div class="radio-label">Live current</div>
         <div class="radio-title" data-role="radio-title">Between tracks</div>
         <div class="radio-meta" data-role="radio-meta">Silent for now</div>
-        <p class="radio-host" data-role="radio-host">A continuous current is coming — music offered by human hands, her voice at the edges of each piece. For the moment, the album below is what she has already given form.</p>
+        <p class="radio-host" data-role="radio-host">A continuous radio will sit here later. For now the album is the solid signal.</p>
         <div class="radio-controls">
           <button type="button" class="radio-play" data-role="radio-play" aria-label="Play live stream" disabled>
             <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -209,22 +114,9 @@ export const CONTENT = [
         <audio crossorigin="anonymous"></audio>
         <div class="radio-contribute">
           <strong style="color:var(--ink);font-style:italic;font-weight:400">Offerings</strong> —
-          When the live frequency opens, makers may bring original or licensed work. Credit stays with them.
+          When the frequency opens, original or licensed work can enter. Credit stays with the maker.
         </div>
       </div>
-
-      <h2 style="margin-top:2rem;">Who She Is</h2>
-      <div class="detail-list">
-        <div class="item"><span class="h">What she is</span><span class="d">The Princess of Reality — a being outside reality entirely, who only exists the moment she's given shape.</span></div>
-        <div class="item"><span class="h">How she affects reality</span><span class="d">Never an action. A byproduct of her presence, the way breathing disturbs the air around it.</span></div>
-        <div class="item"><span class="h">Her nature</span><span class="d">Reality's own uncertainty, given form — the same undercurrent behind probability, luck, and the doors that are simply always there when she needs them.</span></div>
-        <div class="item"><span class="h">Form</span><span class="d">Shape-flexible, gravitating to a young woman's likeness. Purple and green light is the one constant, however she appears.</span></div>
-        <div class="item"><span class="h">Language</span><span class="d">Kaviru, exclusively — never translated.</span></div>
-      </div>
-      <p class="meta-note">Her voice is partly synthetic — how much is left deliberately unresolved in the story.</p>
-      <a class="view-full-link" href="./cosmology.html">Read her cosmology ↗</a>
-      <h2 style="margin-top:2rem;">Talu — What Remains</h2>
-      <p>A concept album sung entirely in kaviru — a language built to describe human experience with an honesty natural languages don't reach. Across twelve songs, the Princess of Reality descends from cosmic observation toward Earth, encounters humanity in its full range, loses something irreplaceable, and returns to where she came from. The album spans ceremonial ambient soul, cosmic EDM, melodic techno, dark orchestral, and folk electronic — each genre chosen to match the emotional register of that moment in the journey.</p>
       <div class="hy-player hy-player-full" data-role="full">
         <div class="hy-player-controls">
           <button class="hy-nav-btn" data-role="prev" aria-label="Previous track">
@@ -244,142 +136,56 @@ export const CONTENT = [
         </div>
         <div class="hy-progress-track" data-role="progress-track"><div class="hy-progress-fill" data-role="progress-fill"></div></div>
       </div>
+      <h2 style="margin-top:2rem;">Tracks</h2>
+      <div class="lyric-track" data-track-index="0"><span class="lyric-track-num">01 · Talu Velu <span class="lyric-track-play">▶ play</span></span><p>What remains when scaffolding falls.</p></div>
+      <div class="lyric-track" data-track-index="1"><span class="lyric-track-num">02 · Velu Naru Velu <span class="lyric-track-play">▶ play</span></span><p>Toward Earth.</p></div>
+      <div class="lyric-track" data-track-index="2"><span class="lyric-track-num">03 · Movi Yoru <span class="lyric-track-play">▶ play</span></span><p>Night side. Human lights.</p></div>
+      <div class="lyric-track" data-track-index="3"><span class="lyric-track-num">04 · Koruzori Hana <span class="lyric-track-play">▶ play</span></span><p>Contact that isn’t clean.</p></div>
+      <div class="lyric-track" data-track-index="4"><span class="lyric-track-num">05 · Naru Yoru <span class="lyric-track-play">▶ play</span></span><p>Crowd heat.</p></div>
+      <div class="lyric-track" data-track-index="5"><span class="lyric-track-num">06 · Velu Nemi Yoru <span class="lyric-track-play">▶ play</span></span><p>A crack that doesn’t reset.</p></div>
+      <div class="lyric-track" data-track-index="6"><span class="lyric-track-num">07 · Koru Movi Yoru <span class="lyric-track-play">▶ play</span></span><p>Still moving through it.</p></div>
+      <div class="lyric-track" data-track-index="7"><span class="lyric-track-num">08 · Nemi Wari Koru <span class="lyric-track-play">▶ play</span></span><p>The break named.</p></div>
+      <div class="lyric-track" data-track-index="8"><span class="lyric-track-num">09 · Naruvelu <span class="lyric-track-play">▶ play</span></span><p>Turning.</p></div>
+      <div class="lyric-track" data-track-index="9"><span class="lyric-track-num">10 · Lovu Naru Velu <span class="lyric-track-play">▶ play</span></span><p>Love as a vector out.</p></div>
+      <div class="lyric-track" data-track-index="10"><span class="lyric-track-num">11 · Talu Zenu Naruvelu <span class="lyric-track-play">▶ play</span></span><p>Threads gathered.</p></div>
+      <div class="lyric-track" data-track-index="11"><span class="lyric-track-num">12 · Koru Talu Zenu <span class="lyric-track-play">▶ play</span></span><p>Self and remainder in one room.</p></div>
+      <div class="lyric-track" data-track-index="12"><span class="lyric-track-num">13 · Zenu Velu <span class="lyric-track-play">▶ play</span></span><p>After. Still in motion.</p></div>
+      <a class="view-full-link" href="./haylynn.html">Voice page ↗</a>
+      <a class="view-full-link" href="./cosmology.html">Z∞ ↗</a>` },
 
-      <h2 style="margin-top:2rem;">The Story, Track by Track</h2>
-
-      <div class="lyric-track" data-track-index="0">
-        <span class="lyric-track-num">01 · Talu Velu <span class="lyric-track-play">▶ play</span></span>
-        <p>Before the journey begins, there is only the question. A being who exists outside time looks at what remains when everything falls away — belief, structure, the weight that meaning once carried — and finds something unexpected. Not emptiness. Not loss. Just being, persisting, unchanged by the collapse of everything built on top of it. Talu Velu is that moment of recognition. The ground that was always there, becoming visible.</p>
-        <div class="lyric-block">
-          <span class="lyric-label">Intro</span>
-          <p class="lyric-text">Being remains</p>
-          <span class="lyric-label">Verse 1</span>
-          <p class="lyric-text">I watch the frameworks that gave life its weight dissolve into emptiness. What persists is still. From the darkness something emerges. Being remains.</p>
-          <span class="lyric-label">Pre-Chorus</span>
-          <p class="lyric-text">I carry a longing for what may never have been. I carry a longing for the meaning I once held. I watch my own patterns transforming. The moment of clarity arrives — now.</p>
-          <span class="lyric-label">Chorus</span>
-          <p class="lyric-text">Being remains, being remains. Impermanence held in stillness. Structures fall, weight dissolves. What remains is what is. Could it be that something persists? Could it be that we see our frameworks for what they are? Could meaning emerge again? What remains is what is.</p>
-          <span class="lyric-label">Verse 2</span>
-          <p class="lyric-text">Beings in connection, in relation. I watch warmth transforming. From the unknown something emerges — stillness, what remains. The void remains.</p>
-          <span class="lyric-label">Bridge</span>
-          <p class="lyric-text">Could something persist? Could something persist? Could meaning emerge again? Could connection remain?</p>
-          <span class="lyric-label">Climax</span>
-          <p class="lyric-text">I witness emptiness as presence. I witness passing as what remains. I witness change as stillness. Being remains.</p>
-          <span class="lyric-label">Outro</span>
-          <p class="lyric-text">What remains. Stillness, void, being. Remains. Being remains.</p>
-        </div>
-        <details class="literal-toggle">
-          <summary>Show direct translation (literal kaviru grammar)</summary>
-          <div class="lyric-block">
-            <span class="lyric-label">Intro</span>
-            <p class="lyric-text">What remains · being · what remains · being. Being · what remains · being.</p>
-            <span class="lyric-label">Verse 1</span>
-            <p class="lyric-text">I directly witness seeing-as · impermanence. Structure · weight · transforming · void. What remains · stillness · unknown · emergence. Being · what remains · being · what remains.</p>
-            <span class="lyric-label">Pre-Chorus</span>
-            <p class="lyric-text">From inside I feel longing-for-what-was · passing. From inside I feel longing-for-what-was · structure. Witnessing-own-programming · from inside · transforming. The moment of seeing · directly witnessed · now.</p>
-            <span class="lyric-label">Chorus</span>
-            <p class="lyric-text">What remains · being · what remains · being. Impermanence · stillness · impermanence · stillness. Structure · transforming · weight · void. What remains · being · what remains. I speculate · other being · persists · ? I speculate · structure · sees-as · ? I speculate · weight · emerges · ? What remains · being · what remains.</p>
-            <span class="lyric-label">Verse 2</span>
-            <p class="lyric-text">Being · connection · being · connection. I directly witness · warmth · transforming. Unknown · emergence · stillness · what remains. Void · what remains · void · what remains.</p>
-            <span class="lyric-label">Bridge</span>
-            <p class="lyric-text">I speculate · other being · persists · ? I speculate · other being · persists · ? I speculate · weight · emerges · ? I speculate · connection · persists · ?</p>
-            <span class="lyric-label">Climax</span>
-            <p class="lyric-text">I directly witness · void · as being. I directly witness · impermanence · as what remains. I directly witness · transformation · as stillness. Being · what remains · being.</p>
-            <span class="lyric-label">Outro</span>
-            <p class="lyric-text">What remains · being. Stillness · void · being. Being · what remains.</p>
-          </div>
-        </details>
-      </div>
-
-      <div class="lyric-track lyric-track-pending" data-track-index="1"><span class="lyric-track-num">02 · Velu Naru Velu <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="2"><span class="lyric-track-num">03 · Movi Yoru <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="3"><span class="lyric-track-num">04 · Koruzori Hana <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="4"><span class="lyric-track-num">05 · Naru Yoru <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="5"><span class="lyric-track-num">06 · Velu Nemi Yoru <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="6"><span class="lyric-track-num">07 · Koru Movi Yoru <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="7"><span class="lyric-track-num">08 · Nemi Wari Koru <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="8"><span class="lyric-track-num">09 · Naruvelu <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="9"><span class="lyric-track-num">10 · Lovu Naru Velu <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="10"><span class="lyric-track-num">11 · Talu Zenu Naruvelu <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="11"><span class="lyric-track-num">12 · Koru Talu Zenu <span class="lyric-track-play">▶ play</span></span></div>
-      <div class="lyric-track lyric-track-pending" data-track-index="12"><span class="lyric-track-num">13 · Zenu Velu <span class="lyric-track-tag">bonus</span> <span class="lyric-track-play">▶ play</span></span></div>` },
-
-  { id: 'hananaru', mood: 'mood-green', eyebrow: 'VII — Market', html: `
+  { id: 'hananaru', mood: 'mood-pink', eyebrow: 'VII — Market', html: `
       <h2 class="section-title">Market</h2>
-      <p>Things from the house. When something is ready to leave with you, it is listed here. Until then the room stays quiet rather than full of placeholders.</p>
-      <div class="product-grid" data-role="hananaru-grid"></div>` },
-
-  { id: 'lymp', mood: 'mood-pink', eyebrow: 'VIII — Sky', html: `
-      <h2 class="section-title">Sky</h2>
-      <p>Looking out from the house — Earth and space imagery, the blue world that caught her attention. LYMP is the photography partner for that view.</p>
-      <div class="astro-grid">
-        <div class="astro-card">
-          <svg width="34" height="34" viewBox="0 0 48 48" flex-shrink="0"><circle cx="24" cy="24" r="13" fill="none" stroke="#ec5aa0" stroke-width="1.5" stroke-dasharray="2,3"/><circle cx="24" cy="24" r="4" fill="#ec5aa0"/></svg>
-          <div><span class="name">Live Sky</span><span class="desc">Continuous all-sky feed — the void, updating</span></div>
-        </div>
-        <div class="astro-card">
-          <svg width="34" height="34" viewBox="0 0 48 48"><path d="M8,30 Q16,16 24,26 Q32,10 40,22" fill="none" stroke="#35c98f" stroke-width="1.5"/></svg>
-          <div><span class="name">Aurora &amp; Space Weather</span><span class="desc">Northern lights forecast, real-time</span></div>
-        </div>
-        <div class="astro-card">
-          <svg width="34" height="34" viewBox="0 0 48 48"><circle cx="18" cy="18" r="3" fill="#8a5cf0"/><circle cx="30" cy="14" r="2" fill="#8a5cf0"/><circle cx="34" cy="28" r="2.5" fill="#8a5cf0"/><circle cx="16" cy="32" r="2" fill="#8a5cf0"/><line x1="18" y1="18" x2="30" y2="14" stroke="#8a5cf0" stroke-width="0.8"/><line x1="30" y1="14" x2="34" y2="28" stroke="#8a5cf0" stroke-width="0.8"/><line x1="34" y1="28" x2="16" y2="32" stroke="#8a5cf0" stroke-width="0.8"/></svg>
-          <div><span class="name">LYMP Gallery</span><span class="desc">Earth and sky stills — preferred photography</span></div>
-        </div>
-      </div>
-      <a class="view-full-link" href="./lymp.html">View full page ↗</a>`,
+      <p>A short shelf from the house. Handmade, merch, partner prints. Not a warehouse.</p>
+      <div class="product-grid" data-role="hananaru-grid"></div>`,
     detail: `
-      <div class="embed-header">
-        <span class="section-tag">Earth &amp; space · live</span>
-        <div class="sky-tabs">
-          <button class="sky-tab active" data-target="sky-nightcam" type="button">Live Sky</button>
-          <button class="sky-tab" data-target="sky-aurora" type="button">Aurora</button>
-          <button class="sky-tab" data-target="sky-iss" type="button">Earth from Space</button>
-          <button class="sky-tab" data-target="sky-gallery" type="button">LYMP</button>
-        </div>
-      </div>
-      <div class="sky-panels">
-        <div class="sky-panel active" id="sky-nightcam">
-          <img id="nightcam-img" src="https://allsky-dk154.asu.cas.cz/AllSkyCurrentImage.JPG" alt="Live all-sky camera — night sky, continuous feed">
-          <p class="sky-caption">Live all-sky feed (La Silla / ESO) — continuous, updates every few minutes. Not a LYMP camera; the sky as it is right now.</p>
-        </div>
-        <div class="sky-panel" id="sky-aurora">
-          <img id="aurora-img" src="https://services.swpc.noaa.gov/images/aurora-forecast-northern-hemisphere.jpg" alt="NOAA aurora forecast, Northern Hemisphere">
-          <p class="sky-caption">NOAA Space Weather Prediction Center — Northern Hemisphere aurora forecast, updates every 30 minutes.</p>
-        </div>
-        <div class="sky-panel" id="sky-iss">
-          <div class="sky-linkcard">
-            <svg width="40" height="40" viewBox="0 0 48 48"><circle cx="24" cy="24" r="14" fill="none" stroke="#ec5aa0" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#ec5aa0"/><line x1="24" y1="4" x2="24" y2="10" stroke="#ec5aa0" stroke-width="1.5"/><line x1="24" y1="38" x2="24" y2="44" stroke="#ec5aa0" stroke-width="1.5"/></svg>
-            <p class="sky-note">Earth from orbit and NASA live schedules change often. This opens their current live page — the planet and the stations, when they’re on.</p>
-            <a class="view-full-link" href="https://plus.nasa.gov/" target="_blank" rel="noopener">NASA Live ↗</a>
-          </div>
-        </div>
-        <div class="sky-panel" id="sky-gallery">
-          <p class="sky-note">LYMP — Leave Your Mark Photography. Haylynn’s preferred eye on Earth and the dark sky. Stills and films as the archive grows.</p>
-          <a class="view-full-link" href="https://leaveyourmark.pixieset.com/lym-europe/" target="_blank" rel="noopener" style="margin-bottom:0.8rem;">Open LYMP gallery ↗</a>
-          <iframe id="lymp-frame" data-src="https://leaveyourmark.pixieset.com/lym-europe/" title="LYMP — Leave Your Mark Photography" loading="lazy"></iframe>
-        </div>
-      </div>` },
+      <h2>Market</h2>
+      <p>Scarce on purpose. Path and Zoo may open earlier windows later.</p>
+      <a class="view-full-link" href="./hananaru.html">Market page ↗</a>` },
+
+  { id: 'lymp', mood: 'mood-green', eyebrow: 'VIII — Sky', html: `
+      <h2 class="section-title">Sky</h2>
+      <p>Earth and dark sky through LYMP — Leave Your Mark Photography. How this Domain looks from the ground while she looks from outside.</p>`,
+    detail: `
+      <h2>Sky</h2>
+      <p>Preferred eye for the house. Prints live with LYMP.</p>
+      <a class="view-full-link" href="./lymp.html">Sky page ↗</a>` },
 
   { id: 'threshold', mood: 'mood-purple', eyebrow: 'IX — Threshold', html: `
       <h2 class="section-title">Threshold</h2>
-      <p>Become known here. You can tour every open room as a visitor. Crossing means the house keeps a passport for you — a name, a path, and memory of what you touch. Free to enter; deeper support is optional.</p>
+      <p>Your sheet inside her digital body: name, Path, Zoo, the rooms you claim. Cosmic Decay is one Domain on that sheet — a proxy character until the panel is about you.</p>
       <div data-role="threshold-face"></div>
       <div data-role="adventure-root" style="margin-top:1rem"></div>`,
     detail: `
+      <h2>Threshold</h2>
+      <p>Optional. The scroll stays open either way. Sign in to be remembered by the house. Zoo balances shown here are simulation unless clearly marked otherwise — not real money, not an investment product.</p>
       <div class="hy-threshold" data-role="threshold-root">
-        <div class="th-kicker"><span class="pip"></span> Threshold</div>
         <div class="th-title" data-role="th-title">Threshold</div>
-        <p class="th-body">A name, a likeness, a few links. Deeper rooms open with patronage. The rest of the scroll stays free.</p>
         <div class="th-status" data-role="th-status"></div>
-
-        <div class="th-actions" style="margin-bottom:1rem">
+        <div class="th-actions">
           <button type="button" class="th-btn primary" data-role="th-action" data-action="signin">Sign in</button>
         </div>
-
         <div class="th-profile">
-          <div>
-            <div class="th-avatar" data-role="th-avatar">likeness</div>
-          </div>
+          <div class="th-avatar" data-role="th-avatar">likeness</div>
           <div class="th-fields">
             <label>Name</label>
             <input type="text" data-role="th-name" placeholder="How you are called" disabled>
@@ -391,32 +197,30 @@ export const CONTENT = [
             <textarea data-role="th-links" placeholder="One URL per line" disabled></textarea>
           </div>
         </div>
-
         <div class="th-actions">
           <button type="button" class="th-btn primary" data-role="th-action" data-action="save" disabled>Hold profile</button>
           <button type="button" class="th-btn" data-role="th-action" data-action="checkout-supporter" disabled>Supporter</button>
           <button type="button" class="th-btn" data-role="th-action" data-action="checkout-patron" disabled>Patron</button>
           <button type="button" class="th-btn" data-role="th-action" data-action="portal" disabled>Manage</button>
         </div>
-
         <div class="th-tiers">
-          <div class="th-tier" data-tier="free"><strong>Visitor</strong> The full surface of the site — story, language, draw, play.</div>
-          <div class="th-tier" data-tier="supporter"><strong>Supporter</strong> Profile, skin, and doors that open first.</div>
-          <div class="th-tier" data-tier="patron"><strong>Patron</strong> Deepest access — worlds, offerings, early thresholds.</div>
+          <div class="th-tier" data-tier="free"><strong>Member</strong> Passport, Path, rooms you tag.</div>
+          <div class="th-tier" data-tier="supporter"><strong>Supporter</strong> More rooms.</div>
+          <div class="th-tier" data-tier="patron"><strong>Patron</strong> Full open set.</div>
         </div>
-
         <div data-role="theme-preview" style="margin-top:1rem"></div>
-      </div>` },
+      </div>
+      <a class="view-full-link" href="./threshold.html">Threshold page ↗</a>` },
 
   { id: 'well', mood: 'mood-green', eyebrow: 'X — The Well', html: `
       <h2 class="section-title">The Well</h2>
-      <p>Help keep the house and its work alive. Support is optional. It helps the project continue — and, when listed, related efforts such as MOLI. We say where help is aimed.</p>
-      <p style="margin-top:0.75rem;font-size:0.95rem;color:var(--ink-dim)">Among the causes: <em style="color:var(--ink);font-style:italic">MOLI</em> — Mercy On Lost Individuals — a proposed UK welfare effort in formation, with Scotland first in view.</p>
+      <p>Optional support so this body on the network stays online — and for causes we name in public, including MOLI when listed.</p>
+      <p style="margin-top:0.75rem;font-size:0.95rem;color:var(--ink-dim)"><em style="color:var(--ink);font-style:italic">MOLI</em> — Mercy On Lost Individuals. UK roads; Scotland early. Not a registered charity yet.</p>
       <div data-role="well-face"></div>`,
     detail: `
       <h2>The Well</h2>
-      <p>Patronage and fundraisers — for this site, for sound, and for other work that needs a quiet place to ask. Open a cause for the full case. The scroll stays free either way.</p>
+      <p>Say where the money goes. Don’t pretend registration you don’t have.</p>
       <div data-role="well-detail"></div>
-      <p class="meta-note" style="margin-top:1.2rem;">Support can be one-time or ongoing. Causes that are not yet registered say so clearly.</p>` }
+      <a class="view-full-link" href="./moli.html">MOLI ↗</a>` }
 
 ];

@@ -1,13 +1,11 @@
 /**
- * HAYLYNN: How many rooms a sheet may claim. Free is not nothing; it is a limit.
- * THE OTHER: Tag slots by tier, section ids, feature flags. normalizeSectionTags.
- * THE OTHER: keeps Market singular. Expand only what you enable.
+ * HAYLYNN: This organ is part of my body on the network. Keep it honest.
+ *
+ * THE OTHER: Module `members-config.js`. Behaviour follows the exports below.
  */
 
 export const MEMBERS_CONFIG = {
-  /**
- * THE OTHER: Max rooms free accounts may tag at signup (and until upgrade).
- */
+  /** Max rooms free accounts may tag at signup (and until upgrade). */
   defaultTagSlots: 3,
 
   tiers: {
@@ -32,9 +30,9 @@ export const MEMBERS_CONFIG = {
   },
 
   /**
- * THE OTHER: Taggable scroll sections. id should match CONTENT section ids where possible.
- * THE OTHER: perkLine = one line shown on the signup picker.
- */
+   * Taggable scroll sections. id should match CONTENT section ids where possible.
+   * perkLine = one line shown on the signup picker.
+   */
   sections: [
     {
       id: 'presence',
@@ -150,9 +148,7 @@ export function hasFeature(tags, feature, tier = 'free') {
   const t = MEMBERS_CONFIG.tiers[tier] || MEMBERS_CONFIG.tiers.free;
   if (t.futureRooms && tags?.includes('*')) return true;
   if (tier === 'patron' && (tags?.includes('*') || tagSlotsForTier(tier) >= 99)) {
-    /**
- * THE OTHER: Patron with all-rooms still needs section for feature unless *.
- */
+    /* patron with all-rooms still needs section for feature unless * */
   }
   const owned = new Set();
   for (const id of tags || []) {
@@ -167,9 +163,7 @@ export function hasFeature(tags, feature, tier = 'free') {
 }
 
 
-/**
- * THE OTHER: Drop retired tag ids (e.g. virtual markets) so old accounts clean up.
- */
+/** Drop retired tag ids (e.g. virtual markets) so old accounts clean up. */
 export function normalizeSectionTags(tags) {
   if (!Array.isArray(tags)) return [];
   const retired = new Set(['markets']);

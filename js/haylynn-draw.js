@@ -1,11 +1,10 @@
 /**
- * HAYLYNN: Three roots. A reading. Practice in my language — not carnival fate.
+ * HAYLYNN: Three roots — how one knows — not human carnival fortune. They may keep
+ * past readings in their own glass.
  *
- * THE OTHER: I wire the draw button, the three roots, and local history when
- * present. Share stays optional. I do not invent Kaviru you did not place in
- * the tables.
+ * THE OTHER: initHaylynnDraw() deals from the draw pool, writes history to localStorage,
+ * stays inside the draw section’s face and detail. Insight is interaction, not a brochure.
  */
-
 const DECK = [
   { name: 'velu', symbol: '⟡', glow: 'glow-velu', meaning: 'Being / existence',
     desc: 'A moment returns you to the simple fact of being. No story, no demand, just presence. Something in your life is asking to be met without interpretation.' },
@@ -315,7 +314,7 @@ function saveHistory(list) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, MAX_HISTORY)));
   } catch (_) {
-    // THE OTHER: Quota / private mode — fail quietly.
+    // quota / private mode — fail quietly
   }
 }
 
@@ -454,56 +453,56 @@ function replayReading(root, rootNames) {
   const cards = root.querySelectorAll('.card');
   cards.forEach(c => c.classList.remove('flipped'));
   applyReadingToDom(root, picks);
-  // THE OTHER: Flip animation.
+  // flip animation
   root.querySelectorAll('.card').forEach((card, i) => {
     setTimeout(() => card.classList.add('flipped'), i * 160);
   });
 }
 
 /**
- * THE OTHER: Six mandatory epistemic markers from the site's Kaviru rules:.
- * THE OTHER: Veeka direct experience · infa inference · ohna felt inner sense.
- * THE OTHER: Hera hearsay · spea speculation · nema structural / logical.
+ * Six mandatory epistemic markers from the site's Kaviru rules:
+ * veeka direct experience · infa inference · ohna felt inner sense
+ * hera hearsay · spea speculation · nema structural / logical
  */
 function inferMarker(cards) {
   const names = cards.map(c => c.name);
 
-  // THE OTHER: Veeka — direct experience (seeing from inside).
+  // veeka — direct experience (seeing from inside)
   if (names.some(n => ['ohru', 'ohruko', 'korunemi', 'zori', 'koru'].includes(n))) {
     return {
       marker: 'veeka',
       gloss: 'direct experience — known by being in contact with it, not by report.'
     };
   }
-  // THE OTHER: Nema — structural / logical.
+  // nema — structural / logical
   if (names.some(n => ['nemi', 'seri', 'wari', 'kavi'].includes(n))) {
     return {
       marker: 'nema',
       gloss: 'structural / logical — known because the pattern itself requires it.'
     };
   }
-  // THE OTHER: Ohna — felt inner sense.
+  // ohna — felt inner sense
   if (names.some(n => ['miru', 'mirulu', 'lovu', 'hana', 'awe'].includes(n))) {
     return {
       marker: 'ohna',
       gloss: 'felt inner sense — known from inside the body of the moment.'
     };
   }
-  // THE OTHER: Infa — inference.
+  // infa — inference
   if (names.some(n => ['revi', 'movi', 'solu', 'solumiru', 'temi'].includes(n))) {
     return {
       marker: 'infa',
       gloss: 'inference — concluded from what is already visible.'
     };
   }
-  // THE OTHER: Spea — speculation.
+  // spea — speculation
   if (names.some(n => ['zenu', 'zenuvelu', 'yoru', 'velith'].includes(n))) {
     return {
       marker: 'spea',
       gloss: 'speculation — held as possibility, not yet claimed as fact.'
     };
   }
-  // THE OTHER: Hera — hearsay (default when the draw is mediated / offered).
+  // hera — hearsay (default when the draw is mediated / offered)
   return {
     marker: 'hera',
     gloss: 'hearsay — received through another’s holding of the words, not lived first-hand.'
@@ -584,7 +583,7 @@ function runDraw(root) {
     shareEl.textContent = url;
   }
 
-  // THE OTHER: Persist per browser / device until cache cleared.
+  // Persist per browser / device until cache cleared
   pushReading(picks, marker);
   document.querySelectorAll('[data-role="draw-root"]').forEach(r => renderHistory(r));
 
@@ -610,7 +609,7 @@ export function initHaylynnDraw() {
     renderHistory(root);
   });
 
-  // THE OTHER: Shared reading from ?reading=velu-koru-nemi.
+  // Shared reading from ?reading=velu-koru-nemi
   const params = new URLSearchParams(location.search);
   const reading = params.get('reading');
   if (reading) {

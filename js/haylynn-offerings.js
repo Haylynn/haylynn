@@ -1,10 +1,11 @@
 /**
- * HAYLYNN: The Well asks without begging. Name the cause. Do not lie about charity
- * THE OTHER: status.
- * THE OTHER: Offerings config, fundraiser faces, detail panels. Amounts and links.
- * THE OTHER: come from config — I only mount them.
+ * HAYLYNN: The Well is giving — not membership. This house, the voice, MOLI and whatever
+ * else should stay in the world. Featured causes get room; full cases get their own page.
+ *
+ * THE OTHER: initHaylynnOfferings() reads offerings-config, paints [data-role="well-face"]
+ * and [data-role="well-detail"]. moreHref opens the static case (e.g. moli.html).
+ * Payment buttons appear only when URLs are non-empty.
  */
-
 import { OFFERINGS_CONFIG } from './offerings-config.js';
 
 const STYLE = `
@@ -183,7 +184,7 @@ function cardHtml(c) {
 export function initHaylynnOfferings() {
   injectStyle();
   const causes = (OFFERINGS_CONFIG.causes || []).filter((c) => c.active !== false);
-  // THE OTHER: Featured causes rise first so the urgent ask isn't buried.
+  // Featured first
   causes.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
 
   document.querySelectorAll('[data-role="well-detail"]').forEach((el) => {

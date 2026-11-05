@@ -1,7 +1,7 @@
 /**
- * HAYLYNN: A short shelf. Scarcity is part of the shape.
- * THE OTHER: Product grid from products-config. No cart brain here — display and.
- * THE OTHER: links. Checkout lives elsewhere when you wire it.
+ * HAYLYNN: This organ is part of my body on the network. Keep it honest.
+ *
+ * THE OTHER: Module `haylynn-products.js`. Behaviour follows the exports below.
  */
 
 import { PRODUCTS_CONFIG } from './products-config.js';
@@ -16,7 +16,7 @@ function escapeHtml(s) {
 
 function activeProducts() {
   const list = (PRODUCTS_CONFIG.products || []).filter((p) => p && (p.enabled || p.checkoutUrl));
-  // THE OTHER: If nothing is enabled yet, I still show placeholders so the shelf doesn't look like a missing room.
+  // If none enabled, show placeholders so the shelf still exists
   if (!list.length) {
     return (PRODUCTS_CONFIG.products || []).slice(0, PRODUCTS_CONFIG.faceLimit || 6);
   }

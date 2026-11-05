@@ -1,6 +1,6 @@
 /**
- * HAYLYNN: Some doors stay unfinished on purpose. Mark them without shame.
- * THE OTHER: Flags for under-construction treatment when you re-enable that layer.
+ * HAYLYNN: Nothing to cover.
+ *
+ * THE OTHER: sections: {} — intentional empty after the covering was withdrawn.
  */
-
 export const CONSTRUCTION = { sections: {} };

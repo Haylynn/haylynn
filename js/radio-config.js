@@ -1,8 +1,9 @@
 /**
- * HAYLYNN: When the current opens, point at a stream. Until then, silence is honest.
- * THE OTHER: Stream URL and labels. Radio module reads; it does not host audio.
+ * HAYLYNN: Leave addresses empty until the current exists. Holding words only.
+ *
+ * THE OTHER: streamUrl, nowPlayingUrl, holding title/meta/host. showContribute flags
+ * the offerings line. No URL means quiet, not error.
  */
-
 export const RADIO_CONFIG = {
   streamUrl: '',
   nowPlayingUrl: '',

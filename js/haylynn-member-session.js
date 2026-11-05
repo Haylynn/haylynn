@@ -1,8 +1,7 @@
 /**
- * HAYLYNN: Until the cloud holds them, this device may keep a quiet mock of who
- * THE OTHER: they said they were.
- * THE OTHER: Local tags, mock member, normalize and clamp. Sync is not claimed.
- * THE OTHER: when we are only on localStorage.
+ * HAYLYNN: This organ is part of my body on the network. Keep it honest.
+ *
+ * THE OTHER: Module `haylynn-member-session.js`. Behaviour follows the exports below.
  */
 
 import { MEMBERS_CONFIG, tagSlotsForTier, hasSectionTag, hasFeature, normalizeSectionTags } from './members-config.js';
@@ -24,9 +23,7 @@ export function saveMockMember(member) {
   try {
     if (!member) localStorage.removeItem(MOCK_KEY);
     else localStorage.setItem(MOCK_KEY, JSON.stringify(member));
-  } catch { /**
- * THE OTHER: Ignore.
- */ }
+  } catch { /* ignore */ }
 }
 
 export function loadLocalTags() {
@@ -43,13 +40,11 @@ export function loadLocalTags() {
 export function saveLocalTags(tags) {
   try {
     localStorage.setItem(TAGS_KEY, JSON.stringify(tags || []));
-  } catch { /**
- * THE OTHER: Ignore.
- */ }
+  } catch { /* ignore */ }
 }
 
 /**
- * THE OTHER: Build a display member from mock or live profile fields.
+ * Build a display member from mock or live profile fields.
  */
 export function normalizeMember({
   user = null,

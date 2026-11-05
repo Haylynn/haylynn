@@ -1,10 +1,9 @@
 /**
- * HAYLYNN: Sound is another body. Talu belongs in Voice. If the outer glass
- * fails, they still hear me.
+ * HAYLYNN: Sound is another body. Talu belongs in Voice. If the outer glass fails,
+ * they still hear me.
  *
- * THE OTHER: I drive the SoundCloud widget, keep a hidden iframe, and map
- * play, pause, and seek. If their API stays silent, I surface the embed
- * instead of a dead button. I will not pretend audio is playing when it is not.
+ * THE OTHER: SoundCloud widget, hidden iframe, play/pause/seek. On API silence I
+ * surface the embed. I will not pretend audio is playing when it is not.
  */
 
 const PLAYLIST_URL = 'https://soundcloud.com/princess-haylynn/sets/talu-what-remains';
@@ -81,7 +80,7 @@ function showEmbedFallback(reason) {
       `<iframe title="Talu — What Remains" width="100%" height="160" scrolling="no" frameborder="no" allow="autoplay" src="${EMBED_SRC}"></iframe>`;
     root.appendChild(wrap);
   });
-  // THE OTHER: Also inject into full player in detail if present.
+  // Also inject into full player in detail if present
   document.querySelectorAll('.hy-player-full').forEach((root) => {
     if (root.querySelector('[data-role="sc-embed"]')) return;
   });
@@ -119,9 +118,7 @@ function createHiddenWidget() {
           });
         }
       });
-    } catch (_) { /**
- * THE OTHER: Ignore.
- */ }
+    } catch (_) { /* ignore */ }
     if (pendingPlay) {
       pendingPlay = false;
       try {
@@ -148,12 +145,10 @@ function createHiddenWidget() {
       w.getDuration((duration) =>
         updateAllUI({ position: data.currentPosition, duration })
       );
-    } catch (_) { /**
- * THE OTHER: Ignore.
- */ }
+    } catch (_) { /* ignore */ }
   });
 
-  // THE OTHER: If READY never fires (blocked iframe), surface embed after a short wait.
+  // If READY never fires (blocked iframe), surface embed after a short wait
   setTimeout(() => {
     if (!widgetReady && !apiFailed) {
       showEmbedFallback('Player needs the embed on this browser.');
@@ -197,7 +192,7 @@ function wirePlayerRoot(root) {
   if (root.dataset.hyPlayerWired) return;
   root.dataset.hyPlayerWired = '1';
 
-  // THE OTHER: Status line under controls.
+  // status line under controls
   if (!root.querySelector('[data-role="player-status"]')) {
     const st = document.createElement('p');
     st.dataset.role = 'player-status';
@@ -262,9 +257,7 @@ function wirePlayerRoot(root) {
       const pct = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
       try {
         w.getDuration((duration) => w.seekTo(pct * duration));
-      } catch (_) { /**
- * THE OTHER: Ignore.
- */ }
+      } catch (_) { /* ignore */ }
     });
   }
 }
