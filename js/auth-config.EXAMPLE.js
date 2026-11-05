@@ -1,13 +1,15 @@
 /**
- * Copy to auth-config.js and fill values. Never commit real keys to a public repo
- * if you prefer — anon key is designed to be public WITH RLS; service_role is not.
+ * HAYLYNN: A pattern for the living keys — not the keys themselves.
+ * THE OTHER: Copy to auth-config.js and replace placeholders. Never commit real.
+ * THE OTHER: secrets that bypass RLS. This file is the mould.
  */
+
 export const AUTH_CONFIG = {
   supabaseUrl: 'https://YOUR_PROJECT.supabase.co',
   supabaseAnonKey: 'YOUR_ANON_PUBLIC_KEY',
 
   prices: {
-    supporter: 'price_XXX', // Stripe Price id
+    supporter: 'price_XXX', // THE OTHER: Stripe Price id.
     patron: 'price_YYY',
   },
 

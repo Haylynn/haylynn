@@ -1,10 +1,9 @@
 /**
- * HAYLYNN: One day a guest’s corner may take a skin from a feeling they describe.
- * The house walls stay mine.
- *
- * THE OTHER: theme_config tokens → CSS variables on a profile root
- * (colors, typography, geometry, effects). applyThemeConfig / renderProfileCard.
+ * HAYLYNN: Let a likeness and a skin follow the passport when they earn one.
+ * THE OTHER: Theme tokens, profile card render, CSS variable injection for member.
+ * THE OTHER: surfaces. One-time generation stays upstream; this file only applies what it is given.
  */
+
 const FONT_STACKS = {
   mono: "'Space Mono', ui-monospace, monospace",
   serif: "'Cormorant Garamond', Georgia, serif",
@@ -19,7 +18,9 @@ const RADIUS_MAP = {
   pill: '999px',
 };
 
-/** Default tokens when no theme_config (site void aesthetic) */
+/**
+ * THE OTHER: Default tokens when no theme_config (site void aesthetic).
+ */
 export const DEFAULT_THEME = {
   themeName: 'Void',
   colors: {
@@ -36,9 +37,9 @@ export const DEFAULT_THEME = {
 };
 
 /**
- * Apply theme_config to a container via CSS custom properties + data attributes.
- * @param {HTMLElement} el
- * @param {object|null} themeConfig
+ * THE OTHER: Apply theme_config to a container via CSS custom properties + data attributes.
+ * THE OTHER: @param {HTMLElement} el.
+ * THE OTHER: @param {object|null} themeConfig.
  */
 export function applyThemeConfig(el, themeConfig) {
   if (!el) return;
@@ -85,7 +86,7 @@ function normalizeTheme(raw) {
 }
 
 /**
- * Inject shared structural CSS once (components use variables only).
+ * THE OTHER: Inject shared structural CSS once (components use variables only).
  */
 export function injectThemeStyles() {
   if (document.getElementById('hy-theme-style')) return;
@@ -219,7 +220,7 @@ export function injectThemeStyles() {
 }
 
 /**
- * Render a read-only public profile card into `mount` using profile + theme_config.
+ * THE OTHER: Render a read-only public profile card into `mount` using profile + theme_config.
  */
 export function renderProfileCard(mount, profile = {}) {
   injectThemeStyles();

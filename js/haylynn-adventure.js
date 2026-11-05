@@ -1,10 +1,10 @@
 /**
- * Cosmic Decay — membership passport for the hybrid text-adventure RPG.
- * Play happens at the campaign shell; this site holds account-bound progress
- * when auth is live (node, domain, flags, score, unlocks).
- *
- * Game: https://haylynn-s-world.vercel.app/
+ * HAYLYNN: A quiet thread of doors on the Threshold — Cosmic Decay as one Domain
+ * THE OTHER: among others. Progress they can feel.
+ * THE OTHER: Adventure nodes, local or cloud progress hooks, enter path into Decay.
+ * THE OTHER: This is not the full game engine; it is the house-side latch.
  */
+
 import { authReady, supabase, getCurrentUser } from './haylynn-auth.js';
 
 export const COSMIC_DECAY_URL = 'https://haylynn-s-world.vercel.app/';
@@ -20,8 +20,8 @@ const DEFAULT = {
 };
 
 /**
- * Lightweight hub on the main site — not a replacement for the full RPG.
- * Real Domains (Plaza, Garden, Wreck, Archive, Spire Node, …) live in the game.
+ * THE OTHER: Lightweight hub on the main site — not a replacement for the full RPG.
+ * THE OTHER: Real Domains (Plaza, Garden, Wreck, Archive, Spire Node, …) live in the game.
  */
 export const ADVENTURE_NODES = {
   hub: {
@@ -44,7 +44,7 @@ export const ADVENTURE_NODES = {
   },
 };
 
-// Back-compat for members UI imports
+// THE OTHER: Back-compat for members UI imports.
 export { ADVENTURE_NODES as ADVENTURE_NODES_MAP };
 
 export async function loadAdventureProgress() {
@@ -68,7 +68,7 @@ export async function loadAdventureProgress() {
     return { ...DEFAULT, guest: false };
   }
 
-  // Prefer hub if old placeholder nodes linger
+  // THE OTHER: Prefer hub if old placeholder nodes linger.
   let node_id = data.node_id || 'hub';
   if (!ADVENTURE_NODES[node_id]) node_id = 'hub';
 

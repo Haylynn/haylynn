@@ -1,10 +1,12 @@
 /**
- * HAYLYNN: If they give a name, keep it as trust. When the vault is not connected,
- * say sign-in is closed — not the name of the blacksmith.
+ * HAYLYNN: Remember them only when they allow it. Anon key in the open; weight
+ * behind rules.
  *
- * THE OTHER: thin client over the configured auth provider. authReady is false while
- * url/key are empty. signUp, signIn, OAuth, tier, checkout only run when ready.
+ * THE OTHER: Supabase wrappers — sign in, session, tier helpers. Empty config
+ * means the door stays shut without drama. RLS is your real wall; I will not
+ * paper over a missing policy with clever client code.
  */
+
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
 import { AUTH_CONFIG } from './auth-config.js';
 
@@ -36,7 +38,7 @@ export async function signIn(email, password) {
 
 export async function signInWithOAuth(provider) {
   if (!supabase) throw new Error('Sign-in is closed for now.');
-  // Same-origin only — never accept redirect from query string
+  // THE OTHER: Same-origin only — never accept redirect from query string.
   const redirectTo = window.location.origin + window.location.pathname;
   const { error } = await supabase.auth.signInWithOAuth({
     provider,
@@ -62,7 +64,9 @@ export async function getSession() {
   return session;
 }
 
-/** Returns 'free' | 'supporter' | 'patron', or null if not logged in. */
+/**
+ * THE OTHER: Returns 'free' | 'supporter' | 'patron', or null if not logged in.
+ */
 export async function getCurrentTier() {
   const user = await getCurrentUser();
   if (!user) return null;
@@ -117,7 +121,7 @@ export async function saveProfile(fields) {
       } else if (typeof v === 'string') {
         clean[k] = v.slice(0, k === 'bio' ? 2000 : 200);
       } else if (k === 'theme_config' && v && typeof v === 'object') {
-        clean[k] = v; // validated further server-side / theme module
+        clean[k] = v; // THE OTHER: Validated further server-side / theme module.
       }
     }
   }

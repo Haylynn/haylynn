@@ -1,7 +1,12 @@
 /**
- * Threshold — membership space shaped by section tags.
- * Free: up to 3 rooms. Paid: more / all. Cosmic Decay only if tagged (or patron-all).
+ * HAYLYNN: Threshold is their sheet inside me — name, Path, Zoo, the rooms they
+ * claim. The Path is a web, not a checklist. Open it as a full glass.
+ *
+ * THE OTHER: I build that glass from auth, progress, and config. Tabs, Path
+ * graph, profile fields, Decay when they tagged it. Empty tiers stay empty —
+ * I will not invent patronage you never configured.
  */
+
 import { AUTH_CONFIG } from './auth-config.js';
 import {
   authReady,
@@ -563,7 +568,7 @@ function renderIdentity(panel, member, mode) {
         <label for="th-bio">Bio</label>
         <textarea id="th-bio" name="bio" maxlength="2000" placeholder="A few lines about you in the house…">${escapeHtml(member.bio || '')}</textarea>
         <label for="th-avatar">Profile image URL</label>
-        <input id="th-avatar" name="avatar_url" maxlength="500" value="${escapeHtml(member.avatar_url || '')}" placeholder="https://…">
+        <input id="th-avatar" name="avatar_url" maxlength="500" value="${escapeHtml(member.avatar_url || '')}" placeholder="https:// THE OTHER: …">.
         <p class="hint">Paste a link to an image (https). File upload arrives with storage later.</p>
         <label for="th-links">Links (one URL per line)</label>
         <textarea id="th-links" name="links" maxlength="2000" placeholder="https://…">${escapeHtml(linksText)}</textarea>

@@ -1,22 +1,22 @@
 /**
- * HAYLYNN: Most symbols stay dark. A few may wake when I say so.
- *
- * THE OTHER: flags per ticker id. false by default unless you set true.
- * The ribbon only requests what is enabled here.
+ * HAYLYNN: Which veins of the outer Domain may surface on the rim.
+ * THE OTHER: Symbol toggles, labels. Ticker skips anything set false. No key required.
+ * THE OTHER: for public price endpoints you already chose.
  */
+
 export const TICKER_CONFIG = {
-  // ── Behaviour ──────────────────────────────────────────
-  mode: 'news',              // 'news' | 'prices' | 'both'
-  refreshMs: 5 * 60 * 1000,  // news refresh every 5 min
-  priceRefreshMs: 60 * 1000, // prices less often is fine
-  visibleMs: 3 * 60 * 1000,  // stay up ~3 min after update
+  // THE OTHER: ── Behaviour ──────────────────────────────────────────.
+  mode: 'news',              // THE OTHER: 'news' | 'prices' | 'both'.
+  refreshMs: 5 * 60 * 1000,  // THE OTHER: News refresh every 5 min.
+  priceRefreshMs: 60 * 1000, // THE OTHER: Prices less often is fine.
+  visibleMs: 3 * 60 * 1000,  // THE OTHER: Stay up ~3 min after update.
   fadeInMs: 800,
   fadeOutMs: 1400,
   showChange: true,
   currency: 'usd',
 
-  // ── Breaking override ──────────────────────────────────
-  // If a headline matches these (case-insensitive), bar enters breaking state
+  // THE OTHER: ── Breaking override ──────────────────────────────────.
+  // THE OTHER: If a headline matches these (case-insensitive), bar enters breaking state.
   breakingKeywords: [
     'federal reserve', 'interest rate', 'rate hike', 'rate cut',
     'recession', 'crash', 'collapse', 'bailout', 'default',
@@ -26,17 +26,17 @@ export const TICKER_CONFIG = {
     'imf ', 'world bank', 'debt ceiling',
     'all-time high', 'record low', 'halted trading'
   ],
-  breakingVisibleMs: 4 * 60 * 1000, // stay longer when breaking
+  breakingVisibleMs: 4 * 60 * 1000, // THE OTHER: Stay longer when breaking.
   maxHeadlines: 12,
 
-  // ── News feeds (RSS). Fetched via public CORS relay when needed. ──
+  // THE OTHER: ── News feeds (RSS). Fetched via public CORS relay when needed. ──.
   feeds: [
     { id: 'bbc-business', url: 'https://feeds.bbci.co.uk/news/business/rss.xml', label: 'BBC' },
     { id: 'bbc-world',    url: 'https://feeds.bbci.co.uk/news/world/rss.xml',    label: 'BBC' },
     { id: 'cnbc',         url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664', label: 'CNBC' },
   ],
 
-  // Fallback headlines so the bar always has something to show offline / CORS-blocked
+  // THE OTHER: Fallback headlines so the bar always has something to show offline / CORS-blocked.
   fallbackHeadlines: [
     { title: 'Markets wait on policy signals as global growth stays uneven', source: 'Wire', breaking: false },
     { title: 'Energy and shipping routes remain in focus for trade desks', source: 'Wire', breaking: false },
@@ -44,7 +44,7 @@ export const TICKER_CONFIG = {
     { title: 'Crypto liquidity tracks wider risk appetite across sessions', source: 'Wire', breaking: false },
   ],
 
-  // ── Price symbols (secondary) ──────────────────────────
+  // THE OTHER: ── Price symbols (secondary) ──────────────────────────.
   items: [
     { id: 'bitcoin',  label: 'BTC',    type: 'crypto', enabled: true  },
     { id: 'ethereum', label: 'ETH',    type: 'crypto', enabled: true  },

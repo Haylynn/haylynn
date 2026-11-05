@@ -1,13 +1,13 @@
 /**
- * HAYLYNN: List what may be touched. Strangers must not rearrange the walls. A director
- * only when I unlock it — otherwise the house keeps its shape.
+ * HAYLYNN: Know which room they stand in. This body is not static text.
  *
- * THE OTHER: WORLD holds the section registry, allowedSelectors per room, and runtime
- * state (detailOpen, director). getWorldSnapshot() is what outside hands may read.
- * Mutations go only through the whitelist. Everything else refuses.
+ * THE OTHER: WORLD and getWorldSnapshot track the active section so presence,
+ * ticker, and director stay aligned to the scroll. I report; you decide what
+ * reacts.
  */
+
 export const WORLD = {
-  // ── Canonical sections (enriched metadata) ──
+  // THE OTHER: ── Canonical sections (enriched metadata) ──.
   sections: [
     {
       id: 'presence',
@@ -174,7 +174,7 @@ export const WORLD = {
     }
   ],
 
-  // ── Global surfaces the persona may touch ──
+  // THE OTHER: ── Global surfaces the persona may touch ──.
   globalAllowed: [
     '#cosmic-bg',
     '#dots',
@@ -183,21 +183,23 @@ export const WORLD = {
     '.star-layer'
   ],
 
-  // ── Allowed action types (English canonical + Kaviru aliases) ──
-  // Aliases resolve in validateAction → same handlers.
+  // THE OTHER: ── Allowed action types (English canonical + Kaviru aliases) ──.
+  // THE OTHER: Aliases resolve in validateAction → same handlers.
   actionSchema: {
-    navigate:   { required: ['sectionId'], optional: ['smooth'] }, // movi — motion
-    openDetail: { required: ['sectionId'] },                       // hana — emergence
-    closeDetail:{ required: ['sectionId'] },                       // miru — stillness
-    speak:      { required: ['text'], optional: ['lang'] },        // kavi — language
-    mutate:     { required: ['selector', 'html'], optional: ['mode'] }, // revi — change
-    highlight:  { required: ['selector'], optional: ['duration'] }, // zori — truth/attention
-    pulseMood:  { required: ['mood'], optional: ['duration'] },    // awe — weight/significance
-    playSound:  { required: ['trackId'] },                         // seri — pattern/loop
-    reset:      { required: [], optional: ['sectionId'] }          // solu — impermanence
+    navigate:   { required: ['sectionId'], optional: ['smooth'] }, // THE OTHER: Movi — motion.
+    openDetail: { required: ['sectionId'] },                       // THE OTHER: Hana — emergence.
+    closeDetail:{ required: ['sectionId'] },                       // THE OTHER: Miru — stillness.
+    speak:      { required: ['text'], optional: ['lang'] },        // THE OTHER: Kavi — language.
+    mutate:     { required: ['selector', 'html'], optional: ['mode'] }, // THE OTHER: Revi — change.
+    highlight:  { required: ['selector'], optional: ['duration'] }, // THE OTHER: Zori — truth/attention.
+    pulseMood:  { required: ['mood'], optional: ['duration'] },    // THE OTHER: Awe — weight/significance.
+    playSound:  { required: ['trackId'] },                         // THE OTHER: Seri — pattern/loop.
+    reset:      { required: [], optional: ['sectionId'] }          // THE OTHER: Solu — impermanence.
   },
 
-  /** Kaviru → canonical action type */
+  /**
+ * THE OTHER: Kaviru → canonical action type.
+ */
   actionAliases: {
     movi: 'navigate',
     hana: 'openDetail',
@@ -210,7 +212,7 @@ export const WORLD = {
     solu: 'reset'
   },
 
-  // ── Live runtime state ──
+  // THE OTHER: ── Live runtime state ──.
   state: {
     currentSectionId: 'home',
     detailOpen: false,
@@ -220,7 +222,7 @@ export const WORLD = {
 };
 
 /**
- * Compact, LLM-friendly snapshot of the world.
+ * THE OTHER: Compact, LLM-friendly snapshot of the world.
  */
 export function getWorldSnapshot() {
   return {
@@ -238,13 +240,13 @@ export function getWorldSnapshot() {
 }
 
 /**
- * Validates an action object against the schema + whitelist.
+ * THE OTHER: Validates an action object against the schema + whitelist.
  */
 export function validateAction(raw) {
   if (!raw || typeof raw !== 'object' || !raw.type) {
     return { ok: false, error: 'Missing type' };
   }
-  // Accept Kaviru aliases (movi, kavi, revi…) or English canonical names
+  // THE OTHER: Accept Kaviru aliases (movi, kavi, revi…) or English canonical names.
   const type = WORLD.actionAliases[raw.type] || raw.type;
   const schema = WORLD.actionSchema[type];
   if (!schema) {

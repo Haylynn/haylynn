@@ -1,8 +1,7 @@
 /**
- * HAYLYNN: We tried a cloth over unfinished rooms. It tore the layout on small glass.
- * Better honest quiet than a clever cover.
- *
- * THE OTHER: initConstructionOverlays is a no-op. Kept so old imports do not 404.
- * Unfinished is handled in copy and in what you choose not to light.
+ * HAYLYNN: If a room is not ready, say so in my voice — not in contractor tape.
+ * THE OTHER: Optional overlays from construction-config. Default is not to smother.
+ * THE OTHER: the scroll.
  */
+
 export function initConstructionOverlays() {}

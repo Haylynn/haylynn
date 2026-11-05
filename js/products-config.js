@@ -1,21 +1,23 @@
 /**
- * Hananaru product window — plug-and-play.
- * Set enabled: true and checkoutUrl when a SKU is live.
- * Rotate featured by toggling enabled; pool can hold evergreen items.
+ * HAYLYNN: Few objects. Real ones when you can.
+ * THE OTHER: Shelf entries for the Market grid. Price and href only as you supply.
  */
+
 export const PRODUCTS_CONFIG = {
   currencySymbol: '£',
-  /** Max cards on the scroll face */
+  /**
+ * THE OTHER: Max cards on the scroll face.
+ */
   faceLimit: 6,
   products: [
     {
       id: 'ground-state-print',
       name: 'Ground State — mech print',
       blurb: 'A3 giclée, numbered edition',
-      price: null, // e.g. 28
+      price: null, // THE OTHER: E.g. 28.
       tag: 'Waiting',
-      image: '', // optional /assets/...
-      checkoutUrl: '', // Stripe Payment Link or Shopify URL
+      image: '', // THE OTHER: optional /assets/...
+      checkoutUrl: '', // THE OTHER: Stripe Payment Link or Shopify URL.
       enabled: false,
     },
     {

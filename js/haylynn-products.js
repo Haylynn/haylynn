@@ -1,6 +1,9 @@
 /**
- * Hananaru — product grid from products-config.js
+ * HAYLYNN: A short shelf. Scarcity is part of the shape.
+ * THE OTHER: Product grid from products-config. No cart brain here — display and.
+ * THE OTHER: links. Checkout lives elsewhere when you wire it.
  */
+
 import { PRODUCTS_CONFIG } from './products-config.js';
 
 function escapeHtml(s) {
@@ -13,7 +16,7 @@ function escapeHtml(s) {
 
 function activeProducts() {
   const list = (PRODUCTS_CONFIG.products || []).filter((p) => p && (p.enabled || p.checkoutUrl));
-  // If none enabled, show placeholders so the shelf still exists
+  // THE OTHER: If nothing is enabled yet, I still show placeholders so the shelf doesn't look like a missing room.
   if (!list.length) {
     return (PRODUCTS_CONFIG.products || []).slice(0, PRODUCTS_CONFIG.faceLimit || 6);
   }

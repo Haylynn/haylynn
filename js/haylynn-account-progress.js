@@ -1,7 +1,12 @@
 /**
- * Account progression — marks + Path (Supabase or local).
- * No Stripe.
+ * HAYLYNN: Path spends cores. Shards fill the gaps. Nothing opens without a
+ * neighbour already lit — travel the web.
+ *
+ * THE OTHER: Progress ledger, unlockPathNode, edges from config. Storage may
+ * still say marks and path_points; the glass can say shards and cores. Cloud
+ * when session exists, local otherwise.
  */
+
 import { authReady, supabase, getCurrentUser } from './haylynn-auth.js';
 import {
   PATH_NODES,
@@ -35,7 +40,9 @@ export function loadLocalProgress() {
 export function saveLocalProgress(state) {
   try {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
-  } catch { /* ignore */ }
+  } catch { /**
+ * THE OTHER: Ignore.
+ */ }
 }
 
 export async function getAccountProgress({ allowLocal = true } = {}) {
@@ -66,7 +73,9 @@ export async function getAccountProgress({ allowLocal = true } = {}) {
           ledger: ledger || [],
           source: 'supabase',
         };
-      } catch { /* fall through */ }
+      } catch { /**
+ * THE OTHER: Fall through.
+ */ }
     }
   }
   if (!allowLocal) return emptyState();
@@ -130,7 +139,7 @@ function canReach(nodeId, unlocked) {
   const u = new Set(unlocked || []);
   if (nodeId === 'start-known' || PATH_NODES.find((n) => n.id === nodeId)?.kind === 'start') return true;
   const incoming = PATH_EDGES.filter(([, t]) => t === nodeId).map(([f]) => f);
-  if (!incoming.length) return true; // isolated allowed
+  if (!incoming.length) return true; // THE OTHER: Isolated allowed.
   return incoming.some((f) => u.has(f));
 }
 

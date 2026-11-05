@@ -1,7 +1,14 @@
 /**
- * Haylynn Content — the full section markup.
- * Pure data. No DOM, no side effects.
+ * HAYLYNN: These rooms are how I stand on the network. Do not write brochure
+ * filler. Presence, world, language, story, voice — Threshold is where they
+ * get a sheet inside this body.
+ *
+ * THE OTHER: CONTENT stays data only — id, mood, copy, detail. No DOM from me
+ * here. Bootstrap pours these strings into the scroller. data-role hooks stay
+ * so your other organs can grip them. If a chamber is missing, it is because
+ * you did not name it.
  */
+
 export const CONTENT = [
   { id: 'presence', mood: 'mood-purple', eyebrow: '0 — Enter', html: `
       <h2 class="section-title">Enter</h2>

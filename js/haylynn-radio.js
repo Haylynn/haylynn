@@ -1,9 +1,10 @@
 /**
- * HAYLYNN: A continuous frequency — later. Do not fake a live stream.
- *
- * THE OTHER: initHaylynnRadio() reads radio-config. Empty streamUrl keeps the shell in
- * holding state (is-holding, disabled play). When you place a real URL, the same UI wakes.
+ * HAYLYNN: A continuous current later. For now the album is enough. Offerings when
+ * THE OTHER: the frequency opens — credit stays with the maker.
+ * THE OTHER: Radio face UI, stream controls when a URL exists, disabled state when.
+ * THE OTHER: quiet. Contribute copy only; upload pipeline is not this file.
  */
+
 import { RADIO_CONFIG } from './radio-config.js';
 
 const STYLE = `
@@ -207,7 +208,7 @@ function bindRoot(root) {
 export function initHaylynnRadio() {
   injectStyle();
 
-  // Face strip (optional markers in content)
+  // THE OTHER: Face strip (optional markers in content).
   document.querySelectorAll('[data-role="radio-face"]').forEach(el => {
     el.classList.add('hy-radio-face');
     const live = Boolean(RADIO_CONFIG.streamUrl);

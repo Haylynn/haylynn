@@ -1,20 +1,21 @@
 /**
- * Account Path — scaled starter web (minors + majors).
- * PoE-style: small nodes cheap, notables cost more, keystones are defining.
- * Costs are cores (shards fill the gap at MARKS_PER_PATH_POINT).
+ * HAYLYNN: Name every node as a door in the house — not as engineering tickets.
+ * THE OTHER: PATH_NODES, edges, costs, kinds. Edit here to grow the web. Runtime.
+ * THE OTHER: only reads; it does not invent majors you left out.
  */
+
 export const STARTING_MARKS = 0;
 export const MARKS_PER_PATH_POINT = 5;
 
 /**
- * kind: 'minor' | 'major' | 'keystone' | 'start'
- * x, y: percent positions in the tree viewport
+ * THE OTHER: Kind: 'minor' | 'major' | 'keystone' | 'start'.
+ * THE OTHER: X, y: percent positions in the tree viewport.
  */
 export const PATH_NODES = [
-  // —— Centre / start ——
+  // THE OTHER: —— Centre / start ——.
   { id: 'start-known', name: 'Known', blurb: 'You are known. The passport stays with the house.', cost: 0, kind: 'start', cluster: 'house', x: 50, y: 48 },
 
-  // —— House cluster (left-centre) ——
+  // THE OTHER: —— House cluster (left-centre) ——.
   { id: 'h-nameplate', name: 'True name', blurb: 'Your name is spoken clearly on the passport.', cost: 1, kind: 'minor', cluster: 'house', x: 38, y: 42 },
   { id: 'h-bio', name: 'Told in full', blurb: 'Room for a longer telling of who you are.', cost: 1, kind: 'minor', cluster: 'house', x: 34, y: 50 },
   { id: 'h-avatar', name: 'Likeness', blurb: 'A face the house can hold beside your name.', cost: 1, kind: 'minor', cluster: 'house', x: 36, y: 58 },
@@ -24,7 +25,7 @@ export const PATH_NODES = [
   { id: 'h-presence', name: 'Felt in glass', blurb: 'A quiet mark on Enter when the house is awake.', cost: 2, kind: 'minor', cluster: 'house', x: 32, y: 62 },
   { id: 'h-passport-major', name: 'Full passport', blurb: 'The passport shows more of who you are in the house.', cost: 4, kind: 'major', cluster: 'house', x: 24, y: 48 },
 
-  // —— Play cluster (top) ——
+  // THE OTHER: —— Play cluster (top) ——.
   { id: 'p-first-steps', name: 'First steps', blurb: 'What you walk in Domains can be seen on the passport.', cost: 1, kind: 'minor', cluster: 'play', x: 50, y: 34 },
   { id: 'p-path-sense', name: 'Path sense', blurb: 'Domains may leave cores when a session ends.', cost: 1, kind: 'minor', cluster: 'play', x: 44, y: 28 },
   { id: 'p-mark-drip', name: 'Shard fall', blurb: 'Shards may gather from milestones in play.', cost: 1, kind: 'minor', cluster: 'play', x: 56, y: 28 },
@@ -37,7 +38,7 @@ export const PATH_NODES = [
   { id: 'p-story-path', name: 'Story path', blurb: 'Domains lean toward story when they can.', cost: 2, kind: 'minor', cluster: 'play', x: 36, y: 24 },
   { id: 'p-key-walker', name: 'Domain walker', blurb: 'Keystone: you lean into Domains; Market favours grow quieter.', cost: 6, kind: 'keystone', cluster: 'play', x: 50, y: 8 },
 
-  // —— Market cluster (right) ——
+  // THE OTHER: —— Market cluster (right) ——.
   { id: 'm-browse', name: 'Browse', blurb: 'The Market remembers what last caught your eye.', cost: 1, kind: 'minor', cluster: 'market', x: 64, y: 42 },
   { id: 'm-watch', name: 'Watch mark', blurb: 'Keep a quiet list of what you watch for.', cost: 1, kind: 'minor', cluster: 'market', x: 70, y: 46 },
   { id: 'm-notify', name: 'Drop whisper', blurb: 'Whispers when something new is laid on the shelf.', cost: 1, kind: 'minor', cluster: 'market', x: 72, y: 54 },
@@ -48,7 +49,7 @@ export const PATH_NODES = [
   { id: 'm-handmade', name: 'Handmade door', blurb: 'A door toward handmade editions when they appear.', cost: 6, kind: 'major', cluster: 'market', x: 84, y: 56 },
   { id: 'm-key-merchant', name: 'Merchant path', blurb: 'Keystone: you lean into the Market; Domain threads grow fewer.', cost: 6, kind: 'keystone', cluster: 'market', x: 90, y: 50 },
 
-  // —— Voice / Chronicle (bottom-left) ——
+  // THE OTHER: —— Voice / Chronicle (bottom-left) ——.
   { id: 'v-listen', name: 'Deep listen', blurb: 'Voice opens a deeper strip when the current runs.', cost: 1, kind: 'minor', cluster: 'voice', x: 38, y: 68 },
   { id: 'v-liner', name: 'Liner notes', blurb: 'Notes beside the music when they are given.', cost: 2, kind: 'minor', cluster: 'voice', x: 32, y: 72 },
   { id: 'v-radio', name: 'Radio queue', blurb: 'A place in line when the radio takes offerings.', cost: 4, kind: 'major', cluster: 'voice', x: 28, y: 78 },
@@ -56,20 +57,22 @@ export const PATH_NODES = [
   { id: 'c-early', name: 'Early page', blurb: 'Pages before they are common, when the story allows.', cost: 4, kind: 'major', cluster: 'chronicle', x: 40, y: 80 },
   { id: 'c-guest', name: 'Guest spine', blurb: 'Leave a title of your own near the spine, when invited.', cost: 3, kind: 'major', cluster: 'chronicle', x: 48, y: 84 },
 
-  // —— Sky / LYMP (bottom-right) ——
+  // THE OTHER: —— Sky / LYMP (bottom-right) ——.
   { id: 's-gallery', name: 'Gallery eye', blurb: 'The Sky looks with you a little longer.', cost: 1, kind: 'minor', cluster: 'sky', x: 62, y: 68 },
   { id: 's-print-1', name: 'Print window', blurb: 'A window for prints when the Sky and LYMP agree.', cost: 4, kind: 'major', cluster: 'sky', x: 70, y: 74 },
   { id: 's-print-2', name: 'Second window', blurb: 'Another opening for prints in the Sky.', cost: 3, kind: 'minor', cluster: 'sky', x: 76, y: 70 },
   { id: 's-cross', name: 'Cross-house', blurb: 'What you earn here may be felt at LYMP when the link is live.', cost: 5, kind: 'major', cluster: 'sky', x: 80, y: 78 },
 
-  // —— Draw / Well ——
+  // THE OTHER: —— Draw / Well ——.
   { id: 'd-history', name: 'Draw memory', blurb: 'The Draw remembers what you pulled, when the house keeps it.', cost: 1, kind: 'minor', cluster: 'draw', x: 56, y: 62 },
   { id: 'd-depth', name: 'Deeper draw', blurb: 'More depth when the cards are read.', cost: 2, kind: 'minor', cluster: 'draw', x: 60, y: 56 },
   { id: 'w-follow', name: 'Well mark', blurb: 'Stand marked beside causes at the Well.', cost: 1, kind: 'minor', cluster: 'well', x: 46, y: 60 },
   { id: 'w-moli', name: 'MOLI eye', blurb: 'MOLI stays in sight when that work is active.', cost: 1, kind: 'minor', cluster: 'well', x: 52, y: 66 },
 ];
 
-/** Edges: [fromId, toId] — travel the web */
+/**
+ * THE OTHER: Edges: [fromId, toId] — travel the web.
+ */
 export const PATH_EDGES = [
   ['start-known', 'h-nameplate'],
   ['start-known', 'h-links'],

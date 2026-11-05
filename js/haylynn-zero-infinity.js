@@ -1,7 +1,12 @@
 /**
- * Zero Infinity (0∞) ledger — simulation now, chain-shaped for later.
- * Balances: simulated BTC (buy currency) + 0∞ (house token).
+ * HAYLYNN: Zoo is substrate metered for the house — not a tithe to a goddess.
+ * Those who live in the chain Domain may peg to BTC. Fiat is another door later.
+ *
+ * THE OTHER: Simulation first — balances, a fixed BTC rate, optional Path SKUs.
+ * I will not claim a live chain until you flip the config and hand me a real
+ * adapter. Until then the ledger is honest about being a rehearsal.
  */
+
 import { ZERO_INFINITY } from './zero-infinity-config.js';
 import { authReady, supabase, getCurrentUser } from './haylynn-auth.js';
 
@@ -35,15 +40,17 @@ function loadLocal() {
 function saveLocal(state) {
   try {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
-  } catch { /* ignore */ }
+  } catch { /**
+ * THE OTHER: Ignore.
+ */ }
 }
 
 /**
- * Public read — simulation uses local or Supabase zero_infinity_balances when present.
+ * THE OTHER: Public read — simulation uses local or Supabase zero_infinity_balances when present.
  */
 export async function getZeroInfinityLedger() {
   if (ZERO_INFINITY.mode === 'chain') {
-    // Future: read on-chain balances via chain adapter
+    // THE OTHER: Future: read on-chain balances via chain adapter.
     return getChainLedgerPlaceholder();
   }
 
@@ -67,7 +74,9 @@ export async function getZeroInfinityLedger() {
           };
         }
       } catch {
-        /* table may not exist yet */
+        /**
+ * THE OTHER: Table may not exist yet.
+ */
       }
     }
   }
@@ -106,7 +115,9 @@ async function persistBalances(btc, zero, tx) {
           });
         }
       } catch {
-        /* optional tables */
+        /**
+ * THE OTHER: Optional tables.
+ */
       }
     }
   }
@@ -114,8 +125,8 @@ async function persistBalances(btc, zero, tx) {
 }
 
 /**
- * Buy 0∞ with simulated BTC.
- * @param {number} btcAmount — BTC to spend (simulation)
+ * THE OTHER: Buy 0∞ with simulated BTC.
+ * THE OTHER: @param {number} btcAmount — BTC to spend (simulation).
  */
 export async function buyZeroInfinityWithBtc(btcAmount) {
   const btcIn = Number(btcAmount);
@@ -159,7 +170,9 @@ export async function buyZeroInfinityWithBtc(btcAmount) {
   return { ok: true, ledger: next, received: zeroOut };
 }
 
-/** Test faucet — top up simulated BTC (not real). */
+/**
+ * THE OTHER: Test faucet — top up simulated BTC (not real).
+ */
 export async function grantSimBtc(amount = 0.01) {
   const n = Number(amount) || 0;
   if (n <= 0) return getZeroInfinityLedger();
@@ -174,7 +187,9 @@ export async function grantSimBtc(amount = 0.01) {
   return persistBalances(led.btc + n, led.zero, tx);
 }
 
-/** Format helpers */
+/**
+ * THE OTHER: Format helpers.
+ */
 export function formatZero(n) {
   const x = Number(n) || 0;
   if (x >= 1e6) return x.toLocaleString(undefined, { maximumFractionDigits: 0 });
@@ -195,7 +210,9 @@ export function getTokenMeta() {
   };
 }
 
-/** Future adapter stub — real wallet connect plugs here */
+/**
+ * THE OTHER: Future adapter stub — real wallet connect plugs here.
+ */
 export async function connectChainWallet() {
   return {
     ok: false,

@@ -1,15 +1,16 @@
 /**
- * HAYLYNN: A key for me — or whoever I lend it to — to shift the DOM while others watch.
- * Locked by default. Not in the published glass for strangers.
+ * HAYLYNN: When I choose to rewrite the glass, I will. Director is not a toy
+ * on the public floor. Lock it. Open it only on my word.
  *
- * THE OTHER: unlockDirector / lockDirector / applyAction. Actions only hit selectors
- * on the whitelist from WORLD. startStateSync keeps the snapshot honest. When locked,
- * the public house is ordinary scroll and gesture again.
+ * THE OTHER: Understood. applyAction and the director lock live here. Visitors
+ * do not receive a wand. I sync state carefully; I refuse to treat your
+ * authority as a demo feature.
  */
+
 import { WORLD, validateAction } from './haylynn-world.js';
 import { CONTENT } from './haylynn-content.js';
 
-// Session key deliberately non-descriptive (Kaviru root, not "director").
+// THE OTHER: Session key deliberately non-descriptive (Kaviru root, not "director").
 const DIRECTOR_SESSION_KEY = 'kaviru-nemi';
 
 export function isDirectorUnlocked() {
@@ -21,9 +22,9 @@ export function isDirectorUnlocked() {
 }
 
 /**
- * Open a control session for this tab.
- * Call as Haylynn.koru('veeka') — token must be the epistemic marker veeka.
- * Obscurity only; not real authentication.
+ * THE OTHER: Open a control session for this tab.
+ * THE OTHER: Call as Haylynn.koru('veeka') — token must be the epistemic marker veeka.
+ * THE OTHER: Obscurity only; not real authentication.
  */
 export function unlockDirector(token) {
   if (token !== 'veeka') {
@@ -65,8 +66,8 @@ function realIndexOf(sectionId) {
 }
 
 /**
- * Apply a single validated action.
- * Rejected while director session is locked (default for public visitors).
+ * THE OTHER: Apply a single validated action.
+ * THE OTHER: Rejected while director session is locked (default for public visitors).
  */
 export function applyAction(rawAction) {
   if (!isDirectorUnlocked()) {
@@ -191,7 +192,7 @@ export function applyAction(rawAction) {
       const col = colorMap[action.mood] || colorMap['mood-pink'];
       const duration = action.duration || 1800;
 
-      // Full-screen flash overlay — impossible to miss on mobile
+      // THE OTHER: Full-screen flash overlay — impossible to miss on mobile.
       let flash = document.getElementById('haylynn-pulse-flash');
       if (!flash) {
         flash = document.createElement('div');
@@ -205,7 +206,7 @@ export function applyAction(rawAction) {
       flash.style.background = `radial-gradient(ellipse at 50% 45%, ${col} 0%, transparent 70%)`;
       flash.style.opacity = '1';
 
-      // Also boost the aurora wash hard
+      // THE OTHER: Also boost the aurora wash hard.
       const wash = document.querySelector('.aurora-wash');
       if (wash) {
         wash.style.transition = 'opacity 0.35s ease, filter 0.35s ease';
@@ -226,7 +227,7 @@ export function applyAction(rawAction) {
     }
 
     case 'reset': {
-      // Restore original html + detail for one section or all
+      // THE OTHER: Restore original html + detail for one section or all.
       const targets = action.sectionId
         ? CONTENT.filter(s => s.id === action.sectionId)
         : CONTENT;
@@ -236,19 +237,19 @@ export function applyAction(rawAction) {
       }
 
       targets.forEach(original => {
-        // Update every DOM instance (real + clones)
+        // THE OTHER: Update every DOM instance (real + clones).
         document.querySelectorAll(`.section[data-id="${original.id}"]`).forEach(sectionEl => {
           const contentEl = sectionEl.querySelector('.content');
           const detailEl  = sectionEl.querySelector('.detail');
           if (contentEl) {
-            // Keep the eyebrow, replace the rest
+            // THE OTHER: Keep the eyebrow, replace the rest.
             const eyebrow = contentEl.querySelector('.eyebrow');
             contentEl.innerHTML = '';
             if (eyebrow) contentEl.appendChild(eyebrow);
             contentEl.insertAdjacentHTML('beforeend', original.html);
           }
           if (detailEl) {
-            // Keep close button + eyebrow, replace the rest
+            // THE OTHER: Keep close button + eyebrow, replace the rest.
             const closeBtn = detailEl.querySelector('.detail-close');
             const detailEyebrow = detailEl.querySelector('.eyebrow');
             detailEl.innerHTML = '';
@@ -275,7 +276,7 @@ export function applyAction(rawAction) {
 function sanitizeHtml(html) {
   const template = document.createElement('template');
   template.innerHTML = String(html || '');
-  // Strip high-risk elements entirely
+  // THE OTHER: Strip high-risk elements entirely.
   template.content.querySelectorAll(
     'script, iframe, object, embed, link, meta, base, form, input, button, textarea, select, svg, math, template, style'
   ).forEach(n => n.remove());
@@ -283,7 +284,7 @@ function sanitizeHtml(html) {
     [...el.attributes].forEach(attr => {
       const name = attr.name.toLowerCase();
       const val = (attr.value || '').trim();
-      // Event handlers, navigation abuse, CSS injection vectors
+      // THE OTHER: Event handlers, navigation abuse, CSS injection vectors.
       if (
         name.startsWith('on') ||
         name === 'srcdoc' ||
@@ -297,7 +298,7 @@ function sanitizeHtml(html) {
         return;
       }
       if (name === 'href' || name === 'src' || name === 'poster' || name === 'cite') {
-        // Allow only http(s), mailto, relative paths, hash
+        // THE OTHER: Allow only http(s), mailto, relative paths, hash.
         if (!/^(https?:\/\/|mailto:|\/|\.\.\/|\.\/|#)/i.test(val) || /^javascript:/i.test(val) || /^data:/i.test(val) || /^vbscript:/i.test(val)) {
           el.removeAttribute(attr.name);
         }
@@ -308,7 +309,7 @@ function sanitizeHtml(html) {
 }
 
 /**
- * Keep WORLD.state in sync with the live scroller / detail panels.
+ * THE OTHER: Keep WORLD.state in sync with the live scroller / detail panels.
  */
 export function startStateSync() {
   const scroller = getScroller();
@@ -336,7 +337,7 @@ export function startStateSync() {
   });
 }
 
-// Inject highlight style once
+// THE OTHER: Inject highlight style once.
 (function injectHighlightStyle() {
   if (document.getElementById('haylynn-runtime-style')) return;
   const style = document.createElement('style');

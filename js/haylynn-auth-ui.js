@@ -1,7 +1,10 @@
 /**
- * Auth badge + modal. Signup includes up to N section tags (rooms).
- * Offline: "Preview member" uses local mock so Threshold can be tested pre-Supabase.
+ * HAYLYNN: Sign in is a door, not a billboard. Keep it out of the way until they
+ * THE OTHER: choose it.
+ * THE OTHER: Badge, modal, sign-in / sign-up / OAuth hooks against haylynn-auth.
+ * THE OTHER: Errors surface as plain text. I do not log secrets into the glass.
  */
+
 import {
   signUp,
   signIn,
@@ -173,7 +176,7 @@ export async function initAuthUI() {
   }
   const card = modal.querySelector('[data-role="auth-card"]');
 
-  let mode = 'signin'; // signin | signup
+  let mode = 'signin'; // THE OTHER: Signin | signup.
   let selectedTags = [];
 
   function slots() {
@@ -301,7 +304,9 @@ export async function initAuthUI() {
         try {
           await saveProfile({ section_tags: tags });
         } catch {
-          /* profile row may lag trigger; tags kept locally until next save */
+          /**
+ * THE OTHER: Profile row may lag trigger; tags kept locally until next save.
+ */
         }
       } else {
         const { error } = await signIn(email, password);

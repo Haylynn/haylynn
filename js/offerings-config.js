@@ -1,10 +1,8 @@
 /**
- * HAYLYNN: List the causes. MOLI is UK-wide, Scotland first, not registered yet —
- * say so. Empty payment strings mean “not open,” not a broken button.
- *
- * THE OTHER: causes[] with title, blurb, body, goal, payments{stripe,gofundme,paypal},
- * moreHref, featured. active:false hides a card without deleting the idea.
+ * HAYLYNN: Name each ask. Scotland, roads, the house — say which.
+ * THE OTHER: Cause list, links, progress placeholders. Well UI maps this 1:1.
  */
+
 export const OFFERINGS_CONFIG = {
   faceLine:
     'Support this house, or another work that should stay in the world. Nothing here is required to walk the scroll.',

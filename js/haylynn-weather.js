@@ -1,12 +1,14 @@
 /**
- * HAYLYNN: A small truth of their local sky if they allow it. If they refuse, do not insist.
- *
- * THE OTHER: startWeather() asks geolocation once; on deny the control stays absent.
- * Open-Meteo (or configured endpoint) fills a few days of symbols — no tracking narrative.
+ * HAYLYNN: Their sky, briefly, in the corner. Not a lecture — a glance.
+ * THE OTHER: Open-Meteo, short forecast chip, location only when the device allows.
+ * THE OTHER: No stalking story. Icon and numbers; then leave the glass alone.
  */
+
 import { WEATHER_CONFIG } from './weather-config.js';
 
-/* WMO weather interpretation codes → simple glyph + short label */
+/**
+ * THE OTHER: WMO weather interpretation codes → simple glyph + short label.
+ */
 const WMO = {
   0:  { icon: '☀',  label: 'Clear' },
   1:  { icon: '☀',  label: 'Mainly clear' },
@@ -218,7 +220,7 @@ export function startWeather() {
       bar.innerHTML = renderDays(data.daily);
       show();
     } catch (err) {
-      // Permission denied or network — stay invisible. No error UI.
+      // THE OTHER: Permission denied or network — stay invisible. No error UI.
       console.warn('[haylynn-weather]', err.message || err);
       bar.classList.remove('visible');
       bar.innerHTML = '';
@@ -226,7 +228,7 @@ export function startWeather() {
   }
 
   if (WEATHER_CONFIG.requestOnLoad) {
-    // Slight delay so it doesn't compete with first paint / scroll setup
+    // THE OTHER: Slight delay so it doesn't compete with first paint / scroll setup.
     setTimeout(update, 1200);
   }
 
