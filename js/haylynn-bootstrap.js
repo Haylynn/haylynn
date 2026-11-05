@@ -28,6 +28,7 @@ import { initHaylynnAdventure } from './haylynn-adventure.js';
 import { initHaylynnOfferings } from './haylynn-offerings.js';
 import { initHaylynnProducts } from './haylynn-products.js';
 import { initAuthUI } from './haylynn-auth-ui.js';
+import { initHaylynnIss } from './haylynn-iss.js';
 
 // ── Star field ────────────────────────────────────────────────────────
 function paintStars(el, count, size, alpha) {
@@ -90,6 +91,7 @@ initHaylynnAdventure();
 initHaylynnOfferings();
 initHaylynnProducts();
 initAuthUI();
+  initHaylynnIss();
 
 // Dot nav
 const dotColors = { 'mood-green': 'var(--green)', 'mood-pink': 'var(--pink)', 'mood-purple': 'var(--purple)' };
