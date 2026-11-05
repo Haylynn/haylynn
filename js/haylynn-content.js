@@ -164,11 +164,73 @@ export const CONTENT = [
 
   { id: 'lymp', mood: 'mood-green', eyebrow: 'VIII — Sky', html: `
       <h2 class="section-title">Sky</h2>
-      <p>Earth and dark sky through LYMP — Leave Your Mark Photography. How this Domain looks from the ground while she looks from outside.</p>`,
+      <p>Windows on the Domain: ground all-sky, the Sun, Earth from orbit, aurora, a live sky map — and LYMP, her preferred human eye on stills and dark-sky work. Open More for the feeds.</p>
+`,
     detail: `
       <h2>Sky</h2>
-      <p>Preferred eye for the house. Prints live with LYMP.</p>
-      <a class="view-full-link" href="./lymp.html">Sky page ↗</a>` },
+      <p>Live instruments and one photographer. LYMP holds the stills and films; the feeds below are public eyes on the same void.</p>
+
+      <div class="detail-list" style="margin-bottom:1.25rem">
+        <div class="item"><span class="h">Ground</span><span class="d">All-sky from dark sites — the ceiling of the Domain.</span></div>
+        <div class="item"><span class="h">Sun</span><span class="d">SDO — the star that lights and storms this place.</span></div>
+        <div class="item"><span class="h">Orbit</span><span class="d">ISS external view — Earth as a passing surface.</span></div>
+        <div class="item"><span class="h">Aurora</span><span class="d">NOAA space weather when the magnetosphere answers.</span></div>
+        <div class="item"><span class="h">Map</span><span class="d">Stellarium Web — where objects sit right now.</span></div>
+        <div class="item"><span class="h">LYMP</span><span class="d">Leave Your Mark Photography — her chosen human archive.</span></div>
+      </div>
+
+      <h3 style="margin:1.2rem 0 0.45rem;font-weight:400;font-style:italic">1 · Live all-sky</h3>
+      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">Observatory outreach cams (ESO). Continuous ground view — not a LYMP camera.</p>
+      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.28);background:#000">
+        <iframe title="ESO outreach webcams" src="https://www.eso.org/public/outreach/webcams/" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:min(52vw,300px);border:0;background:#000"></iframe>
+      </div>
+
+      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">2 · The Sun · SDO</h3>
+      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">NASA Solar Dynamics Observatory — latest AIA imagery (refreshes on the server side).</p>
+      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(236,90,160,0.28);background:#000;text-align:center">
+        <img alt="SDO solar imagery" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0334.jpg" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 auto"/>
+      </div>
+      <p style="margin-top:0.4rem;font-size:0.8rem">
+        <a class="view-full-link" href="https://sdo.gsfc.nasa.gov/data/" rel="noopener" target="_blank">SDO data ↗</a>
+        <a class="view-full-link" href="https://www.youtube.com/@NASASDO/videos" rel="noopener" target="_blank">SDO video ↗</a>
+      </p>
+
+      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">3 · Earth from orbit · ISS</h3>
+      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">Official NASA external HD view when the stream is live. May show recorded loops when the camera is offline.</p>
+      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(138,92,240,0.3);background:#000">
+        <iframe title="NASA ISS live Earth view" src="https://www.youtube.com/embed/ROboUHfPUrU?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:min(56vw,340px);border:0"></iframe>
+      </div>
+      <p style="margin-top:0.4rem;font-size:0.8rem">
+        <a class="view-full-link" href="https://www.nasa.gov/nasalive/" rel="noopener" target="_blank">NASA Live ↗</a>
+        <a class="view-full-link" href="https://www.youtube.com/@Sen/live" rel="noopener" target="_blank">Sen 4K ISS ↗</a>
+      </p>
+
+      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">4 · Aurora &amp; space weather</h3>
+      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">NOAA SWPC — northern hemisphere aurora product.</p>
+      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.28);background:#0a0a12;text-align:center">
+        <img alt="NOAA aurora forecast" src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 auto"/>
+      </div>
+      <p style="margin-top:0.4rem;font-size:0.8rem">
+        <a class="view-full-link" href="https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" rel="noopener" target="_blank">NOAA aurora ↗</a>
+        <a class="view-full-link" href="https://www.swpc.noaa.gov/" rel="noopener" target="_blank">Space Weather Prediction Center ↗</a>
+      </p>
+
+      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">5 · Sky map · now</h3>
+      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">Stellarium Web — interactive chart of the sky as computed for this moment.</p>
+      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(138,92,240,0.28);background:#000">
+        <iframe title="Stellarium Web" src="https://stellarium-web.org/" loading="lazy" style="width:100%;height:min(70vw,420px);border:0;background:#000"></iframe>
+      </div>
+
+      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">6 · LYMP — her photographer</h3>
+      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">Leave Your Mark Photography. Stills and films of Earth and dark sky — the human archive this house prefers. Instruments show the void; LYMP frames it.</p>
+      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.35);background:#0a0a12;min-height:260px">
+        <iframe title="LYMP — Leave Your Mark Photography" src="https://leaveyourmark.photography/" loading="lazy" style="width:100%;height:min(70vw,400px);border:0;background:#0a0a12"></iframe>
+      </div>
+      <p style="margin-top:0.55rem">
+        <a class="view-full-link" href="https://leaveyourmark.photography/" rel="noopener" target="_blank">Open LYMP gallery ↗</a>
+        <a class="view-full-link" href="./lymp.html">Full Sky page ↗</a>
+      </p>
+` },
 
   { id: 'threshold', mood: 'mood-purple', eyebrow: 'IX — Threshold', html: `
       <h2 class="section-title">Threshold</h2>
