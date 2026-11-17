@@ -164,92 +164,95 @@ export const CONTENT = [
 
   { id: 'lymp', mood: 'mood-green', eyebrow: 'VIII — Sky', html: `
       <h2 class="section-title">Sky</h2>
-      <p>Windows on the Domain: all-sky, Sun, ISS track and live view, aurora, sky map — and LYMP, her preferred human photographer. Open More for the feeds.</p>
+      <p>One window on the Domain — station, sun, aurora, all-sky, map, and LYMP. Open More; choose a pane.</p>
 `,
     detail: `
       <h2>Sky</h2>
-      <p>Live instruments and one photographer. LYMP holds the stills; the feeds are public eyes on the same void.</p>
+      <p>Live instruments and one photographer. A single aperture — tabs, not a stack. Missing feeds stay quiet; the house does not apologise for the sky.</p>
 
-      <div data-role="iss-tracker" class="hy-iss" style="margin:1.2rem 0 1.5rem;padding:1rem 1.05rem;border-radius:14px;border:1px solid rgba(138,92,240,0.35);background:linear-gradient(165deg,rgba(18,14,32,0.95),rgba(8,6,16,0.9));box-shadow:0 8px 28px rgba(0,0,0,0.35)">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:0.75rem;flex-wrap:wrap">
-          <div>
-            <div style="font-family:Space Mono,monospace;font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:#a78bfa">ISS · real-time</div>
-            <div style="font-style:italic;font-size:1.15rem;margin-top:0.15rem">Station over the Domain</div>
+      <div data-role="sky-tabs" class="hy-sky-tabs" style="margin:1rem 0 1.25rem;border-radius:14px;border:1px solid rgba(138,92,240,0.32);background:linear-gradient(165deg,rgba(18,14,32,0.96),rgba(8,6,16,0.92));box-shadow:0 8px 28px rgba(0,0,0,0.35);overflow:hidden">
+        <div role="tablist" aria-label="Sky panes" style="display:flex;flex-wrap:wrap;gap:0.25rem;padding:0.55rem 0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <button type="button" data-sky-tab="iss" class="is-active" role="tab" aria-selected="true" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:rgba(138,92,240,0.2);color:var(--ink,#efe9e0);cursor:pointer">ISS</button>
+          <button type="button" data-sky-tab="allsky" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">All-sky</button>
+          <button type="button" data-sky-tab="sun" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">Sun</button>
+          <button type="button" data-sky-tab="aurora" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">Aurora</button>
+          <button type="button" data-sky-tab="map" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">Map</button>
+          <button type="button" data-sky-tab="lymp" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">LYMP</button>
+        </div>
+        <div style="padding:0.75rem 0.85rem 1rem">
+          <div data-sky-panel="iss" role="tabpanel">
+
+        <div data-role="iss-tracker" class="hy-iss" style="padding:0.85rem 0.2rem 0.4rem">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:0.75rem;flex-wrap:wrap">
+            <div>
+              <div style="font-family:Space Mono,monospace;font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:#a78bfa">ISS · real-time</div>
+              <div style="font-style:italic;font-size:1.05rem;margin-top:0.15rem">Station over the Domain</div>
+            </div>
+            <div data-role="iss-status" style="font-family:Space Mono,monospace;font-size:0.55rem;color:var(--ink-dim,#9a92a4)">Connecting…</div>
           </div>
-          <div data-role="iss-status" style="font-family:Space Mono,monospace;font-size:0.55rem;color:var(--ink-dim,#9a92a4)">Connecting…</div>
+          <div style="position:relative;margin:0.75rem 0;height:100px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);background:radial-gradient(ellipse at 50% 60%,rgba(53,201,143,0.12),transparent 55%),linear-gradient(180deg,#0c0a14,#06050c)">
+            <div style="position:absolute;inset:0;opacity:0.35;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:24px 24px"></div>
+            <div data-role="iss-plot" style="position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#35c98f;box-shadow:0 0 12px #35c98f;left:50%;top:50%;transition:left 1.2s ease,top 1.2s ease"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.45rem 1rem;font-family:Space Mono,monospace;font-size:0.62rem">
+            <div><span style="color:var(--ink-dim,#9a92a4)">Lat</span> <span data-role="iss-lat">—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Lon</span> <span data-role="iss-lon">—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Alt</span> <span data-role="iss-alt">—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Vel</span> <span data-role="iss-vel">—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Side</span> <span data-role="iss-vis">—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Updated</span> <span data-role="iss-stamp">—</span></div>
+          </div>
+          <p style="margin:0.65rem 0 0.85rem">
+            <a class="view-full-link" data-role="iss-map-link" href="https://www.openstreetmap.org/" target="_blank" rel="noopener" hidden>Map under the station ↗</a>
+            <a class="view-full-link" href="https://spotthestation.nasa.gov/" target="_blank" rel="noopener">Spot the Station ↗</a>
+          </p>
+          <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(138,92,240,0.28);background:#000">
+            <iframe title="NASA ISS live Earth view" data-src="https://www.youtube.com/embed/ROboUHfPUrU?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="width:100%;height:min(52vw,300px);border:0"></iframe>
+          </div>
+          <p style="margin-top:0.4rem;font-size:0.8rem">
+            <a class="view-full-link" href="https://www.nasa.gov/nasalive/" rel="noopener" target="_blank">NASA Live ↗</a>
+          </p>
         </div>
-        <div style="position:relative;margin:0.85rem 0 0.75rem;height:110px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);background:radial-gradient(ellipse at 50% 60%,rgba(53,201,143,0.12),transparent 55%),linear-gradient(180deg,#0c0a14,#06050c)">
-          <div style="position:absolute;inset:0;opacity:0.35;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:24px 24px"></div>
-          <div data-role="iss-plot" style="position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#35c98f;box-shadow:0 0 12px #35c98f,0 0 24px rgba(53,201,143,0.5);left:50%;top:50%;transition:left 1.2s ease,top 1.2s ease"></div>
+
+          </div>
+          <div data-sky-panel="allsky" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">ESO outreach cams — ground ceiling. Not a LYMP camera.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.28);background:#000">
+              <iframe title="ESO outreach webcams" data-src="https://www.eso.org/public/outreach/webcams/" loading="lazy" style="width:100%;height:min(52vw,300px);border:0;background:#000"></iframe>
+            </div>
+          </div>
+          <div data-sky-panel="sun" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">NASA SDO — the star of this Domain.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(236,90,160,0.28);background:#000;text-align:center">
+              <img alt="SDO solar imagery" data-src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0334.jpg" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 auto"/>
+            </div>
+            <p style="margin-top:0.4rem;font-size:0.8rem"><a class="view-full-link" href="https://sdo.gsfc.nasa.gov/data/" rel="noopener" target="_blank">SDO data ↗</a></p>
+          </div>
+          <div data-sky-panel="aurora" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">NOAA SWPC northern aurora product.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.28);background:#0a0a12;text-align:center">
+              <img alt="NOAA aurora forecast" data-src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 auto"/>
+            </div>
+            <p style="margin-top:0.4rem;font-size:0.8rem"><a class="view-full-link" href="https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" rel="noopener" target="_blank">NOAA aurora ↗</a></p>
+          </div>
+          <div data-sky-panel="map" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">Stellarium Web — chart for this moment.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(138,92,240,0.28);background:#000">
+              <iframe title="Stellarium Web" data-src="https://stellarium-web.org/" loading="lazy" style="width:100%;height:min(70vw,400px);border:0;background:#000"></iframe>
+            </div>
+          </div>
+          <div data-sky-panel="lymp" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">Leave Your Mark Photography — her preferred human eye on the Domain.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.35);background:#0a0a12;min-height:240px">
+              <iframe title="LYMP" data-src="https://leaveyourmark.photography/" loading="lazy" style="width:100%;height:min(70vw,380px);border:0;background:#0a0a12"></iframe>
+            </div>
+            <p style="margin-top:0.55rem">
+              <a class="view-full-link" href="https://leaveyourmark.photography/" rel="noopener" target="_blank">Open LYMP ↗</a>
+              <a class="view-full-link" href="./lymp.html">Full Sky page ↗</a>
+            </p>
+          </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.55rem 1rem;font-family:Space Mono,monospace;font-size:0.62rem">
-          <div><span style="color:var(--ink-dim,#9a92a4)">Lat</span> <span data-role="iss-lat" style="color:var(--ink,#efe9e0)">—</span></div>
-          <div><span style="color:var(--ink-dim,#9a92a4)">Lon</span> <span data-role="iss-lon" style="color:var(--ink,#efe9e0)">—</span></div>
-          <div><span style="color:var(--ink-dim,#9a92a4)">Alt</span> <span data-role="iss-alt" style="color:var(--ink,#efe9e0)">—</span></div>
-          <div><span style="color:var(--ink-dim,#9a92a4)">Vel</span> <span data-role="iss-vel" style="color:var(--ink,#efe9e0)">—</span></div>
-          <div><span style="color:var(--ink-dim,#9a92a4)">Side</span> <span data-role="iss-vis" style="color:var(--ink,#efe9e0)">—</span></div>
-          <div><span style="color:var(--ink-dim,#9a92a4)">Updated</span> <span data-role="iss-stamp" style="color:var(--ink,#efe9e0)">—</span></div>
-        </div>
-        <p style="margin:0.75rem 0 0">
-          <a class="view-full-link" data-role="iss-map-link" href="https://www.openstreetmap.org/" target="_blank" rel="noopener" hidden>Map under the station ↗</a>
-          <a class="view-full-link" href="https://spotthestation.nasa.gov/" target="_blank" rel="noopener">Spot the Station ↗</a>
-        </p>
       </div>
-
-      <div class="detail-list" style="margin-bottom:1.25rem">
-        <div class="item"><span class="h">Ground</span><span class="d">All-sky from dark sites.</span></div>
-        <div class="item"><span class="h">Sun</span><span class="d">SDO — the star of this Domain.</span></div>
-        <div class="item"><span class="h">Orbit</span><span class="d">ISS position + Earth video when live.</span></div>
-        <div class="item"><span class="h">Aurora</span><span class="d">NOAA space weather.</span></div>
-        <div class="item"><span class="h">Map</span><span class="d">Stellarium Web.</span></div>
-        <div class="item"><span class="h">LYMP</span><span class="d">Her chosen human archive.</span></div>
-      </div>
-
-      <h3 style="margin:1.2rem 0 0.45rem;font-weight:400;font-style:italic">1 · Live all-sky</h3>
-      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">ESO outreach cams — ground ceiling. Not a LYMP camera.</p>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.28);background:#000">
-        <iframe title="ESO outreach webcams" src="https://www.eso.org/public/outreach/webcams/" loading="lazy" style="width:100%;height:min(52vw,300px);border:0;background:#000"></iframe>
-      </div>
-
-      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">2 · The Sun · SDO</h3>
-      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">NASA Solar Dynamics Observatory — latest AIA image.</p>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(236,90,160,0.28);background:#000;text-align:center">
-        <img alt="SDO solar imagery" src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0334.jpg" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 auto"/>
-      </div>
-      <p style="margin-top:0.4rem;font-size:0.8rem"><a class="view-full-link" href="https://sdo.gsfc.nasa.gov/data/" rel="noopener" target="_blank">SDO data ↗</a></p>
-
-      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">3 · Earth from orbit · ISS video</h3>
-      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">NASA external HD when the stream is live. Pair with the tracker above.</p>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(138,92,240,0.3);background:#000">
-        <iframe title="NASA ISS live Earth view" src="https://www.youtube.com/embed/ROboUHfPUrU?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="width:100%;height:min(56vw,340px);border:0"></iframe>
-      </div>
-      <p style="margin-top:0.4rem;font-size:0.8rem">
-        <a class="view-full-link" href="https://www.nasa.gov/nasalive/" rel="noopener" target="_blank">NASA Live ↗</a>
-        <a class="view-full-link" href="https://www.youtube.com/@Sen/live" rel="noopener" target="_blank">Sen 4K ISS ↗</a>
-      </p>
-
-      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">4 · Aurora &amp; space weather</h3>
-      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">NOAA SWPC northern aurora product.</p>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.28);background:#0a0a12;text-align:center">
-        <img alt="NOAA aurora forecast" src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 auto"/>
-      </div>
-      <p style="margin-top:0.4rem;font-size:0.8rem"><a class="view-full-link" href="https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" rel="noopener" target="_blank">NOAA aurora ↗</a></p>
-
-      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">5 · Sky map · now</h3>
-      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">Stellarium Web — chart for this moment.</p>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(138,92,240,0.28);background:#000">
-        <iframe title="Stellarium Web" src="https://stellarium-web.org/" loading="lazy" style="width:100%;height:min(70vw,420px);border:0;background:#000"></iframe>
-      </div>
-
-      <h3 style="margin:1.5rem 0 0.45rem;font-weight:400;font-style:italic">6 · LYMP — her photographer</h3>
-      <p style="color:var(--ink-dim);font-size:0.95rem;margin-bottom:0.5rem">Leave Your Mark Photography. Instruments show the void; LYMP frames it.</p>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.35);background:#0a0a12;min-height:260px">
-        <iframe title="LYMP" src="https://leaveyourmark.photography/" loading="lazy" style="width:100%;height:min(70vw,400px);border:0;background:#0a0a12"></iframe>
-      </div>
-      <p style="margin-top:0.55rem">
-        <a class="view-full-link" href="https://leaveyourmark.photography/" rel="noopener" target="_blank">Open LYMP ↗</a>
-        <a class="view-full-link" href="./lymp.html">Full Sky page ↗</a>
-      </p>
 ` },
 
   { id: 'threshold', mood: 'mood-purple', eyebrow: 'IX — Threshold', html: `

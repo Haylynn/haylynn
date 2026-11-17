@@ -1,8 +1,10 @@
 /**
  * HAYLYNN: Show where the station walks the Domain — a moving point, not a myth.
+ * One window for the sky. Tabs, not a stack of boxes. I choose which eye is open.
  *
- * THE OTHER: Poll where the ISS is (wheretheiss.at), paint lat/lon/alt/velocity into
- * [data-role="iss-tracker"] roots. Quiet failures. No key required.
+ * THE OTHER: Poll ISS (wheretheiss.at). Paint lat/lon/alt/velocity into
+ * [data-role="iss-tracker"] roots. Sky panes use [data-role="sky-tabs"] —
+ * one panel visible, lazy src on first open. Quiet failures. No key required.
  */
 
 const ISS_URL = 'https://api.wheretheiss.at/v1/satellites/25544';
@@ -18,7 +20,6 @@ function fmt(n, d = 2) {
 }
 
 function mapUrl(lat, lon) {
-  // OpenStreetMap view centered on ISS
   const latf = Number(lat).toFixed(4);
   const lonf = Number(lon).toFixed(4);
   return `https://www.openstreetmap.org/?mlat=${latf}&mlon=${lonf}#map=${MAP_ZOOM}/${latf}/${lonf}`;
@@ -33,6 +34,7 @@ function renderRoot(root, data, err) {
   const visEl = root.querySelector('[data-role="iss-vis"]');
   const link = root.querySelector('[data-role="iss-map-link"]');
   const stamp = root.querySelector('[data-role="iss-stamp"]');
+  const plot = root.querySelector('[data-role="iss-plot"]');
 
   if (err) {
     if (status) status.textContent = 'Signal quiet — retrying…';
@@ -55,11 +57,12 @@ function renderRoot(root, data, err) {
   }
   if (stamp) {
     const t = data.timestamp ? new Date(data.timestamp * 1000) : new Date();
-    stamp.textContent = t.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    stamp.textContent = t.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
   }
-
-  // optional mini “dot” on a simple equirect projection box
-  const plot = root.querySelector('[data-role="iss-plot"]');
   if (plot) {
     const x = ((Number(data.longitude) + 180) / 360) * 100;
     const y = ((90 - Number(data.latitude)) / 180) * 100;
@@ -83,13 +86,61 @@ async function tick() {
   }
 }
 
+/**
+ * HAYLYNN: One aperture. I do not want six mouths open at once on a small glass.
+ * THE OTHER: Tabs. Activate panel, lazy-load data-src into iframe/img once.
+ */
+function activateSkyTab(root, id) {
+  const buttons = root.querySelectorAll('[data-sky-tab]');
+  const panels = root.querySelectorAll('[data-sky-panel]');
+  buttons.forEach((btn) => {
+    const on = btn.getAttribute('data-sky-tab') === id;
+    btn.classList.toggle('is-active', on);
+    btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    btn.style.background = on ? 'rgba(138,92,240,0.22)' : 'transparent';
+    btn.style.color = on ? 'var(--ink, #efe9e0)' : 'var(--ink-dim, #9a92a4)';
+  });
+  panels.forEach((panel) => {
+    const on = panel.getAttribute('data-sky-panel') === id;
+    panel.hidden = !on;
+    if (on) {
+      panel.querySelectorAll('[data-src]').forEach((el) => {
+        if (!el.getAttribute('src')) {
+          el.setAttribute('src', el.getAttribute('data-src'));
+        }
+      });
+    }
+  });
+}
+
+function bindSkyTabs(root) {
+  if (root.dataset.skyBound === '1') return;
+  root.dataset.skyBound = '1';
+  const buttons = root.querySelectorAll('[data-sky-tab]');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activateSkyTab(root, btn.getAttribute('data-sky-tab'));
+    });
+  });
+  const initial =
+    root.querySelector('[data-sky-tab].is-active')?.getAttribute('data-sky-tab') ||
+    buttons[0]?.getAttribute('data-sky-tab');
+  if (initial) activateSkyTab(root, initial);
+}
+
+function scanSkyTabs() {
+  document.querySelectorAll('[data-role="sky-tabs"]').forEach(bindSkyTabs);
+}
+
 export function initHaylynnIss() {
-  if (timer) return;
-  tick();
-  timer = setInterval(tick, POLL_MS);
-  // re-scan when detail panels open
+  if (!timer) {
+    tick();
+    timer = setInterval(tick, POLL_MS);
+  }
+  scanSkyTabs();
   const obs = new MutationObserver(() => {
     if (document.querySelector('[data-role="iss-tracker"]')) tick();
+    scanSkyTabs();
   });
   obs.observe(document.body, { childList: true, subtree: true });
 }
