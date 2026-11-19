@@ -82,16 +82,19 @@ const domList = [
   { ...CONTENT[0], cloneOf: 0 },
 ];
 scroller.innerHTML = domList.map((s, i) => sectionMarkup(s, i)).join('');
-initHaylynnPlayer();
-initHaylynnDraw();
-initHaylynnRadio();
-initHaylynnPresence();
-initHaylynnMembers();
-initHaylynnAdventure();
-initHaylynnOfferings();
-initHaylynnProducts();
-initAuthUI();
-  initHaylynnIss();
+function safeInit(name, fn) {
+  try { fn(); } catch (err) { console.warn('[Haylynn] init failed:', name, err); }
+}
+safeInit('player', initHaylynnPlayer);
+safeInit('draw', initHaylynnDraw);
+safeInit('radio', initHaylynnRadio);
+safeInit('presence', initHaylynnPresence);
+safeInit('members', initHaylynnMembers);
+safeInit('adventure', initHaylynnAdventure);
+safeInit('offerings', initHaylynnOfferings);
+safeInit('products', initHaylynnProducts);
+safeInit('authUI', initAuthUI);
+safeInit('iss', initHaylynnIss);
 
 // Dot nav
 const dotColors = { 'mood-green': 'var(--green)', 'mood-pink': 'var(--pink)', 'mood-purple': 'var(--purple)' };

@@ -25,7 +25,15 @@ export const supabase = authReady
 
 export async function signUp(email, password) {
   if (!supabase) return { data: null, error: { message: 'Sign-in is closed for now.' } };
-  return supabase.auth.signUp({ email, password });
+  const emailRedirectTo =
+    (typeof window !== 'undefined' && window.location?.origin
+      ? window.location.origin + (window.location.pathname.replace(/\/[^/]*$/, '/') || '/')
+      : 'https://haylynn.github.io/haylynn/');
+  return supabase.auth.signUp({
+    email,
+    password,
+    options: { emailRedirectTo },
+  });
 }
 
 export async function signIn(email, password) {
