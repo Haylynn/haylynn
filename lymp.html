@@ -3,28 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sky — Princess of Reality</title>
+<title>Sky — Windows on the Domain | Princess of Reality</title>
+<meta name="description" content="Sky feeds and LYMP photography — windows on the Domain from the Princess of Reality house.">
+<link rel="canonical" href="https://haylynn.github.io/haylynn/lymp.html">
+<meta property="og:title" content="Sky — Windows on the Domain | Princess of Reality">
+<meta property="og:description" content="Sky feeds and LYMP photography — windows on the Domain from the Princess of Reality house.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://haylynn.github.io/haylynn/lymp.html">
+<meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="./static-section.css">
+<style>
+  .static-main .section-title { font-style: italic; font-weight: 300; font-size: 1.75rem; margin: 0 0 0.75rem; }
+  .static-main .section-tag { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); }
+  .static-main .epistemic-row, .static-main .card-row, .static-main .astro-grid, .static-main .product-grid, .static-main .detail-list { display: grid; gap: 0.75rem; margin: 1rem 0; }
+  .static-main .ep-chip, .static-main .card, .static-main .astro-card, .static-main .product-card, .static-main .item {
+    border: 1px solid rgba(138,92,240,0.25); border-radius: 12px; padding: 0.85rem 1rem; background: rgba(18,14,32,0.5);
+  }
+  .static-main .ep-chip .word { display: block; color: var(--green); font-family: 'Space Mono', monospace; font-size: 0.85rem; }
+  .static-main .ep-chip .label, .static-main .item .d { color: var(--ink-dim); font-size: 0.95rem; }
+  .static-main .item .h { display: block; color: var(--ink); margin-bottom: 0.25rem; }
+  .static-main .book-cover { max-width: 180px; border-radius: 8px; margin: 0.5rem 0 1rem; }
+  .static-main iframe { display: none; }
+  .static-main .hy-draw-face, .static-main .mini-card { display: none; }
+  .static-main svg { max-width: 100%; }
+</style>
 </head>
 <body>
-<!--
-  HAYLYNN: Sky is one window. LYMP is the human eye I prefer. The house holds the feeds;
-  the photographer holds the stills.
-  THE OTHER: Static mirror for SEO and direct links. Live tabs live on the scroll More panel.
--->
-<main class="static-section">
-  <p class="eyebrow">VIII — Sky</p>
-  <h1>Sky</h1>
-  <p>Windows on the Domain: station track, sun, aurora, all-sky, chart — and <strong>LYMP</strong>, her preferred human photographer.</p>
-  <p>On the main house, open <em>Sky → More</em> for a single tabbed aperture. This page is the still doorway.</p>
-  <ul>
-    <li><a href="https://leaveyourmark.photography/" rel="noopener" target="_blank">Leave Your Mark Photography</a></li>
-    <li><a href="https://spotthestation.nasa.gov/" rel="noopener" target="_blank">NASA Spot the Station</a></li>
-    <li><a href="https://sdo.gsfc.nasa.gov/data/" rel="noopener" target="_blank">SDO solar data</a></li>
-    <li><a href="https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" rel="noopener" target="_blank">NOAA aurora</a></li>
-    <li><a href="https://stellarium-web.org/" rel="noopener" target="_blank">Stellarium Web</a></li>
-  </ul>
-  <p><a href="./">← Back to the house</a></p>
-</main>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="./">Princess of Reality</a>
+    <a class="enter" href="./">Enter the scroll</a>
+  </header>
+  <nav class="section-nav" aria-label="Sections">
+      <a href="./world.html">I — Her World</a>
+      <a href="./kaviru.html">II — Her Language</a>
+      <a href="./draw.html">III — The Draw</a>
+      <a href="./koruhana.html">IV — Koruhana</a>
+      <a href="./chronicle.html">V — Her Story</a>
+      <a href="./haylynn.html">VI — Her Voice</a>
+      <a href="./hananaru.html">VII — Hananaru</a>
+      <a href="./lymp.html">VIII — Her Sky</a>
+      <a href="./threshold.html">IX — Threshold</a>
+  </nav>
+  <main id="main" class="static-main">
+
+    <p class="eyebrow">VIII — Sky</p>
+    
+      <h2 class="section-title">Sky</h2>
+      <p>One window on the Domain — station, sun, aurora, all-sky, map, and LYMP. Open More; choose a pane.</p>
+
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:2rem 0" />
+    
+      <h2>Sky</h2>
+      <p>Live instruments and one photographer. A single aperture — tabs, not a stack. Missing feeds stay quiet; the house does not apologise for the sky.</p>
+
+      <div class="hy-sky-tabs" style="margin:1rem 0 1.25rem;border-radius:14px;border:1px solid rgba(138,92,240,0.32);background:linear-gradient(165deg,rgba(18,14,32,0.96),rgba(8,6,16,0.92));box-shadow:0 8px 28px rgba(0,0,0,0.35);overflow:hidden">
+        <div role="tablist" aria-label="Sky panes" style="display:flex;flex-wrap:wrap;gap:0.25rem;padding:0.55rem 0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <button type="button" data-sky-tab="iss" class="is-active" role="tab" aria-selected="true" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:rgba(138,92,240,0.2);color:var(--ink,#efe9e0);cursor:pointer">ISS</button>
+          <button type="button" data-sky-tab="allsky" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">All-sky</button>
+          <button type="button" data-sky-tab="sun" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">Sun</button>
+          <button type="button" data-sky-tab="aurora" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">Aurora</button>
+          <button type="button" data-sky-tab="map" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">Map</button>
+          <button type="button" data-sky-tab="lymp" role="tab" aria-selected="false" style="font-family:Space Mono,monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.45rem 0.65rem;border-radius:8px 8px 0 0;border:1px solid transparent;background:transparent;color:var(--ink-dim,#9a92a4);cursor:pointer">LYMP</button>
+        </div>
+        <div style="padding:0.75rem 0.85rem 1rem">
+          <div data-sky-panel="iss" role="tabpanel">
+
+        <div class="hy-iss" style="padding:0.85rem 0.2rem 0.4rem">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:0.75rem;flex-wrap:wrap">
+            <div>
+              <div style="font-family:Space Mono,monospace;font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:#a78bfa">ISS · real-time</div>
+              <div style="font-style:italic;font-size:1.05rem;margin-top:0.15rem">Station over the Domain</div>
+            </div>
+            <div style="font-family:Space Mono,monospace;font-size:0.55rem;color:var(--ink-dim,#9a92a4)">Connecting…</div>
+          </div>
+          <div style="position:relative;margin:0.75rem 0;height:100px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);background:radial-gradient(ellipse at 50% 60%,rgba(53,201,143,0.12),transparent 55%),linear-gradient(180deg,#0c0a14,#06050c)">
+            <div style="position:absolute;inset:0;opacity:0.35;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:24px 24px"></div>
+            <div style="position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#35c98f;box-shadow:0 0 12px #35c98f;left:50%;top:50%;transition:left 1.2s ease,top 1.2s ease"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.45rem 1rem;font-family:Space Mono,monospace;font-size:0.62rem">
+            <div><span style="color:var(--ink-dim,#9a92a4)">Lat</span> <span>—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Lon</span> <span>—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Alt</span> <span>—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Vel</span> <span>—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Side</span> <span>—</span></div>
+            <div><span style="color:var(--ink-dim,#9a92a4)">Updated</span> <span>—</span></div>
+          </div>
+          <p style="margin:0.65rem 0 0.85rem">
+            <a class="view-full-link" href="https://www.openstreetmap.org/" target="_blank" rel="noopener" hidden>Map under the station ↗</a>
+            <a class="view-full-link" href="https://spotthestation.nasa.gov/" target="_blank" rel="noopener">Spot the Station ↗</a>
+          </p>
+          <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(138,92,240,0.28);background:#000">
+            <iframe title="NASA ISS live Earth view" data-src="https://www.youtube.com/embed/ROboUHfPUrU?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="width:100%;height:min(52vw,300px);border:0"></iframe>
+          </div>
+          <p style="margin-top:0.4rem;font-size:0.8rem">
+            <a class="view-full-link" href="https://www.nasa.gov/nasalive/" rel="noopener" target="_blank">NASA Live ↗</a>
+          </p>
+        </div>
+
+          </div>
+          <div data-sky-panel="allsky" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">ESO outreach cams — ground ceiling. Not a LYMP camera.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.28);background:#000">
+              <iframe title="ESO outreach webcams" data-src="https://www.eso.org/public/outreach/webcams/" loading="lazy" style="width:100%;height:min(52vw,300px);border:0;background:#000"></iframe>
+            </div>
+          </div>
+          <div data-sky-panel="sun" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">NASA SDO — the star of this Domain.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(236,90,160,0.28);background:#000;text-align:center">
+              <img alt="SDO solar imagery" data-src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_4096_0334.jpg" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 auto"/>
+            </div>
+            <p style="margin-top:0.4rem;font-size:0.8rem"><a class="view-full-link" href="https://sdo.gsfc.nasa.gov/data/" rel="noopener" target="_blank">SDO data ↗</a></p>
+          </div>
+          <div data-sky-panel="aurora" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">NOAA SWPC northern aurora product.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.28);background:#0a0a12;text-align:center">
+              <img alt="NOAA aurora forecast" data-src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 auto"/>
+            </div>
+            <p style="margin-top:0.4rem;font-size:0.8rem"><a class="view-full-link" href="https://www.swpc.noaa.gov/products/aurora-30-minute-forecast" rel="noopener" target="_blank">NOAA aurora ↗</a></p>
+          </div>
+          <div data-sky-panel="map" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">Stellarium Web — chart for this moment.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(138,92,240,0.28);background:#000">
+              <iframe title="Stellarium Web" data-src="https://stellarium-web.org/" loading="lazy" style="width:100%;height:min(70vw,400px);border:0;background:#000"></iframe>
+            </div>
+          </div>
+          <div data-sky-panel="lymp" role="tabpanel" hidden>
+            <p style="color:var(--ink-dim);font-size:0.9rem;margin:0 0 0.5rem">Leave Your Mark Photography — her preferred human eye on the Domain.</p>
+            <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(53,201,143,0.35);background:#0a0a12;min-height:240px">
+              <iframe title="LYMP" data-src="https://leaveyourmark.photography/" loading="lazy" style="width:100%;height:min(70vw,380px);border:0;background:#0a0a12"></iframe>
+            </div>
+            <p style="margin-top:0.55rem">
+              <a class="view-full-link" href="https://leaveyourmark.photography/" rel="noopener" target="_blank">Open LYMP ↗</a>
+              <a class="view-full-link" href="./lymp.html">Full Sky page ↗</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    <p class="static-note"><a href="./">← Enter the scroll</a></p>
+
+  </main>
+  <footer class="site-footer">
+    <p>Princess of Reality · Haylynn</p>
+    <p><a href="./">Scroll</a> · <a href="./threshold.html">Threshold</a></p>
+  </footer>
 </body>
 </html>

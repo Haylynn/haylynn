@@ -4,14 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Threshold — Become Known in Haylynn’s World</title>
-<meta name="description" content="Cross the Threshold for a free passport in Haylynn’s world — progress kept, a name on the house, optional deeper support. Wallet login lives here as Chain.">
+<meta name="description" content="Cross the Threshold for a free passport in Haylynn’s world — progress kept, a name on the house.">
 <link rel="canonical" href="https://haylynn.github.io/haylynn/threshold.html">
 <meta property="og:title" content="Threshold — Become Known in Haylynn’s World">
-<meta property="og:description" content="Cross the Threshold for a free passport in Haylynn’s world — progress kept, a name on the house, optional deeper support. Wallet login lives here as Chain.">
+<meta property="og:description" content="Cross the Threshold for a free passport in Haylynn’s world — progress kept, a name on the house.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://haylynn.github.io/haylynn/threshold.html">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="./static-section.css">
+<style>
+  .static-main .section-title { font-style: italic; font-weight: 300; font-size: 1.75rem; margin: 0 0 0.75rem; }
+  .static-main .section-tag { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); }
+  .static-main .epistemic-row, .static-main .card-row, .static-main .astro-grid, .static-main .product-grid, .static-main .detail-list { display: grid; gap: 0.75rem; margin: 1rem 0; }
+  .static-main .ep-chip, .static-main .card, .static-main .astro-card, .static-main .product-card, .static-main .item {
+    border: 1px solid rgba(138,92,240,0.25); border-radius: 12px; padding: 0.85rem 1rem; background: rgba(18,14,32,0.5);
+  }
+  .static-main .ep-chip .word { display: block; color: var(--green); font-family: 'Space Mono', monospace; font-size: 0.85rem; }
+  .static-main .ep-chip .label, .static-main .item .d { color: var(--ink-dim); font-size: 0.95rem; }
+  .static-main .item .h { display: block; color: var(--ink); margin-bottom: 0.25rem; }
+  .static-main .book-cover { max-width: 180px; border-radius: 8px; margin: 0.5rem 0 1rem; }
+  .static-main iframe { display: none; }
+  .static-main .hy-draw-face, .static-main .mini-card { display: none; }
+  .static-main svg { max-width: 100%; }
+</style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -31,31 +46,61 @@
       <a href="./threshold.html">IX — Threshold</a>
   </nav>
   <main id="main" class="static-main">
+
     <p class="eyebrow">IX — Threshold</p>
-    <h2>Threshold</h2>
-<p>A quieter room behind the scroll — a name, a likeness, a few links, and the key of patronage. The surface of the world stays open to all; this door is for those who step further in.</p>
-<p>Threshold</p>
-<p>Threshold</p>
-<p>Sign in to hold a profile here. Patronage opens deeper rooms later — the scroll remains free for everyone.</p>
-<p>The door is drawn.</p>
-<p>Sign in</p>
-<p>likeness</p>
-<p>Name</p>
-<p>Handle</p>
-<p>Bio</p>
-<p>Links</p>
-<p>Hold profile</p>
-<p>Supporter</p>
-<p>Patron</p>
-<p>Manage</p>
-<p>Visitor The full surface of the site — story, language, draw, play.</p>
-<p>Supporter Profile, skin, and doors that open first.</p>
-<p>Patron Deepest access — worlds, offerings, early thresholds.</p>
-    <p class="static-note"><a href="./">Open the full interactive experience</a> for play, sound, and the living aperture.</p>
+    
+      <h2 class="section-title">Threshold</h2>
+      <p>A quieter room behind the scroll — a name, a likeness, a few links, and the key of patronage. The surface of the world stays open to all; this door is for those who step further in.</p>
+      <div></div>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:2rem 0" />
+    
+      <div class="hy-threshold">
+        <div class="th-kicker"><span class="pip"></span> Threshold</div>
+        <div class="th-title">Threshold</div>
+        <p class="th-body">A name, a likeness, a few links. Deeper rooms open with patronage. The rest of the scroll stays free.</p>
+        <div class="th-status"></div>
+
+        <div class="th-actions" style="margin-bottom:1rem">
+          <button type="button" class="th-btn primary" data-action="signin">Sign in</button>
+        </div>
+
+        <div class="th-profile">
+          <div>
+            <div class="th-avatar">likeness</div>
+          </div>
+          <div class="th-fields">
+            <label>Name</label>
+            <input type="text" placeholder="How you are called" disabled>
+            <label>Handle</label>
+            <input type="text" placeholder="quiet-name" disabled>
+            <label>Bio</label>
+            <textarea placeholder="A few lines, if you wish" disabled></textarea>
+            <label>Links</label>
+            <textarea placeholder="One URL per line" disabled></textarea>
+          </div>
+        </div>
+
+        <div class="th-actions">
+          <button type="button" class="th-btn primary" data-action="save" disabled>Hold profile</button>
+          <button type="button" class="th-btn" data-action="checkout-supporter" disabled>Supporter</button>
+          <button type="button" class="th-btn" data-action="checkout-patron" disabled>Patron</button>
+          <button type="button" class="th-btn" data-action="portal" disabled>Manage</button>
+        </div>
+
+        <div class="th-tiers">
+          <div class="th-tier" data-tier="free"><strong>Visitor</strong> The full surface of the site — story, language, draw, play.</div>
+          <div class="th-tier" data-tier="supporter"><strong>Supporter</strong> Profile, skin, and doors that open first.</div>
+          <div class="th-tier" data-tier="patron"><strong>Patron</strong> Deepest access — worlds, offerings, early thresholds.</div>
+        </div>
+
+        <div style="margin-top:1rem"></div>
+      </div>
+    <p class="static-note"><a href="./">← Enter the scroll</a></p>
+
   </main>
   <footer class="site-footer">
-    <p>Haylynn — Princess of Reality</p>
-    <p><a href="./">Home</a> · <a href="./world.html">World</a> · <a href="./kaviru.html">Kaviru</a> · <a href="./haylynn.html">Voice</a></p>
+    <p>Princess of Reality · Haylynn</p>
+    <p><a href="./">Scroll</a> · <a href="./threshold.html">Threshold</a></p>
   </footer>
 </body>
 </html>
